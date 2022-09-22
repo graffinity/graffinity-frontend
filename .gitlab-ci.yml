@@ -7,20 +7,20 @@ mirror-from-external:
     - apt-get update -y && apt-get install openssh-client -y
     - apt install git -y
     - eval $(ssh-agent -s)
-    - echo "$GIT_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4P3AAXzc9LnJHWEUX1fw8mcpBrsi0KJSthoavKRjt4s6gZVqwq7tWMz4cF6BwnKmlhIoyicH+LuQPCdr8HVISJkWiKg8XcnwFdLbPfp4RTRjDD5HhDEN+E9tanZwpZgtfo9X+NBSnaHaYYPZnd2SyGC1YGlwdFnUZ0bh6GyDs1YpsiQ6rAV0LzMMXCGavAYOSFJgMj1/ZLsWKLcff+fyC+2hqOtCcZnYIfNn7Qc1BgdASc4LWGGWoDmUux5v89R3eN0xkQBrSWyjYSkCMbaErWs6nJ2tzR7LT0/jg661fQTTouPbjLBq9LnPOgqeI1NAFr1p0Qf3t9GzFbJmCRAyrdJ6cSfq5k4iII5YsySRT1f9NV/8ba9PHhhy2EyyeKnlLdOOf46bxpm/1QqfMpTs2B8MOmWoTz0quvvr3nh7QkgGoOgZfF3THR5L1pw37P0ktQliTxU/Yf0VvPLbCoyIH8D9E3sgK1LdRCvi0+1Qtq4gYIGLKx/ZEZD5kKCWqBOk= kernius@Kerniuss-MacBook-Pro.local" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $GIT_LAB_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $git@git.mif.vu.lt >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - git config --global user.name "${GIT_USER_NAME}"
-    - git config --global user.email "${GIT_USER_EMAIL}"
-    - ssh "git@$GIT_LAB_HOST"
+    - git config --global user.name "kesu8139"
+    - git config --global user.email "kernius.survila@mif.stud.vu.lt"
+    - ssh "git@git.mif.vu.lt"
   script:
-    - echo $SOURCE_REPOSITORY
-    - git clone --mirror $SOURCE_REPOSITORY Your_Repo_folder_name
-    - cd Your_Repo_folder_name
+    - echo git@github.com:graffinity/graffinity-frontend.git
+    - git clone --mirror git@github.com:graffinity/graffinity-frontend.git frontend-graffinity-test
+    - cd frontend-graffinity-test
     - git remote remove origin
-    - git remote add origin $DESTINATION_REPOSITORY
+    - git remote add origin git@git.mif.vu.lt:graffinity/graffinity-frontend.git
     - git push --prune --all
     - git push --prune --tags
   only:
