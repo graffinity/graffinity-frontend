@@ -7,7 +7,7 @@ mirror-from-external:
     - apt-get update -y && apt-get install openssh-client -y
     - apt install git -y
     - eval $(ssh-agent -s)
-    - echo $GIT_SSH_PRIVATE_KEY | tr -d '\r' | ssh-add -
+    - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4P3AAXzc9LnJHWEUX1fw8mcpBrsi0KJSthoavKRjt4s6gZVqwq7tWMz4cF6BwnKmlhIoyicH+LuQPCdr8HVISJkWiKg8XcnwFdLbPfp4RTRjDD5HhDEN+E9tanZwpZgtfo9X+NBSnaHaYYPZnd2SyGC1YGlwdFnUZ0bh6GyDs1YpsiQ6rAV0LzMMXCGavAYOSFJgMj1/ZLsWKLcff+fyC+2hqOtCcZnYIfNn7Qc1BgdASc4LWGGWoDmUux5v89R3eN0xkQBrSWyjYSkCMbaErWs6nJ2tzR7LT0/jg661fQTTouPbjLBq9LnPOgqeI1NAFr1p0Qf3t9GzFbJmCRAyrdJ6cSfq5k4iII5YsySRT1f9NV/8ba9PHhhy2EyyeKnlLdOOf46bxpm/1QqfMpTs2B8MOmWoTz0quvvr3nh7QkgGoOgZfF3THR5L1pw37P0ktQliTxU/Yf0VvPLbCoyIH8D9E3sgK1LdRCvi0+1Qtq4gYIGLKx/ZEZD5kKCWqBOk= kernius@Kerniuss-MacBook-Pro.local" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan $GIT_LAB_HOST >> ~/.ssh/known_hosts
