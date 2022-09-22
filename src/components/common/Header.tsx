@@ -3,6 +3,7 @@ const Header = () => {
 		<div>
 			<h1>bruh, aint no way</h1>
 			<h1>bruh, aint no way v2</h1>
+			<h1>bruh, aint no way, nu plsssss</h1>
 		</div>
 	);
 };
