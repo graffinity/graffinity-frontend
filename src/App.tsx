@@ -1,14 +1,14 @@
 import React from 'react';
-import Nav from './components/nav/Nav';
-
 import './App.css';
+import ResponsiveAppBar from './components/Nav/Nav';
+import BasicCard from './components/Nav/Card';
 
 function App() {
   return (
-    <>
     
-    <Nav />
-    <h1>Hello world</h1>
+    <>
+    < ResponsiveAppBar />
+    <BasicCard />
     </>
   );
 }
