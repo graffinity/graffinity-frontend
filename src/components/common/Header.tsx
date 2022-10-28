@@ -14,103 +14,108 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 
 const theme = createTheme({
-	palette: {
-		primary: {
-			main: "#C4A29E",
-		},
-	},
+  palette: {
+    primary: {
+      main: "#C4A29E",
+    },
+  },
 });
 
 const pages = ["Home", "About", "Contact"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-		null
-	);
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-		null
-	);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget);
-	};
-	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElUser(event.currentTarget);
-	};
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
-	};
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-	return (
-		<ThemeProvider theme={theme}>
-			<AppBar position='static'>
-				{/* <Container maxWidth="xl"> */}
-				<Toolbar
-					disableGutters
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						gap: "10px",
-					}}
-					sx={{
-						padding: "0px 32px",
-					}}>
-					<div
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "flex-end",
-							width: "100%",
-						}}>
-						<BrushIcon
-							sx={{
-								display: {
-									xs: "none",
-									md: "flex",
-									fontSize: "large",
-								},
-								mr: 1,
-							}}
-						/>
-					</div>
-					<div
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-							width: "100%",
-						}}>
-						<Typography
-							variant='h3'
-							noWrap
-							component='a'
-							href='/'
-							sx={{
-								mr: 2,
-								display: { xs: "none", md: "flex" },
-								fontFamily: "monospace",
-								fontWeight: 700,
-								letterSpacing: ".3rem",
-								color: "inherit",
-								textDecoration: "none",
-							}}>
-							GRAFFINITY
-						</Typography>
-					</div>
-					<div
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "flex-end",
-							width: "100%",
-						}}>
-						{/* <IconButton
+  return (
+    <ThemeProvider theme={theme}>
+      <AppBar position="static">
+        {/* <Container maxWidth="xl"> */}
+        <Toolbar
+          disableGutters
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "10px",
+          }}
+          sx={{
+            padding: "0px 32px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            <BrushIcon
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "flex",
+                  fontSize: "large",
+                },
+                mr: 1,
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <Typography
+              variant="h3"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              GRAFFINITY
+            </Typography>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            {/* <IconButton
 							size='large'
 							aria-label='account of current user'
 							aria-controls='menu-appbar'
@@ -119,52 +124,44 @@ const ResponsiveAppBar = () => {
 							color='inherit'>
 							<MenuIcon />
 						</IconButton> */}
-						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title='Open settings'>
-								<IconButton
-									onClick={handleOpenUserMenu}
-									sx={{ p: 0 }}>
-									<Avatar
-										alt='Remy Sharp'
-										src='/static/images/avatar/2.jpg'
-									/>
-								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{ mt: "45px" }}
-								id='menu-appbar'
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}>
-								{settings.map((setting) => (
-									<MenuItem
-										key={setting}
-										onClick={handleCloseUserMenu}>
-										<Typography textAlign='center'>
-											{setting}
-										</Typography>
-									</MenuItem>
-								))}
-							</Menu>
-						</Box>
-					</div>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </div>
 
-					{/* <Box
+          {/* <Box
 						sx={{
 							flexGrow: 1,
 							display: { xs: "flex", md: "none" },
 						}}> */}
 
-					{/* <Menu
+          {/* <Menu
 							id='menu-appbar'
 							anchorEl={anchorElNav}
 							anchorOrigin={{
@@ -270,10 +267,10 @@ const ResponsiveAppBar = () => {
 							))}
 						</Menu>
 					</Box> */}
-				</Toolbar>
-				{/* </Container> */}
-			</AppBar>
-		</ThemeProvider>
-	);
+        </Toolbar>
+        {/* </Container> */}
+      </AppBar>
+    </ThemeProvider>
+  );
 };
 export default ResponsiveAppBar;
