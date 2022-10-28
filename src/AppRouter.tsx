@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import "./AppRouter.css";
 // import BasicCard from "./components/common/Nav/Card";
 import dotenv from "dotenv";
-import ResponsiveAppBar from "./components/common/Nav/Nav";
+import ResponsiveAppBar from "./components/common/Header";
 
 const env = dotenv.config();
 
