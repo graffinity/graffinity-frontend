@@ -1,10 +1,9 @@
 import "./AppRouter.css";
 
-import HomePage from "pages/home/HomePage";
-import ResponsiveAppBar from "components/common/Header";
-import Map from "components/Map/Map";
-import { FooterContainer } from "Containers/footerContainer";
 import MultiActionAreaCard from "components/common/Card";
+import Header from "components/common/Header";
+import Map from "components/map/Map";
+import { FooterContainer } from "Containers/footerContainer";
 
 const AppRouter = () => {
 	return (
@@ -15,10 +14,10 @@ const AppRouter = () => {
 				display: "flex",
 				flexDirection: "column",
 			}}>
-			<HomePage />
+			{/* <HomePage /> */}
 			<>
 				<div className='bg-primary'>
-					<ResponsiveAppBar />
+					<Header />
 					<div className='row g-0 bg-transparent '>
 						<div className='col bg-transparent d-flex justify-content-center '>
 							<div className='leftSide'>
