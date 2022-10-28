@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import MultiActionAreaCard from "components/common/Card";
+import Header from "components/common/Header";
 import ResponsiveAppBar from "components/common/Header";
 import { useCallback, useState } from "react";
+import Map from "components/Map/Map";
+import { FooterContainer } from "Containers/footerContainer";
 
 const containerStyle = {
 	width: "800px",
@@ -44,25 +48,21 @@ const HomePage = () => {
 				display: "flex",
 				flexDirection: "column",
 			}}>
-			<ResponsiveAppBar />
-			<div
-				style={{
-					width: "100%",
-					display: "flex",
-					justifyContent: "center",
-					marginTop: "64px",
-					marginBottom: "100px",
-				}}>
-				{isLoaded ? (
-					<GoogleMap
-						mapContainerStyle={containerStyle}
-						center={center}
-						zoom={10}
-						onLoad={onLoad}
-						onUnmount={onUnmount}></GoogleMap>
-				) : (
-					<></>
-				)}
+			<div className='bg-primary'>
+				<div className='row g-0 bg-transparent '>
+					<div className='col bg-transparent d-flex justify-content-center '>
+						<div className='leftSide'>
+							<MultiActionAreaCard />
+						</div>
+					</div>
+
+					<div className='col d-flex justify-content-center align-items-center '>
+						<div className='rightSide'>
+							{/* <Map /> */}
+						</div>
+					</div>
+				</div>
+				<FooterContainer />
 			</div>
 		</div>
 	);

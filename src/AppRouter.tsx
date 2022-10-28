@@ -1,9 +1,9 @@
 import "./AppRouter.css";
 
-import MultiActionAreaCard from "components/common/Card";
 import Header from "components/common/Header";
-import Map from "components/Map/Map";
-import { FooterContainer } from "Containers/footerContainer";
+import routes from "constants/routes";
+import RouteItem from "models/routes/RouteItem";
+import { Route, Routes } from "react-router-dom";
 
 const AppRouter = () => {
 	return (
@@ -14,26 +14,26 @@ const AppRouter = () => {
 				display: "flex",
 				flexDirection: "column",
 			}}>
-			{/* <HomePage /> */}
-			<>
-				<div className='bg-primary'>
-					<Header />
-					<div className='row g-0 bg-transparent '>
-						<div className='col bg-transparent d-flex justify-content-center '>
-							<div className='leftSide'>
-								<MultiActionAreaCard />
-							</div>
-						</div>
-
-						<div className='col d-flex justify-content-center align-items-center '>
-							<div className='rightSide'>
-								<Map />
-							</div>
-						</div>
-					</div>
-					<FooterContainer />
-				</div>
-			</>
+			<Header />
+			<div
+				style={{
+					width: "100%",
+					height: "100%",
+					display: "flex",
+					flexDirection: "column",
+				}}>
+				<Routes>
+					{[...routes[0].items, ...routes[1].items].map(
+						(route: RouteItem) => (
+							<Route
+								key={route.key}
+								path={route.path}
+								element={route.element}
+							/>
+						)
+					)}
+				</Routes>
+			</div>
 		</div>
 	);
 };

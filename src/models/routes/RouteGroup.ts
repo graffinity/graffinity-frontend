@@ -2,7 +2,7 @@ import RouteItem from "./RouteItem";
 
 interface RouteGroup {
 	group: string;
-	routes: RouteItem[];
+	items: RouteItem[];
 }
 
 export default RouteGroup;

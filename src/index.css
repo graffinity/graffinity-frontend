@@ -1,5 +1,28 @@
 html {
-  margin: 0 auto;
-  /*background: #cdd9ff;*/
-  background-color: gray;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: "Inter", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	height: 100%;
+	width: 100%;
+}
+
+code {
+	font-family: "Inter", sans-serif;
+}
+
+p {
+	margin: 0;
+}
+
+#root {
+	height: 100%;
+}
+
+* {
+	/* border: 1px solid limegreen; */
 }
