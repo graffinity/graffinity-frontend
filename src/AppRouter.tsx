@@ -1,23 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import React, { useState } from "react";
 import "./AppRouter.css";
-import BasicCard from "./components/common/Nav/Card";
-
+// import BasicCard from "./components/common/Nav/Card";
+import dotenv from "dotenv";
 import ResponsiveAppBar from "./components/common/Nav/Nav";
+
+const env = dotenv.config();
+
 const containerStyle = {
 	width: "800px",
 	height: "600px",
 };
 
 const center = {
-	lat: -3.745,
-	lng: -38.523,
+	lat: 54.730012,
+	lng: 25.262638,
+};
+
+const center2 = {
+	lat: 25.262648,
+	lng: 54.730012,
 };
 
 function App() {
+	let googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: "AIzaSyBuBPx0KmNq3e2VxxSnf07mHjBwE1lwlvA",
+		googleMapsApiKey: process.env.NODE_ENV,
 	});
 
 	const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -44,12 +54,13 @@ function App() {
 				flexDirection: "column",
 			}}>
 			<ResponsiveAppBar />
-			<BasicCard />
 			<div
 				style={{
 					width: "100%",
 					display: "flex",
 					justifyContent: "center",
+					marginTop: "64px",
+					marginBottom: "100px",
 				}}>
 				{isLoaded ? (
 					<GoogleMap
@@ -57,10 +68,7 @@ function App() {
 						center={center}
 						zoom={10}
 						onLoad={onLoad}
-						onUnmount={onUnmount}>
-						{/* Child components, such as markers, info windows, etc. */}
-						<></>
-					</GoogleMap>
+						onUnmount={onUnmount}></GoogleMap>
 				) : (
 					<></>
 				)}
@@ -68,27 +76,5 @@ function App() {
 		</div>
 	);
 }
-// return (
-// <div
-// 	style={{
-// 		width: "100%",
-// 		height: "100%",
-// 		display: "flex",
-// 		flexDirection: "column",
-// 		marginTop: "140px",
-// 	}}>
-// 	<div
-// 		style={{
-// 			width: "100%",
-// 			display: "flex",
-// 			justifyContent: "center",
-// 		}}>
-
-// 		</div>
-// 	{/* <ResponsiveAppBar />
-// 	<BasicCard /> */}
-// </div>
-// 	);
-// }
 
 export default App;
