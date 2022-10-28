@@ -2,7 +2,7 @@ import "./AppRouter.css";
 
 import MultiActionAreaCard from "components/common/Card";
 import Header from "components/common/Header";
-import Map from "components/map/Map";
+import Map from "components/Map/Map";
 import { FooterContainer } from "Containers/footerContainer";
 
 const AppRouter = () => {
