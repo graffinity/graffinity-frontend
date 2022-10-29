@@ -5,6 +5,7 @@ import routes from "constants/routes";
 import RouteItem from "models/routes/RouteItem";
 import { Route, Routes } from "react-router-dom";
 import { FooterContainer } from "components/common/Footer";
+import NavBar from "components/common/NavBar";
 
 const AppRouter = () => {
 	return (
@@ -15,11 +16,12 @@ const AppRouter = () => {
 				display: "flex",
 				flexDirection: "column",
 			}}>
+			<NavBar />
 			<Header />
 			<div
 				style={{
 					width: "100%",
-					height: "100%",
+
 					display: "flex",
 					flexDirection: "column",
 				}}>
