@@ -1,0 +1,24 @@
+.homepage-container {
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}
+
+.homepage-container .left {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+
+.homepage-container .right {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
