@@ -16,7 +16,8 @@
 		"noImplicitAny": false,
 		"noEmit": true,
 		"jsx": "react-jsx",
+		"typeRoots": ["./environment.d.ts", "./node_modules/@types"],
 		"baseUrl": "./src"
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*", "environment.d.ts"]
 }

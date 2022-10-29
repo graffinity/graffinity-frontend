@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { width } from "@mui/system";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import React, { useState } from "react";
 import "./map.css";
@@ -17,7 +16,7 @@ const center2 = {
 const Map = () => {
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: "api_key_placeholder",
+		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 	});
 
 	const [map, setMap] = useState<google.maps.Map | null>(null);
