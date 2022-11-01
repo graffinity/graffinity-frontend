@@ -56,3 +56,12 @@ BasicCard {
 .text:hover {
   color: #c8d8e9;
 }
+
+@media screen and (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    width: 25%;
+    padding-top: 10;
+    gap: 16px;
+  }
+}

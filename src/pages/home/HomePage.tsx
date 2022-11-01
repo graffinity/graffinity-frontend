@@ -1,9 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import MultiActionAreaCard from "components/common/Card";
-import { FooterContainer } from "components/common/Footer";
 import MapComponent from "components/map/MapComponent";
+import { useState } from "react";
+import "./HomePage.css";
+
+const maxWidth4DesktopView = 900;
 
 const HomePage = () => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [height, setHeight] = useState<number>(window.innerHeight);
+
+  window.addEventListener("resize", () => {
+    setWidth(window.innerWidth);
+  });
+  window.addEventListener("resize", () => {
+    setHeight(window.innerHeight)
+  });
+
   return (
     <div
       style={{
@@ -11,25 +24,24 @@ const HomePage = () => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-      }}
-    >
-      <div className="">
-        <div className="">
-          <div className="">
-            <div className="leftSide">
-              <MultiActionAreaCard />
-            </div>
-          </div>
 
-          <div className="">
-            <div className="rightSide">{/* <Map /> */}</div>
-          </div>
+      }}>
+      <div className='homepage-container'>
+        <div className='left'>
+          <MultiActionAreaCard />
         </div>
-        <MapComponent />
-        <FooterContainer />
+
+        <div className='right'>
+          <MapComponent
+            width={width >= maxWidth4DesktopView ? (width / 1.6) : width} height={height / 1.25} />
+        </div>
       </div>
     </div>
   );
 };
 
 export default HomePage;
+function setHeight(innerHeight: number) {
+  throw new Error("Function not implemented.");
+}
+
