@@ -16,6 +16,7 @@ const center2 = {
 
 interface MapComponentProps {
 	width: number;
+	height: number;
 }
 
 const MapComponent = (props: MapComponentProps) => {
@@ -37,7 +38,7 @@ const MapComponent = (props: MapComponentProps) => {
 	) {
 		setMap(null);
 	},
-	[]);
+		[]);
 
 	return (
 		<div
@@ -60,7 +61,8 @@ const MapComponent = (props: MapComponentProps) => {
 					<GoogleMap
 						mapContainerStyle={{
 							width: props.width,
-							height: props.width * 1.5,
+							height: props.height,
+
 						}}
 						center={center}
 						zoom={10}
