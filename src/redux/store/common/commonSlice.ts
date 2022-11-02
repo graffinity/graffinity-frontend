@@ -2,7 +2,7 @@ import CommonState from "./CommonState";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState: CommonState = {
-	loggedIn: undefined,
+	isLoggedIn: undefined,
 	userInfo: undefined,
 };
 
@@ -11,7 +11,7 @@ export const commonSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		setStatus(state, action) {
-			state.loggedIn = action.payload.loggedIn;
+			state.isLoggedIn = action.payload.isLoggedIn;
 		},
 		setUserInfo(state, action) {
 			state.userInfo = action.payload.me;

@@ -1,7 +1,7 @@
 import UserInfoResponse from "models/auth/UserInfoResponse";
 
 interface CommonState {
-	loggedIn?: boolean;
+	isLoggedIn?: boolean;
 	userInfo?: UserInfoResponse;
 }
 

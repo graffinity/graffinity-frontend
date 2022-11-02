@@ -1,7 +1,9 @@
 import { ThemeProvider } from "@emotion/react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import setupAxiosInterceptors from "redux/services/setupAxiosInterceptors";
+import { store } from "redux/store/rootReducer";
 import AppRouter from "./AppRouter";
 import AppTheme from "./AppTheme";
 import "./index.css";
@@ -15,9 +17,11 @@ setupAxiosInterceptors();
 
 root.render(
 	<BrowserRouter>
-		<ThemeProvider theme={AppTheme}>
-			<AppRouter />
-		</ThemeProvider>
+		<Provider store={store}>
+			<ThemeProvider theme={AppTheme}>
+				<AppRouter />
+			</ThemeProvider>
+		</Provider>
 	</BrowserRouter>
 );
 
