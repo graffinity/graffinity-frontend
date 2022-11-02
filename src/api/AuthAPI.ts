@@ -1,6 +1,6 @@
 import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
-import StatusResponse from "models/StatusResponse";
+import StatusResponse from "models/auth/StatusResponse";
 
 const baseUrl = apiEndpoints.auth;
 
