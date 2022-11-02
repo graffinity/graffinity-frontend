@@ -3,10 +3,13 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
+// import Skeleton from '@mui/material/Skeleton';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
+import MultiActionAreaCardMobile from './CardMobile';
+import { FooterContainerMobile } from './FooterMobile';
+import "./Common.css";
 
 const drawerBleeding = 56;
 
@@ -28,12 +31,12 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
-    backgroundColor:
-        theme.palette.mode === 'light' ? grey[100] : theme.palette.background.default,
+    backgroundColor: 'transparent',
+
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
-    backgroundColor: `#202024`,
+    backgroundColor: `#404044`,
 }));
 
 
@@ -46,7 +49,6 @@ export default function SwipeableEdgeDrawer(props: Props) {
         setOpen(newOpen);
     };
 
-    // This is used only for the example
 
 
     return (
@@ -55,13 +57,13 @@ export default function SwipeableEdgeDrawer(props: Props) {
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                        height: `calc(80% - ${drawerBleeding}px)`,
+                        height: `calc(95% - ${drawerBleeding}px)`,
                         overflow: 'visible',
                     },
                 }}
             />
             <IconButton
-
+                sx={{ color: 'white' }}
                 onClick={toggleDrawer(true)}>
                 <MenuIcon ></MenuIcon>
             </IconButton>
@@ -78,7 +80,6 @@ export default function SwipeableEdgeDrawer(props: Props) {
                 }}
             >
                 <Puller />
-
                 <StyledBox
                     sx={{
                         px: 2,
@@ -87,7 +88,8 @@ export default function SwipeableEdgeDrawer(props: Props) {
                         overflow: 'auto',
                     }}
                 >
-                    <Skeleton variant="rectangular" height="100%" />
+                    <MultiActionAreaCardMobile />
+                    <FooterContainerMobile />
                 </StyledBox>
             </SwipeableDrawer>
         </Root >

@@ -1,5 +1,8 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { AppBar, Link, Typography } from "@mui/material";
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import "./Common.css";
 
 export function FooterContainer() {
@@ -118,16 +121,19 @@ export function FooterContainer() {
                 </Typography>
               </Link>
               <Link href="#" className="link">
+                <InstagramIcon className="icon" />
                 <Typography variant="body" className="text">
                   Instagram
                 </Typography>
               </Link>
               <Link href="#" className="link">
+                <YouTubeIcon className="icon" />
                 <Typography variant="body" className="text">
                   Youtube
                 </Typography>
               </Link>
               <Link href="#" className="link">
+                <TwitterIcon className="icon" />
                 <Typography variant="body" className="text">
                   Twitter
                 </Typography>

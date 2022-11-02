@@ -1,5 +1,4 @@
 import "./AppRouter.css";
-
 import Header from "components/common/Header";
 import routes from "constants/routes";
 import RouteItem from "models/routes/RouteItem";
@@ -14,6 +13,7 @@ const AppRouter = () => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+
       }}>
       <Header />
       <div

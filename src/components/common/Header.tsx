@@ -140,7 +140,7 @@ const Header = () => {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{ mt: "45px", display: { xs: 'none', md: 'block' } }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -168,7 +168,7 @@ const Header = () => {
       {/* appbar for mobile device  */}
       <AppBar position="fixed" sx={{
         display: { xs: "block", md: "none", },
-        top: 'auto', bottom: 0, mt: '100px',
+        top: 'auto', bottom: 0, mt: 'none',
         borderRadius: "20px 20px 0 0",
       }}>
         <Toolbar
@@ -176,7 +176,7 @@ const Header = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            gap: "10px",
+
 
           }}
           sx={{
@@ -190,6 +190,7 @@ const Header = () => {
               alignItems: "center",
               justifyContent: "flex-start",
               width: "100%",
+              background: "transparent",
             }}
           >
 
@@ -212,22 +213,7 @@ const Header = () => {
                 },
               }}
             />
-            <Typography
-              variant="h3"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                display: { xs: "none", md: "flex" },
-                fontFamily: "Times, Times New Roman, serif",
-                fontWeight: 300,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              GRAFFINITY
-            </Typography>
+
             <Typography
               textAlign="center"
               variant="h5"
@@ -257,23 +243,23 @@ const Header = () => {
               width: "100%",
             }}
           >
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0 }}  >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Avatar" />
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{ display: { xs: 'block', md: 'none' } }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
+                  vertical: "bottom",
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
@@ -290,7 +276,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 export default Header;

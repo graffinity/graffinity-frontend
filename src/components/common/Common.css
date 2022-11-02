@@ -5,6 +5,11 @@ BasicCard {
   color: rgb(255, 255, 255);
 }
 
+div {
+  margin: 0;
+  padding: 0;
+}
+
 .footer-container {
   display: flex;
   justify-content: space-between;
@@ -53,15 +58,21 @@ BasicCard {
   width: 24px;
 }
 
-.text:hover {
+.text :hover {
   color: #c8d8e9;
 }
 
 @media screen and (max-width: 900px) {
   .footer-container {
+    display: flex;
     flex-direction: column;
-    width: 25%;
-    padding-top: 10;
+    justify-content: space-between;
+    width: 100%;
+    padding: 48px 80px;
     gap: 16px;
+  }
+
+  .footer-title {
+    margin-bottom: 16px;
   }
 }
