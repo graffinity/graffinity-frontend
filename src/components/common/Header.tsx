@@ -1,18 +1,18 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import BrushIcon from "@mui/icons-material/Brush";
 import { Toolbar } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { createTheme } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import "./Common.css";
 import SwipeableEdgeDrawer from "./Drawer";
-import './Common.css';
 
 const theme = createTheme({
   palette: {
@@ -45,19 +45,19 @@ const Header = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" sx={{
-        display: { md: "block", xs: "none" },
-        borderRadius: "0 0 20px 20px",
-
-      }}>
-
+      <AppBar
+        position="static"
+        sx={{
+          display: { md: "block", xs: "none" },
+          borderRadius: "0 0 20px 20px",
+        }}
+      >
         <Toolbar
           disableGutters
           style={{
             display: "flex",
             justifyContent: "space-between",
             gap: "10px",
-
           }}
           sx={{
             padding: "0px 32px",
@@ -86,6 +86,9 @@ const Header = () => {
                   md: "flex",
                   fontSize: "large",
                 },
+              }}
+              style={{
+                paddingRight: "8px",
               }}
             />
             <Typography
@@ -140,8 +143,12 @@ const Header = () => {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px", display: { xs: 'none', md: 'block' } }}
                 id="menu-appbar"
+                disableScrollLock
+                sx={{
+                  mt: "45px",
+                  display: { xs: "none", md: "block" },
+                }}
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: "top",
@@ -166,18 +173,21 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       {/* appbar for mobile device  */}
-      <AppBar position="fixed" sx={{
-        display: { xs: "block", md: "none", },
-        top: 'auto', bottom: 0, mt: 'none',
-        borderRadius: "20px 20px 0 0",
-      }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          display: { xs: "block", md: "none" },
+          top: "auto",
+          bottom: 0,
+          mt: "none",
+          borderRadius: "20px 20px 0 0",
+        }}
+      >
         <Toolbar
           disableGutters
           style={{
             display: "flex",
             justifyContent: "space-between",
-
-
           }}
           sx={{
             padding: "0px 32px",
@@ -193,7 +203,6 @@ const Header = () => {
               background: "transparent",
             }}
           >
-
             <SwipeableEdgeDrawer />
           </div>
           <div
@@ -211,6 +220,9 @@ const Header = () => {
                   md: "flex",
                   fontSize: "large",
                 },
+              }}
+              style={{
+                paddingRight: "8px",
               }}
             />
 
@@ -243,14 +255,14 @@ const Header = () => {
               width: "100%",
             }}
           >
-            <Box sx={{ flexGrow: 0 }}  >
+            <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Avatar" />
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ display: { xs: 'block', md: 'none' } }}
+                sx={{ display: { xs: "block", md: "none" } }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -275,8 +287,7 @@ const Header = () => {
           </div>
         </Toolbar>
       </AppBar>
-
-    </ThemeProvider >
+    </ThemeProvider>
   );
 };
 export default Header;

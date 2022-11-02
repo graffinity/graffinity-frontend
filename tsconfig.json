@@ -1,23 +1,23 @@
 {
-	"compilerOptions": {
-		"target": "ES6",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noImplicitAny": false,
-		"noEmit": true,
-		"jsx": "react-jsx",
-		"typeRoots": ["./environment.d.ts", "./node_modules/@types"],
-		"baseUrl": "./src"
-	},
-	"include": ["src/**/*", "environment.d.ts"]
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "typeRoots": ["./environment.d.ts", "./node_modules/@types"],
+    "baseUrl": "./src"
+  },
+  "include": ["src/**/*", "environment.d.ts"]
 }

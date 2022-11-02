@@ -1,9 +1,9 @@
 interface GraffitiResponse {
-    id: number;
-    name: string;
-    description: string;
-    location: string;
-    createdAt: Date
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  createdAt: Date;
 }
 
-export default GraffitiResponse
+export default GraffitiResponse;

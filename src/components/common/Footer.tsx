@@ -1,8 +1,8 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { AppBar, Link, Typography } from "@mui/material";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import "./Common.css";
 
 export function FooterContainer() {
@@ -10,7 +10,7 @@ export function FooterContainer() {
     <AppBar
       position="static"
       color="primary"
-      sx={{ display: { xs: 'none', md: 'block' } }}
+      sx={{ display: { xs: "none", md: "block" } }}
       style={{
         width: "100%",
         bottom: "0",
