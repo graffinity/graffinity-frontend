@@ -25,7 +25,8 @@ const Sandbox = () => {
 				width: "100%",
 				height: "100%",
 				gap: "8px",
-			}}>
+			}}
+		>
 			{graffitiPosts &&
 				graffitiPosts.length > 0 &&
 				graffitiPosts.map((graffiti) => (
@@ -34,9 +35,7 @@ const Sandbox = () => {
 						<Typography>{graffiti.name}</Typography>
 						<Typography>{graffiti.description}</Typography>
 						<Typography>{graffiti.location}</Typography>
-						<Typography>
-							{graffiti.creationDate?.toString()}
-						</Typography>
+						<Typography>{graffiti.creationDate?.toString()}</Typography>
 					</div>
 				))}
 		</div>

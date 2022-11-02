@@ -8,17 +8,17 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+	document.getElementById("root") as HTMLElement
 );
 
 setupAxiosInterceptors();
 
 root.render(
-  <BrowserRouter>
-    <ThemeProvider theme={AppTheme}>
-      <AppRouter />
-    </ThemeProvider>
-  </BrowserRouter>
+	<BrowserRouter>
+		<ThemeProvider theme={AppTheme}>
+			<AppRouter />
+		</ThemeProvider>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

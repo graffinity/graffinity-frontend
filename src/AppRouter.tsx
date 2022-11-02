@@ -14,7 +14,8 @@ const AppRouter = () => {
 				height: "100%",
 				display: "flex",
 				flexDirection: "column",
-			}}>
+			}}
+		>
 			<NavBar />
 			<Header />
 			<div
@@ -22,17 +23,12 @@ const AppRouter = () => {
 					width: "100%",
 					display: "flex",
 					flexDirection: "column",
-				}}>
+				}}
+			>
 				<Routes>
-					{[...routes[0].items, ...routes[1].items].map(
-						(route: RouteItem) => (
-							<Route
-								key={route.key}
-								path={route.path}
-								element={route.element}
-							/>
-						)
-					)}
+					{[...routes[0].items, ...routes[1].items].map((route: RouteItem) => (
+						<Route key={route.key} path={route.path} element={route.element} />
+					))}
 				</Routes>
 			</div>
 			<FooterContainer />
