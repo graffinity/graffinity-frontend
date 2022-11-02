@@ -1,16 +1,16 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { AppBar, Link, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { AppBar, Link, Typography } from "@mui/material";
 import "./Common.css";
 
-export function FooterContainer() {
+export function FooterContainerMobile() {
   return (
     <AppBar
       position="static"
       color="primary"
-      sx={{ display: { xs: "none", md: "block" } }}
+      sx={{ display: { xs: "block", md: "none" } }}
       style={{
         width: "100%",
         bottom: "0",
@@ -27,7 +27,7 @@ export function FooterContainer() {
         <div className="footer-container">
           <div className="footer-section">
             <div className="footer-title">
-              <Typography color="#FFFFFF" variant="h3">
+              <Typography color="#FFFFFF" variant="h5">
                 About Us
               </Typography>
             </div>
@@ -51,7 +51,7 @@ export function FooterContainer() {
           </div>
           <div className="footer-section">
             <div className="footer-title">
-              <Typography variant="h3" color="#FFFFFF">
+              <Typography variant="h5" color="#FFFFFF">
                 Services
               </Typography>
             </div>
@@ -80,7 +80,7 @@ export function FooterContainer() {
           </div>
           <div className="footer-section">
             <div className="footer-title">
-              <Typography variant="h3" color="#FFFFFF">
+              <Typography variant="h5" color="#FFFFFF">
                 Contact Us
               </Typography>
             </div>
@@ -109,7 +109,7 @@ export function FooterContainer() {
           </div>
           <div className="footer-section">
             <div className="footer-title">
-              <Typography variant="h3" color="#FFFFFF">
+              <Typography variant="h5" color="#FFFFFF">
                 Social
               </Typography>
             </div>

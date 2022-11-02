@@ -14,7 +14,7 @@ const HomePage = () => {
     setWidth(window.innerWidth);
   });
   window.addEventListener("resize", () => {
-    setHeight(window.innerHeight)
+    setHeight(window.innerHeight);
   });
 
   return (
@@ -24,16 +24,18 @@ const HomePage = () => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-
-      }}>
-      <div className='homepage-container'>
-        <div className='left'>
+      }}
+    >
+      <div className="homepage-container">
+        <div className="left">
           <MultiActionAreaCard />
         </div>
 
-        <div className='right'>
+        <div className="right">
           <MapComponent
-            width={width >= maxWidth4DesktopView ? (width / 1.6) : width} height={height / 1.25} />
+            width={width >= maxWidth4DesktopView ? width / 1.6 : width}
+            height={height / 1.25}
+          />
         </div>
       </div>
     </div>
@@ -44,4 +46,3 @@ export default HomePage;
 function setHeight(innerHeight: number) {
   throw new Error("Function not implemented.");
 }
-
