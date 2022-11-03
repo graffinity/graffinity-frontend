@@ -26,9 +26,15 @@ const getStatus =
 	};
 
 const setUserInfo =
-	(): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-		let response = await UserAPI.getUserInfo();
+	(userId: number): ThunkAction<void, RootState, unknown, AnyAction> =>
+	async (dispatch) => {
+		let response = await UserAPI.getUserInfo(userId);
 		dispatch(commonActions.setStatus({ ...response }));
 	};
+const handleLogin =
+	(isLoggedIn: boolean): ThunkAction<void, RootState, unknown, AnyAction> =>
+	async (dispatch) => {
+		dispatch(commonActions.handleLogin(isLoggedIn));
+	};
 
-export { getStatus, setUserInfo };
+export { getStatus, setUserInfo, handleLogin };

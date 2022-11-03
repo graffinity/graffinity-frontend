@@ -1,26 +1,30 @@
-import { Button, Card, Dialog, Divider, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import AuthAPI from "api/AuthAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
-import FormTextField from "components/form/FormTextField";
-import ReadableHiddenPasswordField from "components/form/ReadableHiddenPasswordField";
-import { Formik, FormikProps } from "formik";
+import LoginDialog from "components/login/LoginDialog";
+import { Form, Formik } from "formik";
 import LoginRequest from "models/auth/LoginRequest";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import { useEffect, useRef, useState } from "react";
+import GraffitiRequest from "models/graffiti/GraffitiRequest";
+import { useEffect, useState } from "react";
 import common from "redux/common";
 import { useAppSelector } from "redux/store/hooks";
 import * as yup from "yup";
 import "./Sandbox.css";
+import FormTextField from "components/form/FormTextField";
 
 const Sandbox = () => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
-	const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined);
+	const userInfo = useAppSelector((state) => state.common.userInfo);
 	const [graffitiPosts, setGraffitiPosts] = useState<GraffitiResponse[]>();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+	const [loginSuccess, setLoginSuccess] = useState<boolean>();
 	useEffect(() => {
-		common.getStatus();
+		if (!isLoggedIn) {
+			common.getStatus();
+		}
+		common.setUserInfo(1);
 		getGraffitiPosts();
-		console.log(isLoggedIn);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -30,13 +34,17 @@ const Sandbox = () => {
 		console.log(response);
 	};
 
-	const ref = useRef<HTMLInputElement>(null);
-
 	const handleSimpleLogin = async (request: LoginRequest) => {
-		let response = await AuthAPI.login(request);
-		common.getStatus(response);
-
-		setLoggedIn(response.success);
+		try {
+			let response = await AuthAPI.login(request);
+			common.getStatus(response);
+			// common.handleLogin(response.success);
+			setLoginSuccess(response.success);
+		} catch (e) {
+			console.error(e);
+			setLoginSuccess(false);
+			common.handleLogin(false);
+		}
 	};
 
 	const handleFormikSubmit = (values: any) => {
@@ -44,6 +52,24 @@ const Sandbox = () => {
 			username: values.username,
 			password: values.password,
 		});
+	};
+
+	const handleLoginDialogClose = () => {
+		setLoginDialogOpen(false);
+		setLoginSuccess(undefined);
+	};
+
+	const handlePostSubmit = (values: CreatePostValues) => {
+		let request: GraffitiRequest = {
+			name: values.name,
+			location: values.location,
+			description: values.description,
+			authorId: userInfo ? userInfo.userId : 1,
+			categoryIds: [],
+			createdAt: new Date(),
+		};
+
+		GraffitiPostAPI.create(request);
 	};
 
 	return (
@@ -171,119 +197,102 @@ const Sandbox = () => {
 						}}
 						style={{
 							padding: "8px 48px",
+							textTransform: "none",
 						}}
 					>
 						Login
 					</Button>
 				</div>
-			</div>
-			<Dialog
-				open={loginDialogOpen}
-				onClose={() => {
-					setLoginDialogOpen(false);
-				}}
-				PaperProps={{
-					style: {
-						width: "100%",
-						maxWidth: "630px",
-						borderRadius: "8px",
-						boxShadow:
-							"0px 6px 12px -6px rgba(0, 43, 0, 0.05), 0px 8px 22px -4px rgba(0, 43, 0, 0.05)",
-					},
-				}}
-			>
-				<Card
+				<Divider
+					variant="fullWidth"
 					style={{
-						overflow: "auto",
-						height: "100%",
+						color: "#D9D9D9",
+						margin: "0px -36px",
+					}}
+				/>
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+						gap: "16px",
+
+						background: "#FFFFFF",
+						padding: "36px",
+						width: "calc(100% - 72px)",
 					}}
 				>
 					<Formik
 						initialValues={initialValues}
+						onSubmit={handlePostSubmit}
 						validationSchema={validationSchema}
-						onSubmit={handleFormikSubmit}
+						enableReinitialize
 					>
-						{(formik: FormikProps<any>) => (
-							<div
-								className="login-with-password-body"
+						{(formik) => (
+							<Form
 								style={{
 									display: "flex",
 									flexDirection: "column",
-									gap: "16px",
-									padding: "24px",
-									boxSizing: "border-box",
+									justifyContent: "flex-start",
+									alignItems: "center",
+									gap: "8px",
 								}}
 							>
-								<Divider>
-									<Typography variant="body">Login</Typography>
-								</Divider>
-
-								<FormTextField
-									title={"Username"}
-									name={"username"}
-									className={"login-input"}
-									onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-										if (event.key === "Enter") {
-											if (formik.isValid) {
-												formik.submitForm();
-											} else {
-												ref.current?.focus();
-											}
-										}
-									}}
-								/>
-								<ReadableHiddenPasswordField
-									title={"Password"}
-									autoComplete={"current-password"}
-									inputRef={ref}
-									name={"password"}
-									enableEnterSubmit={true}
-									enterSubmitAction={() => formik.handleSubmit()}
-									className={"login-input"}
-								/>
-								{loggedIn === false && (
-									<label style={{ color: "red" }}>
-										"Username and/or password is incorrect.",
-									</label>
-								)}
 								<Button
-									fullWidth
-									onClick={() => formik.handleSubmit()}
 									type="submit"
-									color={"primary"}
-									variant={"contained"}
-									disabled={!formik.isValid}
+									variant="contained"
+									color="primary"
 									style={{
+										padding: "8px 48px",
 										textTransform: "none",
-										padding: "16px 40px",
+										marginBottom: "16px",
 									}}
 								>
-									<Typography variant="h5" color="#FFFFFF">
-										Prisijungti
-									</Typography>
+									Create Graffiti Post
 								</Button>
-							</div>
+								<FormTextField name="name" title="Graffiti name" />
+								<FormTextField
+									name="description"
+									title="Graffiti description"
+								/>
+								<FormTextField name="location" title="Graffiti location" />
+							</Form>
 						)}
 					</Formik>
-				</Card>
-			</Dialog>
+				</div>
+			</div>
+			<LoginDialog
+				open={loginDialogOpen}
+				loginSuccess={loginSuccess}
+				handleClose={handleLoginDialogClose}
+				handleSubmit={handleFormikSubmit}
+			/>
 		</div>
 	);
 };
-
-const initialValues = {
-	username: "",
-	password: "",
-};
-
-const validationSchema = yup.object({
-	username: yup.string().required("Username is required."),
-	password: yup.string().required("Password is required"),
-});
 
 export interface LoginResponse {
 	access_token: string;
 	success: boolean;
 }
+
+export interface CreatePostValues {
+	name: string;
+	description: string;
+	location: string;
+}
+
+const initialValues: CreatePostValues = {
+	name: "",
+	description: "",
+	location: "",
+};
+
+const validationSchema = yup.object({
+	name: yup.string().required("Graffiti name is required"),
+	description: yup.string().required("Description name is required"),
+	location: yup.string().required("Location name is required"),
+});
 
 export default Sandbox;

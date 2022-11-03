@@ -14,7 +14,10 @@ export const commonSlice = createSlice({
 			state.isLoggedIn = action.payload.isLoggedIn;
 		},
 		setUserInfo(state, action) {
-			state.userInfo = action.payload.me;
+			state.userInfo = action.payload.userInfo;
+		},
+		handleLogin(state, action) {
+			state.isLoggedIn = action.payload.isLoggedIn;
 		},
 	},
 });

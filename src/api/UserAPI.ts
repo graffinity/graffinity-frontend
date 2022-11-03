@@ -5,7 +5,8 @@ import UserInfoResponse from "models/auth/UserInfoResponse";
 const baseUrl = apiEndpoints.user;
 
 const UserAPI = {
-	getUserInfo: (): Promise<UserInfoResponse> => axios.get(`${baseUrl}/${1}`),
+	getUserInfo: (userId: number): Promise<UserInfoResponse> =>
+		axios.get(`${baseUrl}/${userId}`),
 };
 
 export default UserAPI;
