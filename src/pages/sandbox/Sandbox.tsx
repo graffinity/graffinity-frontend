@@ -243,13 +243,16 @@ const Sandbox = () => {
 									type="submit"
 									variant="contained"
 									color="primary"
+									disabled={!isLoggedIn}
 									style={{
 										padding: "8px 48px",
 										textTransform: "none",
 										marginBottom: "16px",
 									}}
 								>
-									Create Graffiti Post
+									<Typography variant="body" color="#FFFFFF">
+										Create Graffiti Post
+									</Typography>
 								</Button>
 								<FormTextField name="name" title="Graffiti name" />
 								<FormTextField

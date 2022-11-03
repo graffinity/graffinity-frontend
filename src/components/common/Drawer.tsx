@@ -47,7 +47,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
 	};
 
 	return (
-		<Root sx={{ display: { md: "none", xs: "block" } }}>
+		<Root sx={{ display: { md: "none", xs: "block", bottom: "0" } }}>
 			<Global
 				styles={{
 					".MuiDrawer-root > .MuiPaper-root": {
