@@ -15,7 +15,7 @@ const HomePage = () => {
     setWidth(window.innerWidth);
   });
   window.addEventListener("resize", () => {
-    setHeight(window.innerHeight)
+    setHeight(window.innerHeight);
   });
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -34,10 +34,10 @@ const HomePage = () => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-
-      }}>
-      <div className='homepage-container'>
-        <div className='left'>
+      }}
+    >
+      <div className="homepage-container">
+        <div className="left">
           <MultiActionAreaCard />
         </div>
 
@@ -59,4 +59,3 @@ export default HomePage;
 function setHeight(innerHeight: number) {
   throw new Error("Function not implemented.");
 }
-

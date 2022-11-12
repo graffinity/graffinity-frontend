@@ -8,8 +8,8 @@ const MultiActionAreaCard = () => (
       background: "transparent",
       border: "none",
       boxShadow: "none",
-      display: { xs: 'none', md: "block" },
-      ml: '16px'
+      display: { xs: "none", md: "block" },
+      ml: "16px",
     }}
   >
     <CardMedia component="img" src="graf.png" alt="graf logo" />
@@ -18,7 +18,7 @@ const MultiActionAreaCard = () => (
         gutterBottom
         variant="h6"
         component="div"
-        color='white'
+        color="white"
         sx={{
           display: { md: "block", xs: "none", xl: "none" },
           fontSize: 14,
@@ -31,7 +31,7 @@ const MultiActionAreaCard = () => (
       <Typography
         gutterBottom
         variant="h6"
-        color='white'
+        color="white"
         component="div"
         sx={{
           display: { md: "none", xs: "none", xl: "block" },

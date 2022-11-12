@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import setupAxiosInterceptors from "redux/setupAxiosInterceptors";
 import AppRouter from "./AppRouter";
 import AppTheme from "./AppTheme";
 import "./index.css";
@@ -9,6 +10,8 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+setupAxiosInterceptors();
 
 root.render(
   <BrowserRouter>

@@ -17,9 +17,6 @@
     "noEmit": true,
     "strictNullChecks": false,
     "jsx": "react-jsx",
-    "rules": {
-      "no-restricted-syntax": ["error", "SequenceExpression"]
-    },
     "typeRoots": ["./environment.d.ts", "./node_modules/@types"],
     "baseUrl": "./src"
   },
