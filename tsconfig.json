@@ -16,7 +16,6 @@
     "noImplicitAny": false,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strictNullChecks": false,
     "typeRoots": ["./environment.d.ts", "./node_modules/@types"],
     "baseUrl": "./src"
   },
