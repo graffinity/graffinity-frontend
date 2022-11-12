@@ -5,57 +5,54 @@ import { loadMapApi } from "components/utils/GoogleMapsUtils";
 import { useEffect, useState } from "react";
 import "./HomePage.css";
 
-const maxWidth4DesktopView = 900;
-
 const HomePage = () => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [height, setHeight] = useState<number>(window.innerHeight);
+	const [width, setWidth] = useState<number>(window.innerWidth);
+	const [height, setHeight] = useState<number>(window.innerHeight);
 
-  window.addEventListener("resize", () => {
-    setWidth(window.innerWidth);
-  });
-  window.addEventListener("resize", () => {
-    setHeight(window.innerHeight);
-  });
+	window.addEventListener("resize", () => {
+		setWidth(window.innerWidth);
+	});
+	window.addEventListener("resize", () => {
+		setHeight(window.innerHeight);
+	});
 
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
-    googleMapScript.addEventListener('load', function () {
-      setScriptLoaded(true);
-    })
+	const [scriptLoaded, setScriptLoaded] = useState(false);
+	useEffect(() => {
+		const googleMapScript = loadMapApi();
+		googleMapScript.addEventListener("load", function () {
+			setScriptLoaded(true);
+		});
+	}, []);
 
-  }, []);
+	return (
+		<div
+			style={{
+				width: "100%",
+				height: "100%",
+				display: "flex",
+				flexDirection: "column",
+			}}>
+			<div className='homepage-container'>
+				<div className='left'>
+					<MultiActionAreaCard />
+				</div>
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div className="homepage-container">
-        <div className="left">
-          <MultiActionAreaCard />
-        </div>
-
-        <div className='right'>
-          {scriptLoaded && (
-            <MapComponent
-              mapType={google.maps.MapTypeId.ROADMAP}
-              mapTypeControl={true}
-              width={width >= maxWidth4DesktopView ? (width / 1.6) : width} height={height / 1.25} />
-          )}
-
-        </div>
-      </div>
-    </div>
-  );
+				<div className='right'>
+					{scriptLoaded && (
+						<MapComponent
+							mapType={google.maps.MapTypeId.ROADMAP}
+							mapTypeControl={true}
+							width={width}
+							height={height}
+						/>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default HomePage;
 function setHeight(innerHeight: number) {
-  throw new Error("Function not implemented.");
+	throw new Error("Function not implemented.");
 }
