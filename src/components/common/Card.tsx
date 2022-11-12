@@ -23,10 +23,9 @@ const MultiActionAreaCard = () => (
           display: { md: "block", xs: "none", xl: "none" },
           fontSize: 14,
           textAlign: "center",
-          letterSpacing: ".2rem",
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices.
       </Typography>
 
       <Typography
@@ -41,7 +40,7 @@ const MultiActionAreaCard = () => (
           letterSpacing: ".2rem",
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices.
       </Typography>
     </CardContent>
   </Card>

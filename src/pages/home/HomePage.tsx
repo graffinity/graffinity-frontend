@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import MultiActionAreaCard from "components/common/Card";
 import MapComponent from "components/map/MapComponent";
-import { useState } from "react";
+import { loadMapApi } from "components/utils/GoogleMapsUtils";
+import { useEffect, useState } from "react";
 import "./HomePage.css";
 
 const maxWidth4DesktopView = 900;
@@ -16,6 +17,15 @@ const HomePage = () => {
   window.addEventListener("resize", () => {
     setHeight(window.innerHeight)
   });
+
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener('load', function () {
+      setScriptLoaded(true);
+    })
+
+  }, []);
 
   return (
     <div
@@ -32,8 +42,13 @@ const HomePage = () => {
         </div>
 
         <div className='right'>
-          <MapComponent
-            width={width >= maxWidth4DesktopView ? (width / 1.6) : width} height={height / 1.25} />
+          {scriptLoaded && (
+            <MapComponent
+              mapType={google.maps.MapTypeId.ROADMAP}
+              mapTypeControl={true}
+              width={width >= maxWidth4DesktopView ? (width / 1.6) : width} height={height / 1.25} />
+          )}
+
         </div>
       </div>
     </div>
