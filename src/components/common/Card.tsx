@@ -25,7 +25,14 @@ const MultiActionAreaCard = () => (
           textAlign: "center",
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Laoreet non
+        curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet
+        risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac
+        felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut.
+        Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl
+        nisi scelerisque eu ultrices. Consectetur adipiscing elit pellentesque
+        habitant morbi tristique senectus et.
       </Typography>
 
       <Typography
@@ -40,7 +47,14 @@ const MultiActionAreaCard = () => (
           letterSpacing: ".2rem",
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut. Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl nisi scelerisque eu ultrices.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Laoreet non
+        curabitur gravida arcu ac tortor dignissim convallis aenean. Aliquet
+        risus feugiat in ante metus dictum. Eget lorem dolor sed viverra. Ac
+        felis donec et odio pellentesque. Cursus turpis massa tincidunt dui ut.
+        Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. In nisl
+        nisi scelerisque eu ultrices. Consectetur adipiscing elit pellentesque
+        habitant morbi tristique senectus et.
       </Typography>
     </CardContent>
   </Card>

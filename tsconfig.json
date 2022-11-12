@@ -15,7 +15,6 @@
     "isolatedModules": true,
     "noImplicitAny": false,
     "noEmit": true,
-    "strictNullChecks": false,
     "jsx": "react-jsx",
     "typeRoots": ["./environment.d.ts", "./node_modules/@types"],
     "baseUrl": "./src"
