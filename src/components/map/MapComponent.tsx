@@ -1,164 +1,223 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { blue } from "@mui/material/colors";
-import React, { useEffect, useRef, useState } from "react";
-import { Marker } from "react-leaflet";
+/* eslint-disable no-restricted-globals */
+import React, { useState } from "react";
+import {
+	GoogleMap, useJsApiLoader, Marker, InfoWindow,
+} from "@react-google-maps/api";
+import usePlacesAutocomplete, { getGeocode, getLatLng, LatLng, } from "use-places-autocomplete";
+import {
+	Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+import { formatRelative } from "date-fns";
+import mapStyles from "./mapStyles";
 import "./Map.css";
-import { useElementSize } from "usehooks-ts";
 
-interface IMap {
-	mapType: google.maps.MapTypeId;
-	mapTypeControl?: boolean;
+
+interface MarkerData {
+	lat: number;
+	lng: number;
+	time: Date;
+}
+
+const center = {
+	lat: 54.6872,
+	lng: 25.2797,
+
+}
+const options = {
+	styles: mapStyles,
+	disableDefaultUI: true,
+	zoomControl: true,
+}
+interface MapComponentProps {
 	width: number;
 	height: number;
 }
-interface IMarker {
-	address: string;
-	latitude: number;
-	longitude: number;
-}
 
-type GoogleLatLng = google.maps.LatLng;
-type GoogleMap = google.maps.Map;
-type GoogleMarker = google.maps.Marker;
-// let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
 
-const maxWidthForDesktopView = 900;
 
-const MapComponent = (props: IMap) => {
-	const { mapType, mapTypeControl, width, height } = props;
-	const ref = useRef<HTMLDivElement>(null);
-	const [map, setMap] = useState<GoogleMap>();
-	const [marker, setMarker] = useState<IMarker>();
-	const [userLat, setUserLat] = useState<number | undefined>();
-	const [userLong, setUserLong] = useState<number | undefined>();
+export default function MapComponent(props: MapComponentProps) {
+	const { isLoaded, } = useJsApiLoader({
+		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+		libraries: ["places"],
+	});
 
-	const startMap = (): void => {
-		if (!map) {
-			defaultMapStart();
-		}
-	};
-	useEffect(startMap, [map]);
+	const [markers, setMarkers] = React.useState<MarkerData[]>([])
+	const [map, setMap] = useState<google.maps.Map | null>(null);
+	const [selected, setSelected] = React.useState<MarkerData | null>(null);
+	const mapRef = React.useRef<google.maps.Map | null>(null);
 
-	const defaultMapStart = (): void => {
-		const defaultAddress = new google.maps.LatLng(54.72973, 25.26357);
-		const defaultSize = new google.maps.Size(width, height);
-		initMap(18, defaultAddress, defaultSize);
-	};
-	const initEventListener = (): void => {
-		if (map) {
-			google.maps.event.addListener(map, "click", function (e) {
-				coordinateToAddress(e.latLng);
-			});
-		}
-	};
-	useEffect(initEventListener, [map]);
 
-	const coordinateToAddress = async (coordinate: GoogleLatLng) => {
-		const geocoder = new google.maps.Geocoder();
-		await geocoder.geocode(
-			{ location: coordinate },
-			function (results, status) {
-				if (results && status === "OK") {
-					console.log(results[0].formatted_address);
-					console.log(coordinate.lat());
-					console.log(coordinate.lng());
-					setMarker({
-						address: results[0].formatted_address,
-						latitude: coordinate.lat(),
-						longitude: coordinate.lng(),
-					});
-				}
-			}
-		);
-	};
-	const addSingleMarker = (): void => {
-		if (marker) {
-			addMarker(
-				new google.maps.LatLng(marker.latitude, marker.longitude)
-			);
-		}
-	};
-	useEffect(addSingleMarker, [marker]);
-
-	const addMarker = (location: GoogleLatLng): void => {
-		const marker: GoogleMarker = new google.maps.Marker({
-			position: location,
-			map: map,
-			icon: getIconAttributes("#6B8E23"),
-		});
-	};
-
-	const getIconAttributes = (iconColor: string) => {
-		return {
-			fillColor: iconColor,
-			strokeColor: iconColor,
-			path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-			scale: 3,
-			map: map,
-		};
-	};
-
-	const initMap = (
-		zoomLevel: number,
-		address: any,
-		defaultSize: any
-	): void => {
-		if (ref.current) {
-			setMap(
-				new google.maps.Map(ref.current, {
-					zoom: zoomLevel,
-					center: address,
-					mapTypeControl: mapTypeControl,
-					zoomControl: true,
-					mapTypeId: mapType,
-					panControl: true,
-					scaleControl: true,
-					gestureHandling: "cooperative",
-					draggableCursor: "pointer",
-				})
-			);
-		}
-	};
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition((position) => {
-			setUserLat(position.coords.latitude);
-			setUserLong(position.coords.longitude);
-			console.log(position.coords.latitude, position.coords.longitude);
-		});
+	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+		const bounds = new window.google.maps.LatLngBounds(center);
+		map.fitBounds(bounds);
+		setMap(map);
 	}, []);
 
-	let MarkerOptions = {
-		position: new google.maps.LatLng(54.72973, 25.26357),
-		map: map,
-		fillColor: "#6B8E23",
-		strokeColor: "#6B8E23",
-		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-		scale: 3,
-	};
-	const StaticMarker: GoogleMarker = new google.maps.Marker(MarkerOptions);
+	const onUnmount = React.useCallback(function callback(
+		map: google.maps.Map
+	) {
+		setMap(null);
+	},
+		[]);
+	const onMapClick = React.useCallback((e) => {
+		setMarkers((previous) => [
+			...previous,
+			{
+				lat: e.latLng.lat(),
+				lng: e.latLng.lng(),
+				time: new Date(),
+			},
+		]);
+	}, []);
 
-	useEffect(initEventListener, [map]);
+	// const mapRef = React.useRef();
+	const onMapLoad = React.useCallback((map: google.maps.Map) => {
+		mapRef.current = map;
+	}, []);
+
+	const panTo = React.useCallback(({ lat, lng }) => {
+		// if (mapRef.current) {
+		// 	setMap(mapRef.current.panTo({ lat, lng }))
+		// }
+		mapRef.current.panTo({ lat, lng });
+		mapRef.current.setZoom(18);
+	}, []);
+
+
 	return (
-		<div
-			className='map-container'
-			style={{
-				width: width > maxWidthForDesktopView ? width / 1.6 : width,
-				height: height / 1.25,
-			}}>
-			<div ref={ref} className='map'></div>
-			{userLat && userLong && (
-				<button
-					onClick={() => {
-						if (userLat && userLong) {
-							map?.panTo({ lat: userLat, lng: userLong });
-							map?.setZoom(18);
-						}
-					}}>
-					Pan Location
-				</button>
-			)}
+		<>
+			<div className='map-container'
+				style={{
+					width: '800px',
+					height: '800px',
+					display: "flex",
+					flexDirection: "column",
+				}}>
+				{/* <Search panTo={panTo} /> */}
+				<Locate panTo={panTo} />
+				{isLoaded ? (
+					<GoogleMap mapContainerClassName="map"
+						mapContainerStyle={{
+							width: props.width,
+							height: props.height,
+						}}
+						zoom={18}
+						center={center}
+						options={options}
+						onClick={onMapClick}
+						onLoad={onMapLoad}
+						onUnmount={onUnmount}
+
+					>
+						{markers.map((marker) => (
+							<Marker
+								key={marker.time.toISOString()}
+								position={{ lat: marker.lat, lng: marker.lng }}
+								// icon={{
+								// 	url: './location.svg',
+								// 	origin: new window.google.maps.Point(0, 0),
+								// 	anchor: new window.google.maps.Point(15, 15),
+								// 	scaledSize: new window.google.maps.Size(30, 30),
+								// }}
+								onClick={() => {
+									setSelected(marker);
+								}}
+							/>
+						))}
+						{selected ? (<InfoWindow
+							position={{ lat: selected.lat, lng: selected.lng }}
+							onCloseClick={() => {
+								setSelected(null);
+							}}>
+							<div>
+								<p>Graffiti spotted watch out !</p>
+								<p>Spotted {formatRelative(selected.time, new Date()
+								)}
+								</p>
+							</div>
+						</InfoWindow>) : null}
+
+					</GoogleMap>
+				) : (
+					<></>
+				)}
+			</div>
+		</>
+	);
+}
+function Locate({ panTo }) {
+	return (
+		<button
+			className="locate"
+			onClick={() => {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						panTo({
+							lat: position.coords.latitude,
+							lng: position.coords.longitude,
+						});
+					},
+					() => null
+				);
+			}}
+		>
+			<img src="./compass.svg" alt="compass" />		</button>
+	);
+}
+
+
+function Search({ panTo }) {
+	const {
+		ready,
+		value,
+		suggestions: { status, data },
+		setValue,
+		clearSuggestions,
+	} = usePlacesAutocomplete({
+		requestOptions: {
+			//	location: { lat: () => 43.6532, lng: () => -79.3832 },
+			radius: 100 * 1000,
+		},
+	});
+
+	// https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+
+	const handleInput = (e: { target: { value: string; }; }) => {
+		setValue(e.target.value);
+	};
+
+	const handleSelect = async (address: string) => {
+		setValue(address, false);
+		clearSuggestions();
+
+		try {
+			const results = await getGeocode({ address });
+			const { lat, lng } = getLatLng(results[0]);
+			panTo({ lat, lng });
+		} catch (error) {
+			console.log("😱 Error: ", error);
+		}
+	};
+
+	return (
+		<div className="search">
+			<Combobox onSelect={handleSelect}>
+				<ComboboxInput
+					value={value}
+					onChange={handleInput}
+					disabled={!ready}
+					placeholder="Search your location"
+				/>
+				<ComboboxPopover>
+					<ComboboxList>
+						{status === "OK" &&
+							data.map(({ id, description }) => (
+								<ComboboxOption key={id} value={description} />
+							))}
+					</ComboboxList>
+				</ComboboxPopover>
+			</Combobox>
 		</div>
 	);
-};
-export default MapComponent;
+}
