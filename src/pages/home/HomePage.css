@@ -4,6 +4,7 @@
   width: calc(100% - 64px);
   gap: 32px;
   padding: 0px 32px;
+  height: 100%;
 }
 
 .homepage-container .left {
