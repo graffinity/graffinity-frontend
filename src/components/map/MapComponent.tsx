@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import {
 	GoogleMap,
@@ -16,6 +17,7 @@ import "./Map.css";
 import mapStyles from "./mapStyles";
 import { ReactComponent as CompassIcon } from "./compass.svg";
 import { ReactComponent as LocationIcon } from "./location.svg";
+import { IconButton } from "@mui/material";
 
 interface MarkerData {
 	lat: number;
@@ -61,7 +63,7 @@ export default function MapComponent(props: MapComponentProps) {
 	) {
 		setMap(null);
 	},
-	[]);
+		[]);
 	const onMapClick = React.useCallback((e) => {
 		setMarkers((previous) => [
 			...previous,
@@ -98,12 +100,7 @@ export default function MapComponent(props: MapComponentProps) {
 				}}>
 				{/* <Search panTo={panTo} /> */}
 				<Locate panTo={panTo} />
-				<CompassIcon
-					style={{
-						width: "48px",
-						height: "48px",
-					}}
-				/>
+
 				{isLoaded ? (
 					<>
 						<GoogleMap
@@ -172,7 +169,7 @@ export default function MapComponent(props: MapComponentProps) {
 }
 function Locate({ panTo }) {
 	return (
-		<button
+		<IconButton
 			className='locate'
 			onClick={() => {
 				navigator.geolocation.getCurrentPosition(
@@ -184,7 +181,14 @@ function Locate({ panTo }) {
 					},
 					() => null
 				);
-			}}></button>
+			}}>
+			<CompassIcon
+				style={{
+					width: "48px",
+					height: "48px",
+				}}
+			/>
+		</IconButton>
 	);
 }
 
