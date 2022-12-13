@@ -1,5 +1,7 @@
 const apiEndpoints = {
-  graffiti: "/api/v1/graffiti",
+	graffiti: "/api/v1/graffiti",
+	auth: "/api/v1/auth",
+	user: "/api/v1/user",
 };
 
 export default apiEndpoints;

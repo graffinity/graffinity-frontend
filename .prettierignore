@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+node_modules
+public
+dist
+.vscode
+
+# Ignore all files of these formats:
+*.html
+*.yml
+
+# Ignore all files with these names:
+README.md
