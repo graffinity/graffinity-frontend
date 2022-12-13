@@ -57,18 +57,10 @@ export default function MapComponent(props: MapComponentProps) {
 		map.fitBounds(bounds);
 		setMap(map);
 	}, []);
-	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
-		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
-		setMap(map);
-	}, []);
 
-	const onUnmount = React.useCallback(function callback(
-		map: google.maps.Map
-	) {
+	const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
-	},
-		[]);
+	}, []);
 	const onMapClick = React.useCallback((e) => {
 		setMarkers((previous) => [
 			...previous,
@@ -96,34 +88,36 @@ export default function MapComponent(props: MapComponentProps) {
 	return (
 		<>
 			<div
-				className='map-container'
+				className="map-container"
 				style={{
 					width: "100%",
 					flex: 1,
 					display: "flex",
 					flexDirection: "column",
-				}}>
+				}}
+			>
 				{/* <Search panTo={panTo} /> */}
 				<Locate panTo={panTo} />
 
 				{isLoaded ? (
 					<>
 						<GoogleMap
-							mapContainerClassName='map'
+							mapContainerClassName="map"
 							mapContainerStyle={{
 								width:
 									props.width > maxWidthForDesktopView
 										? `calc(${props.width}px /2)`
 										: "100%",
 								// height: props.height ? props.height : "100%",
-								height: props.height ? props.height : '20%',
+								height: props.height ? props.height : "20%",
 							}}
 							zoom={18}
 							center={center}
 							options={options}
 							onClick={onMapClick}
 							onLoad={onMapLoad}
-							onUnmount={onUnmount}>
+							onUnmount={onUnmount}
+						>
 							{markers.map((marker) => (
 								<Marker
 									key={marker.time.toISOString()}
@@ -150,16 +144,11 @@ export default function MapComponent(props: MapComponentProps) {
 									}}
 									onCloseClick={() => {
 										setSelected(null);
-									}}>
+									}}
+								>
 									<div>
 										<p>Graffiti spotted watch out !</p>
-										<p>
-											Spotted{" "}
-											{formatRelative(
-												selected.time,
-												new Date()
-											)}
-										</p>
+										<p>Spotted {formatRelative(selected.time, new Date())}</p>
 									</div>
 								</InfoWindow>
 							) : null}
@@ -175,7 +164,7 @@ export default function MapComponent(props: MapComponentProps) {
 function Locate({ panTo }) {
 	return (
 		<IconButton
-			className='locate'
+			className="locate"
 			onClick={() => {
 				navigator.geolocation.getCurrentPosition(
 					(position) => {
@@ -186,7 +175,8 @@ function Locate({ panTo }) {
 					},
 					() => null
 				);
-			}}>
+			}}
+		>
 			<CompassIcon
 				style={{
 					width: "48px",

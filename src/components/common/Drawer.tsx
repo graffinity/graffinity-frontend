@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Global } from '@emotion/react';
-import { styled } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
-import MultiActionAreaCardMobile from './CardMobile';
-import { FooterContainerMobile } from './FooterMobile';
+import * as React from "react";
+import { Global } from "@emotion/react";
+import { styled } from "@mui/material/styles";
+import { grey } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import MenuIcon from "@mui/icons-material/Menu";
+import IconButton from "@mui/material/IconButton";
+import MultiActionAreaCardMobile from "./CardMobile";
+import { FooterContainerMobile } from "./FooterMobile";
 import "./Common.css";
 
 const drawerBleeding = 56;
