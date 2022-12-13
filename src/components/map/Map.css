@@ -1,4 +1,45 @@
+.map-container {
+  display: flex;
+  flex-direction: column;
+}
 .map {
-	width: 1000px;
-	height: 800px;
+  height: 800px;
+  width: 800px;
+  width: 100%;
+  display: flex;
+  margin: 16px 16px 16px 0px;
+}
+
+.search {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+}
+
+.search input {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  width: 100%;
+}
+.search {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+}
+
+.locate {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  z-index: 10;
 }

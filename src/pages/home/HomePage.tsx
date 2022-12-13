@@ -1,21 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Container } from "@mui/system";
 import MultiActionAreaCard from "components/common/Card";
 import MapComponent from "components/map/MapComponent";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
-
-const maxWidth4DesktopView = 900;
 
 const HomePage = () => {
 	const [width, setWidth] = useState<number>(window.innerWidth);
-	const [height, setHeight] = useState<number>(window.innerHeight);
+	const [height, setHeight] = useState<number | null>(null);
 
 	window.addEventListener("resize", () => {
 		setWidth(window.innerWidth);
 	});
 	window.addEventListener("resize", () => {
+		if (containerRef.current) {
+			setHeight(containerRef.current.clientHeight);
+			return;
+		}
 		setHeight(window.innerHeight);
+		console.log("height", height);
 	});
+
+	useEffect(() => {
+		if (containerRef.current) {
+			setHeight(containerRef.current.clientHeight);
+			return;
+		}
+	}, []);
+
+	const [scriptLoaded, setScriptLoaded] = useState(false);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	return (
 		<div
@@ -24,19 +38,21 @@ const HomePage = () => {
 				height: "100%",
 				display: "flex",
 				flexDirection: "column",
-			}}
-		>
-			<div className="homepage-container">
-				<div className="left">
+			}}>
+			<div className='homepage-container'>
+				<div className='left'>
 					<MultiActionAreaCard />
 				</div>
 
-				<div className="right">
-					<MapComponent
-						width={width >= maxWidth4DesktopView ? width / 1.6 : width}
-						height={height / 1.25}
-					/>
-				</div>
+				<Container
+					ref={containerRef}
+					className='right'
+					style={{
+						height: "100%",
+						maxWidth: "50vw",
+					}}>
+					<MapComponent width={width} height={height} />
+				</Container>
 			</div>
 		</div>
 	);
