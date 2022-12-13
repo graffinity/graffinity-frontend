@@ -6,13 +6,13 @@ import axios from "axios";
  * @param {any} store - any - this is the Redux store that we'll use to dispatch actions.
  */
 const setupAxiosInterceptors = () => {
-  // const handleResponseError = (error: AxiosError) => {
-  // 	store.dispatch(alertActions.addAlert(mapErrorToAlert(error)));
-  // 	return Promise.reject(error);
-  // };
+	// const handleResponseError = (error: AxiosError) => {
+	// 	store.dispatch(alertActions.addAlert(mapErrorToAlert(error)));
+	// 	return Promise.reject(error);
+	// };
 
-  /* It's intercepting all responses and if there's an error, it calls the handleResponseError function. */
-  axios.interceptors.response.use((response) => response.data);
+	/* It's intercepting all responses and if there's an error, it calls the handleResponseError function. */
+	axios.interceptors.response.use((response) => response.data);
 };
 
 export default setupAxiosInterceptors;

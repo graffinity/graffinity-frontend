@@ -57,6 +57,11 @@ export default function MapComponent(props: MapComponentProps) {
 		map.fitBounds(bounds);
 		setMap(map);
 	}, []);
+	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+		const bounds = new window.google.maps.LatLngBounds(center);
+		map.fitBounds(bounds);
+		setMap(map);
+	}, []);
 
 	const onUnmount = React.useCallback(function callback(
 		map: google.maps.Map

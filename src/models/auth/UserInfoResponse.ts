@@ -1,8 +1,9 @@
 interface UserInfoResponse {
-  name: string;
-  lastname: string;
-  email: string;
-  username: string;
+	userId: number;
+	name: string;
+	lastname: string;
+	email: string;
+	username: string;
 }
 
 export default UserInfoResponse;

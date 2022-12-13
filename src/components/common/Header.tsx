@@ -46,11 +46,12 @@ const Header = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<AppBar
-				position='static'
+				position="static"
 				sx={{
 					display: { md: "block", xs: "none" },
 					borderRadius: "0 0 20px 20px",
-				}}>
+				}}
+			>
 				<Toolbar
 					disableGutters
 					style={{
@@ -60,21 +61,24 @@ const Header = () => {
 					}}
 					sx={{
 						padding: "0px 32px",
-					}}>
+					}}
+				>
 					<div
 						style={{
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "flex-end",
 							width: "100%",
-						}}></div>
+						}}
+					></div>
 					<div
 						style={{
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",
 							width: "100%",
-						}}>
+						}}
+					>
 						<BrushIcon
 							sx={{
 								display: {
@@ -88,10 +92,10 @@ const Header = () => {
 							}}
 						/>
 						<Typography
-							variant='h3'
+							variant="h3"
 							noWrap
-							component='a'
-							href='/'
+							component="a"
+							href="/"
 							sx={{
 								display: { xs: "none", md: "flex" },
 								fontFamily: "Times, Times New Roman, serif",
@@ -99,15 +103,16 @@ const Header = () => {
 								letterSpacing: ".3rem",
 								color: "inherit",
 								textDecoration: "none",
-							}}>
+							}}
+						>
 							GRAFFINITY
 						</Typography>
 						<Typography
-							textAlign='center'
-							variant='h5'
+							textAlign="center"
+							variant="h5"
 							noWrap
-							component='a'
-							href=''
+							component="a"
+							href=""
 							sx={{
 								mr: 2,
 								display: { xs: "flex", md: "none" },
@@ -118,7 +123,8 @@ const Header = () => {
 								letterSpacing: ".3rem",
 								color: "inherit",
 								textDecoration: "none",
-							}}>
+							}}
+						>
 							GRAFFINITY
 						</Typography>
 					</div>
@@ -128,17 +134,16 @@ const Header = () => {
 							alignItems: "center",
 							justifyContent: "flex-end",
 							width: "100%",
-						}}>
+						}}
+					>
 						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title='Open settings'>
-								<IconButton
-									onClick={handleOpenUserMenu}
-									sx={{ p: 0 }}>
-									<Avatar alt='Remy Sharp' />
+							<Tooltip title="Open settings">
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+									<Avatar alt="Remy Sharp" />
 								</IconButton>
 							</Tooltip>
 							<Menu
-								id='menu-appbar'
+								id="menu-appbar"
 								disableScrollLock
 								sx={{
 									mt: "45px",
@@ -155,14 +160,11 @@ const Header = () => {
 									horizontal: "right",
 								}}
 								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}>
+								onClose={handleCloseUserMenu}
+							>
 								{settings.map((setting) => (
-									<MenuItem
-										key={setting}
-										onClick={handleCloseUserMenu}>
-										<Typography textAlign='center'>
-											{setting}
-										</Typography>
+									<MenuItem key={setting} onClick={handleCloseUserMenu}>
+										<Typography textAlign="center">{setting}</Typography>
 									</MenuItem>
 								))}
 							</Menu>
@@ -172,14 +174,15 @@ const Header = () => {
 			</AppBar>
 			{/* appbar for mobile device  */}
 			<AppBar
-				position='fixed'
+				position="fixed"
 				sx={{
 					display: { xs: "block", md: "none" },
 					top: "auto",
 					bottom: 0,
 					mt: "none",
 					borderRadius: "20px 20px 0 0",
-				}}>
+				}}
+			>
 				<Toolbar
 					disableGutters
 					style={{
@@ -188,7 +191,8 @@ const Header = () => {
 					}}
 					sx={{
 						padding: "0px 32px",
-					}}>
+					}}
+				>
 					{/* menu icon button  */}
 					<div
 						style={{
@@ -197,7 +201,8 @@ const Header = () => {
 							justifyContent: "flex-start",
 							width: "100%",
 							background: "transparent",
-						}}>
+						}}
+					>
 						<SwipeableEdgeDrawer />
 					</div>
 					<div
@@ -206,7 +211,8 @@ const Header = () => {
 							alignItems: "center",
 							justifyContent: "center",
 							width: "100%",
-						}}>
+						}}
+					>
 						<BrushIcon
 							sx={{
 								display: {
@@ -221,11 +227,11 @@ const Header = () => {
 						/>
 
 						<Typography
-							textAlign='center'
-							variant='h5'
+							textAlign="center"
+							variant="h5"
 							noWrap
-							component='a'
-							href=''
+							component="a"
+							href=""
 							sx={{
 								mr: 2,
 								display: { xs: "flex", md: "none" },
@@ -236,7 +242,8 @@ const Header = () => {
 								letterSpacing: ".3rem",
 								color: "inherit",
 								textDecoration: "none",
-							}}>
+							}}
+						>
 							GRAFFINITY
 						</Typography>
 					</div>
@@ -246,18 +253,17 @@ const Header = () => {
 							alignItems: "center",
 							justifyContent: "flex-end",
 							width: "100%",
-						}}>
+						}}
+					>
 						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title='Open settings'>
-								<IconButton
-									onClick={handleOpenUserMenu}
-									sx={{ p: 0 }}>
-									<Avatar alt='Avatar' />
+							<Tooltip title="Open settings">
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+									<Avatar alt="Avatar" />
 								</IconButton>
 							</Tooltip>
 							<Menu
 								sx={{ display: { xs: "block", md: "none" } }}
-								id='menu-appbar'
+								id="menu-appbar"
 								anchorEl={anchorElUser}
 								anchorOrigin={{
 									vertical: "bottom",
@@ -269,14 +275,11 @@ const Header = () => {
 									horizontal: "right",
 								}}
 								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}>
+								onClose={handleCloseUserMenu}
+							>
 								{settings.map((setting) => (
-									<MenuItem
-										key={setting}
-										onClick={handleCloseUserMenu}>
-										<Typography textAlign='center'>
-											{setting}
-										</Typography>
+									<MenuItem key={setting} onClick={handleCloseUserMenu}>
+										<Typography textAlign="center">{setting}</Typography>
 									</MenuItem>
 								))}
 							</Menu>
