@@ -35,7 +35,7 @@
 			"@pages/*": ["src/pages/*"],
 			"@redux/*": ["src/redux/*"],
 			"@utils/*": ["src/util"],
-			"@services/*": ["src/services/*"],
+			"@services/*": ["src/services/*"]
 		}
 	},
 	"include": ["src/**/*", "environment.d.ts"]
