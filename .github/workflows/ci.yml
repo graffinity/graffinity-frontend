@@ -21,6 +21,9 @@ jobs:
           node-version: 16
           cache: "npm"
 
+      - name: Npm install
+        run: npm install
+
       - name: Run prettier
         run: npx prettier --check .
 
