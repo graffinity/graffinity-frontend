@@ -22,7 +22,21 @@
 		"jsx": "react-jsx",
 		"typeRoots": ["./environment.d.ts", "./node_modules/@types"],
 		"baseUrl": "./src",
-		"outDir": "./dist"
+		"outDir": "./dist",
+
+		"paths": {
+			"@/*": ["*"],
+			"@src/*": ["src/* "],
+			"@api/*": ["src/api/*"],
+			"@assets/*": ["src/assets/*"],
+			"@components/*": ["src/components/*"],
+			"@constants/*": ["src/constants/*"],
+			"@models/*": ["src/models/*"],
+			"@pages/*": ["src/pages/*"],
+			"@redux/*": ["src/redux/*"],
+			"@utils/*": ["src/util"],
+			"@services/*": ["src/services/*"],
+		}
 	},
 	"include": ["src/**/*", "environment.d.ts"]
 }

@@ -13,8 +13,8 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 
 import { IconButton } from "@mui/material";
-import { formatRelative } from "date-fns";
-import { ReactComponent as CompassIcon } from "./compass.svg";
+// import { formatRelative } from "date-fns";
+import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
 import "./Map.css";
 import mapStyles from "./mapStyles";
 
@@ -139,7 +139,7 @@ export default function MapComponent(props: MapComponentProps) {
 						>
 							<div>
 								<p>Graffiti spotted watch out !</p>
-								<p>Spotted {formatRelative(selected.time, new Date())}</p>
+								{/* <p>Spotted {formatRelative(selected.time, new Date())}</p> */}
 							</div>
 						</InfoWindow>
 					)}
