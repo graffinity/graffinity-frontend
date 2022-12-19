@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
