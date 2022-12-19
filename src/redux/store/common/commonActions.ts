@@ -1,9 +1,9 @@
 import { AnyAction, ThunkAction } from "@reduxjs/toolkit";
 import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
-import { LoginResponse } from "pages/sandbox/Sandbox";
 import { RootState } from "../rootReducer";
 import { commonSlice } from "./commonSlice";
+import LoginResponse from "@/models/auth/LoginResponse";
 
 const commonActions = commonSlice.actions;
 
