@@ -1,4 +1,4 @@
-import { LoginResponse } from "pages/sandbox/Sandbox";
+import LoginResponse from "@/models/auth/LoginResponse";
 import {
 	getStatus,
 	handleLogin,

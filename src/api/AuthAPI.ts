@@ -1,8 +1,8 @@
+import LoginResponse from "@/models/auth/LoginResponse";
 import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
 import LoginRequest from "models/auth/LoginRequest";
 import StatusResponse from "models/auth/StatusResponse";
-import { LoginResponse } from "pages/sandbox/Sandbox";
 
 const baseUrl = apiEndpoints.auth;
 
