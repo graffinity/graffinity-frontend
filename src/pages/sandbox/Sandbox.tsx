@@ -79,41 +79,40 @@ const Sandbox = () => {
 				width: "100%",
 				height: "100%",
 				gap: "8px",
-			}}>
+			}}
+		>
 			<Formik
 				validationSchema={validationSchema}
 				initialValues={{
 					file: null,
 				}}
-				onSubmit={onSubmit}>
+				onSubmit={onSubmit}
+			>
 				{(formik: FormikProps<any>) => (
 					<Form>
 						{/* <Button variant='contained' component='label'> */}
-							Upload Photo
-							{/* <input
+						Upload Photo
+						{/* <input
 								type='file'
 								name='file'
 								hidden
 								onChange={(event) => handleFileUpload(event)}
 							/> */}
-							<input
-								id='file'
-								name='file'
-								type='file'
-								onChange={(event) => {
-									if (event.currentTarget.files) {
-										formik.setFieldValue(
-											"file",
-											event.currentTarget.files[0]
-										);
-										console.log("event", event.currentTarget.files);
-									} else {
-										formik.setFieldValue("file", null);
-									}
-								}}
-							/>
+						<input
+							id="file"
+							name="file"
+							type="file"
+							onChange={(event) => {
+								if (event.currentTarget.files) {
+									formik.setFieldValue("file", event.currentTarget.files[0]);
+									console.log("event", event.currentTarget.files);
+								} else {
+									formik.setFieldValue("file", null);
+								}
+							}}
+						/>
 						{/* </Button> */}
-						<Button type='submit' variant='contained'>
+						<Button type="submit" variant="contained">
 							Submit
 						</Button>
 					</Form>
@@ -122,10 +121,7 @@ const Sandbox = () => {
 			{images &&
 				Array.from(images).map((image) => (
 					<div key={image.name}>
-						<img
-							src={URL.createObjectURL(image)}
-							alt={image.name}
-						/>
+						<img src={URL.createObjectURL(image)} alt={image.name} />
 					</div>
 				))}
 		</div>
