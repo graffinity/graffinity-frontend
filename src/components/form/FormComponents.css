@@ -1,0 +1,45 @@
+.textfield-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 8px;
+}
+
+.textfield-title-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.textfield-tooltip {
+	height: 16px !important;
+	width: 16px !important;
+	color: #616161;
+}
+
+.textfield-error-container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 4px;
+	padding: 6px 16px;
+	background: #feebee;
+	border-radius: 5px;
+}
+
+.textfield-error-icon {
+	height: 20px !important;
+	width: 16px !important;
+	color: #c62828;
+}
+
+.textField-showInstead {
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+	border: 1px solid #eeeeee;
+	box-shadow: 0 6px 12px -6px rgba(0, 43, 0, 0.05),
+		0 8px 22px -4px rgba(0, 43, 0, 0.05);
+	border-radius: 5px;
+	min-height: 230px;
+}

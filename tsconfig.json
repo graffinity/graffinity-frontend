@@ -1,24 +1,42 @@
 {
 	"compilerOptions": {
-		"target": "ES6",
+		"module": "CommonJS",
+		"target": "es2017",
 		"lib": ["es5", "es6", "dom", "dom.iterable", "esnext"],
 		"allowJs": true,
-
 		"skipLibCheck": true,
 		"esModuleInterop": true,
+		"incremental": true,
+		"sourceMap": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
+		"strictNullChecks": true,
+		"strictBindCallApply": true,
 		"isolatedModules": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"typeRoots": ["./environment.d.ts", "./node_modules/@types"],
-		"baseUrl": "./src"
+		"baseUrl": "./src",
+		"outDir": "./dist",
+
+		"paths": {
+			"@/*": ["*"],
+			"@src/*": ["src/* "],
+			"@api/*": ["src/api/*"],
+			"@assets/*": ["src/assets/*"],
+			"@components/*": ["src/components/*"],
+			"@constants/*": ["src/constants/*"],
+			"@models/*": ["src/models/*"],
+			"@pages/*": ["src/pages/*"],
+			"@redux/*": ["src/redux/*"],
+			"@utils/*": ["src/util"],
+			"@services/*": ["src/services/*"]
+		}
 	},
 	"include": ["src/**/*", "environment.d.ts"]
 }

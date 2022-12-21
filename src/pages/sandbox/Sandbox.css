@@ -1,0 +1,92 @@
+/* .sandbox-container {
+	display: flex;
+	width: 100%;
+	height: 100%;
+} */
+
+/* .graffiti-post-data-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	flex: 1;
+	padding: 16px;
+	gap: 8px;
+	box-sizing: border-box;
+	border: 1px solid #d9d9d9;
+	border-radius: 8px;
+} */
+
+/* .graffiti-post-data-container > * {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 8px;
+} */
+
+HTML CSS Result Skip Results Iframe EDIT ON body {
+	margin: 20px 60px;
+}
+
+.drop-container {
+	position: relative;
+	display: flex;
+	font-family: "Times New Roman", Times, serif;
+	gap: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	padding: 20px;
+	border-radius: 10px;
+	border: 2px dashed #555;
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.drop-container:hover {
+	background: #ffff;
+	border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+	color: #222;
+}
+
+.drop-title {
+	color: #ffff;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	transition: color 0.2s ease-in-out;
+	font-family: "Times New Roman", Times, serif;
+}
+
+input[type="file"] {
+	width: 350px;
+	max-width: 100%;
+	color: #444;
+	padding: 5px;
+	background: #fff;
+	border-radius: 10px;
+	border: 1px solid #555;
+	font-family: "Times New Roman", Times, serif;
+}
+
+input[type="file"]::file-selector-button {
+	margin-right: 20px;
+	border: none;
+	background: #202024;
+	padding: 10px 20px;
+	border-radius: 10px;
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.2s ease-in-out;
+	font-family: "Times New Roman", Times, serif;
+}
+
+input[type="file"]::file-selector-button:hover {
+	background: #0d45a5;
+}

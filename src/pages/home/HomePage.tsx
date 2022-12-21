@@ -38,19 +38,21 @@ const HomePage = () => {
 				height: "100%",
 				display: "flex",
 				flexDirection: "column",
-			}}>
-			<div className='homepage-container'>
-				<div className='left'>
+			}}
+		>
+			<div className="homepage-container">
+				<div className="left">
 					<MultiActionAreaCard />
 				</div>
 
 				<Container
 					ref={containerRef}
-					className='right'
+					className="right"
 					style={{
 						height: "100%",
 						maxWidth: "50vw",
-					}}>
+					}}
+				>
 					<MapComponent width={width} height={height} />
 				</Container>
 			</div>

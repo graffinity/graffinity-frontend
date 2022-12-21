@@ -1,29 +1,29 @@
 .homepage-container {
-  display: flex;
-  justify-content: center;
-  width: calc(100% - 64px);
-  gap: 32px;
-  padding: 0px 32px;
-  height: 100%;
+	display: flex;
+	justify-content: center;
+	width: calc(100% - 64px);
+	gap: 32px;
+	padding: 0px 32px;
+	height: 100%;
 }
 
 .homepage-container .left {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	width: 100%;
 }
 
 .homepage-container .right {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
 @media screen and (max-width: 900px) {
-  .homepage-container {
-    flex-direction: column-reverse;
-    padding: 0;
-  }
+	.homepage-container {
+		flex-direction: column-reverse;
+		padding: 0;
+	}
 }

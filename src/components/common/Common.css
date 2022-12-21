@@ -1,78 +1,78 @@
 BasicCard {
-  margin-top: 500px;
+	margin-top: 500px;
 }
 .card {
-  color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
 }
 
 div {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .footer-container {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-  width: 60%;
-  padding: 48px 80px;
-  gap: 24px;
+	width: 60%;
+	padding: 48px 80px;
+	gap: 24px;
 }
 
 .footer-title {
-  margin-bottom: 16px;
+	margin-bottom: 16px;
 }
 
 .footer-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 .footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 .footer-links .link {
-  color: #ffffff;
-  text-decoration: none;
+	color: #ffffff;
+	text-decoration: none;
 }
 
 .footer-links .text-and-icon {
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 4px;
 }
 
 .footer-links .text {
-  color: #ffffff;
-  text-decoration: none;
+	color: #ffffff;
+	text-decoration: none;
 }
 
 .footer-links .icon {
-  color: #ffffff;
-  height: 24px;
-  width: 24px;
+	color: #ffffff;
+	height: 24px;
+	width: 24px;
 }
 
 .text :hover {
-  color: #c8d8e9;
+	color: #c8d8e9;
 }
 
 @media screen and (max-width: 900px) {
-  .footer-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    padding: 48px 80px;
-    gap: 16px;
-  }
+	.footer-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 100%;
+		padding: 48px 80px;
+		gap: 16px;
+	}
 
-  .footer-title {
-    margin-bottom: 16px;
-  }
+	.footer-title {
+		margin-bottom: 16px;
+	}
 }
