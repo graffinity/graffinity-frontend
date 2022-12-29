@@ -1,7 +1,6 @@
 import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
 import LoginRequest from "models/auth/LoginRequest";
-import LoginResponse from "models/auth/LoginResponse";
 import StatusResponse from "models/auth/StatusResponse";
 
 const baseUrl = apiEndpoints.auth;
@@ -16,6 +15,8 @@ const AuthAPI = {
 	},
 
 	getStatus: (): Promise<StatusResponse> => axios.get(`${baseUrl}/status`),
+
+	logout: (): Promise<StatusResponse> => axios.get(`${baseUrl}/logout`),
 };
 
 export default AuthAPI;

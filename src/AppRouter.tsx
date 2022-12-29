@@ -1,17 +1,15 @@
+import Header from "components/common/Header";
+import { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./AppRouter.css";
 import { FooterContainer } from "./components/common/Footer";
-import Header from "./components/common/Header";
 import NavBar from "./components/common/NavBar";
 import routes from "./constants/routes";
 import RouteItem from "./models/routes/RouteItem";
-import { Route, Routes } from "react-router-dom";
-import "./AppRouter.css";
-import { useEffect } from "react";
-import common from "redux/common";
 
 const AppRouter = () => {
 	useEffect(() => {
 		// common.getStatus();
-
 	}, []);
 
 	return (
