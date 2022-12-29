@@ -1,19 +1,26 @@
 import { Button, Card, Dialog, Divider, Typography } from "@mui/material";
+import AuthAPI from "api/AuthAPI";
 import FormTextField from "components/form/FormTextField";
 import ReadableHiddenPasswordField from "components/form/ReadableHiddenPasswordField";
 import { Formik, FormikProps } from "formik";
+import LoginRequest from "models/auth/LoginRequest";
 import { useRef } from "react";
 import * as yup from "yup";
 
 interface LoginDialogProps {
 	open: boolean;
 	handleClose: () => void;
-	handleSubmit: (values: any) => void;
+	// handleSubmit: (values: any) => void;
 	loginSuccess?: boolean;
 }
 
 const LoginDialog = (props: LoginDialogProps) => {
-	const { open, loginSuccess, handleClose, handleSubmit } = props;
+	const { open, loginSuccess, handleClose } = props;
+
+	const handleSubmit = (values: LoginRequest) => {
+		console.log("login", values);
+		AuthAPI.login(values);
+	};
 
 	const ref = useRef<HTMLInputElement>(null);
 	return (
@@ -110,7 +117,7 @@ const LoginDialog = (props: LoginDialogProps) => {
 	);
 };
 
-const initialValues = {
+const initialValues: LoginRequest = {
 	username: "",
 	password: "",
 };

@@ -1,15 +1,20 @@
-import LoginResponse from "@/models/auth/LoginResponse";
 import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
 import LoginRequest from "models/auth/LoginRequest";
+import LoginResponse from "models/auth/LoginResponse";
 import StatusResponse from "models/auth/StatusResponse";
 
 const baseUrl = apiEndpoints.auth;
 
 const AuthAPI = {
-	login: (request: LoginRequest): Promise<LoginResponse> => {
-		return axios.post(`${baseUrl}/login`, request);
+	login: async (request: LoginRequest) => {
+		let res = axios.post(`${baseUrl}/login`, request);
+		let temp = (await res).data;
+
+		localStorage.setItem("token", temp.accessToken);
+		return res;
 	},
+
 	getStatus: (): Promise<StatusResponse> => axios.get(`${baseUrl}/status`),
 };
 

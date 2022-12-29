@@ -7,6 +7,8 @@ const baseUrl = apiEndpoints.graffiti;
 
 const GraffitiPostAPI = {
 	findAll: (): Promise<GraffitiResponse[]> => axios.get(baseUrl),
+	findById: (id: number): Promise<GraffitiResponse> =>
+		axios.get(`${baseUrl}/${id}`),
 	create: (request: GraffitiRequest): Promise<GraffitiResponse> =>
 		axios.post(baseUrl, request),
 	update: (id: number, request: GraffitiRequest): Promise<GraffitiResponse> =>
