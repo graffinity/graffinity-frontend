@@ -1,22 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-restricted-globals */
+import { IconButton } from "@mui/material";
 import {
 	GoogleMap,
 	InfoWindow,
 	Marker,
 	useJsApiLoader,
 } from "@react-google-maps/api";
+import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
 import { useCallback, useRef, useState } from "react";
 import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng,
 } from "use-places-autocomplete";
-
-import { IconButton } from "@mui/material";
-// import { formatRelative } from "date-fns";
-import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
 import "./Map.css";
 import mapStyles from "./mapStyles";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
 
 interface MarkerData {
 	lat: number;
@@ -36,6 +33,7 @@ const options = {
 interface MapComponentProps {
 	width: number;
 	height: number | null;
+	graffitis: GraffitiResponse[];
 }
 
 const maxWidthForDesktopView = 900;

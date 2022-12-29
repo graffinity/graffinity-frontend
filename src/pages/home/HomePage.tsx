@@ -4,10 +4,18 @@ import MultiActionAreaCard from "components/common/Card";
 import MapComponent from "components/map/MapComponent";
 import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import GraffitiPostAPI from "api/GraffitiPostAPI";
 
 const HomePage = () => {
 	const [width, setWidth] = useState<number>(window.innerWidth);
+	const [graffitis, setGraffitis] = useState<GraffitiResponse[]>([]);
 	const [height, setHeight] = useState<number | null>(null);
+
+	const getGraffitis = async () => {
+		let response = await GraffitiPostAPI.findAll();
+		setGraffitis(response);
+	};
 
 	window.addEventListener("resize", () => {
 		setWidth(window.innerWidth);
@@ -20,7 +28,6 @@ const HomePage = () => {
 		setHeight(window.innerHeight);
 		console.log("height", height);
 	});
-
 	useEffect(() => {
 		if (containerRef.current) {
 			setHeight(containerRef.current.clientHeight);
@@ -53,7 +60,7 @@ const HomePage = () => {
 						maxWidth: "50vw",
 					}}
 				>
-					<MapComponent width={width} height={height} />
+					<MapComponent width={width} height={height} graffitis={graffitis} />
 				</Container>
 			</div>
 		</div>

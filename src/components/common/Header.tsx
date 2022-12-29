@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, Toolbar } from "@mui/material";
+import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import AppTheme from "AppTheme";
 
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,8 @@ const Header = () => {
 
 					<div>
 						<Button>
-							<Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" />
+							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
+							<Typography>Login</Typography>
 						</Button>
 
 						{/* <AccountInfo me={me} logoff={logoff} /> */}
