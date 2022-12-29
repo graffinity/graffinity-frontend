@@ -46,9 +46,9 @@ const markers = [
 		id: 1,
 		name: "PLZ, WORK",
 		position: { lat: 54.687431, lng: 25.281231 },
-		image: "src/assets/images/testPic.jpg"
+		image: "src/assets/images/testPic.jpg",
 		// ../../assets/images/testPic.jpg
-	}
+	},
 ];
 
 export default function MapComponent(props: MapComponentProps) {
@@ -62,7 +62,6 @@ export default function MapComponent(props: MapComponentProps) {
 	// const [selected, setSelected] = useState<MarkerData | null>(null);
 	const mapRef = useRef<google.maps.Map | null>(null);
 	const [selectedMarker, setSelectedMarker] = useState("");
-
 
 	const [activeMarker, setActiveMarker] = useState(null);
 
@@ -130,7 +129,8 @@ export default function MapComponent(props: MapComponentProps) {
 					// onClick={onMapClick}
 					onLoad={onMapLoad}
 					onUnmount={onUnmount}
-					onClick={() => setActiveMarker(null)} >
+					onClick={() => setActiveMarker(null)}
+				>
 					{markers.map(({ id, name, position, image }) => (
 						<Marker
 							key={id}
@@ -138,13 +138,11 @@ export default function MapComponent(props: MapComponentProps) {
 							onClick={() => handleActiveMarker(id)}
 						>
 							{activeMarker === id ? (
-								<InfoWindow onCloseClick={() =>
-									setActiveMarker(null)}>
+								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
 									<>
 										<div>{name}</div>
 										<img
-											src=
-											{require("../../assets/images/testPic.jpg")}
+											src={require("../../assets/images/testPic.jpg")}
 											width="250"
 											height="250"
 										/>
@@ -154,9 +152,8 @@ export default function MapComponent(props: MapComponentProps) {
 						</Marker>
 					))}
 				</GoogleMap>
-			)
-			}
-		</div >
+			)}
+		</div>
 	);
 }
 
@@ -223,7 +220,7 @@ function Search(props: LocateAndSearchProps) {
 		} catch (error) {
 			console.log("😱 Error: ", error);
 		}
-	}
+	};
 	return <div></div>;
 
 	// return (

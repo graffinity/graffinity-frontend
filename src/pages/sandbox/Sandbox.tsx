@@ -5,14 +5,14 @@ import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import IFile from "models/file/IFile";
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import "./Sandbox.css"
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import "./Sandbox.css";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -85,17 +85,20 @@ const Sandbox = () => {
 			style={{
 				display: "flex",
 				flexDirection: "column",
-				alignItems: 'center',
+				alignItems: "center",
 				padding: "24px",
 				height: "100%",
 				gap: "8px",
 			}}
 		>
 			<div>
-				<Typography color="common.white" sx={{
-					mb: '12px',
-					fontFamily: "Times, Times New Roman, serif",
-				}}>
+				<Typography
+					color="common.white"
+					sx={{
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
 					Enter the name of the graffiti
 				</Typography>
 				<TextField
@@ -104,8 +107,16 @@ const Sandbox = () => {
 					fullWidth
 					multiline
 					label="Name"
-					variant="outlined" />
-				<Typography color="common.white" sx={{ mt: '12px', mb: '12px', fontFamily: "Times, Times New Roman, serif", }}>
+					variant="outlined"
+				/>
+				<Typography
+					color="common.white"
+					sx={{
+						mt: "12px",
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
 					Enter a short description
 				</Typography>
 				<TextField
@@ -114,32 +125,43 @@ const Sandbox = () => {
 					fullWidth
 					multiline
 					label="Description"
-					variant="outlined" />
-				<Typography color="common.white" sx={{ mt: '12px', mb: '12px', fontFamily: "Times, Times New Roman, serif", }}>
+					variant="outlined"
+				/>
+				<Typography
+					color="common.white"
+					sx={{
+						mt: "12px",
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
 					Enter an address of the graffiti
 				</Typography>
 				<Paper
 					component="form"
-					sx=
-					{{
-						p: '2px 4px', display: 'flex', alignItems: 'center',
+					sx={{
+						p: "2px 4px",
+						display: "flex",
+						alignItems: "center",
 						width: 400,
-						mb: '12px', fontFamily: "Times, Times New Roman, serif",
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
 					}}
 				>
-
 					<InputBase
-						sx={{ ml: 5, flex: 1, fontFamily: "Times, Times New Roman, serif", }}
+						sx={{ ml: 5, flex: 1, fontFamily: "Times, Times New Roman, serif" }}
 						placeholder="Search Google Maps"
-						inputProps={{ 'aria-label': 'search google maps' }}
+						inputProps={{ "aria-label": "search google maps" }}
 					/>
-					<IconButton type="button" sx={{ p: '10px' }}
-						aria-label="search">
+					<IconButton type="button" sx={{ p: "10px" }} aria-label="search">
 						<SearchIcon />
 					</IconButton>
 					<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-					<IconButton color="primary" sx={{ p: '10px' }}
-						aria-label="directions">
+					<IconButton
+						color="primary"
+						sx={{ p: "10px" }}
+						aria-label="directions"
+					>
 						<DirectionsIcon />
 					</IconButton>
 				</Paper>
@@ -162,10 +184,8 @@ const Sandbox = () => {
 								type="file"
 								onChange={(event) => {
 									if (event.currentTarget.files) {
-										formik.setFieldValue("file",
-											event.currentTarget.files[0]);
-										console.log("event",
-											event.currentTarget.files);
+										formik.setFieldValue("file", event.currentTarget.files[0]);
+										console.log("event", event.currentTarget.files);
 									} else {
 										formik.setFieldValue("file", null);
 									}

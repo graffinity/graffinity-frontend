@@ -70,7 +70,7 @@ const Header = () => {
 							alignItems: "center",
 							justifyContent: "flex-start",
 							width: "100%",
-							gap: '8px'
+							gap: "8px",
 						}}
 					>
 						{[...routes[0].items, ...routes[1].items].map((item) => (
@@ -79,14 +79,13 @@ const Header = () => {
 									variant="h6"
 									noWrap
 									sx={{
-										color: 'white',
+										color: "white",
 										fontFamily: "Times, Times New Roman, serif",
 										letterSpacing: ".3rem",
 										textDecoration: "none",
 										fontWeight: 300,
-
-
-									}}>
+									}}
+								>
 									{item.pageTitle}
 								</Typography>
 							</Link>
@@ -227,7 +226,9 @@ const Header = () => {
 						<SwipeableEdgeDrawer />
 						{[...routes[0].items, ...routes[1].items].map((item) => (
 							<Link key={item.key} href={item.path}>
-								<Typography sx={{ color: 'white' }}>{item.pageTitle}</Typography>
+								<Typography sx={{ color: "white" }}>
+									{item.pageTitle}
+								</Typography>
 							</Link>
 						))}
 					</div>
