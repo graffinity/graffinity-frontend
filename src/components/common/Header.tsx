@@ -4,9 +4,20 @@ import AppTheme from "AppTheme";
 import { useNavigate } from "react-router-dom";
 
 import "./Common.css";
+import LoginDialog from "components/login/LoginDialog";
+import { useState } from "react";
 
 const Header = () => {
 	const navigate = useNavigate();
+	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+
+	const handleOpenLoginDialog = () => {
+		setLoginDialogOpen(true);
+	};
+
+	const handleCloseLoginDialog = () => {
+		setLoginDialogOpen(false);
+	};
 
 	return (
 		<AppBar position="static">
@@ -38,7 +49,7 @@ const Header = () => {
 					</div>
 
 					<div>
-						<Button>
+						<Button onClick={handleOpenLoginDialog}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
@@ -47,6 +58,10 @@ const Header = () => {
 					</div>
 				</div>
 			</Toolbar>
+			<LoginDialog
+				open={loginDialogOpen}
+				handleClose={handleCloseLoginDialog}
+			/>
 		</AppBar>
 	);
 };

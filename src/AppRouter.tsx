@@ -6,11 +6,18 @@ import { FooterContainer } from "./components/common/Footer";
 import NavBar from "./components/common/NavBar";
 import routes from "./constants/routes";
 import RouteItem from "./models/routes/RouteItem";
+import AuthAPI from "api/AuthAPI";
 
 const AppRouter = () => {
 	useEffect(() => {
 		// common.getStatus();
+		getProfile();
 	}, []);
+
+	const getProfile = async () => {
+		let res = await AuthAPI.getProfile();
+		console.log("profile", res);
+	};
 
 	return (
 		<div
