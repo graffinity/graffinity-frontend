@@ -24,8 +24,6 @@ const PlaygroundPage = () => {
 			<Button>
 				<Typography variant="h4">Login</Typography>
 			</Button>
-
-            
 		</div>
 	);
 };
