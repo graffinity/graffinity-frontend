@@ -1,21 +1,12 @@
-import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import AppTheme from "AppTheme";
 
 import { useNavigate } from "react-router-dom";
 
-import AuthAPI from "api/AuthAPI";
 import "./Common.css";
-const minWidthForLogo = 540;
 
 const Header = () => {
 	const navigate = useNavigate();
-
-	const width = window.innerWidth;
-
-	const logoff = async () => {
-		await AuthAPI.logout();
-		window.location.assign("/");
-	};
 
 	return (
 		<AppBar position="static">
