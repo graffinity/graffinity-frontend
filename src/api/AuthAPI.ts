@@ -9,11 +9,12 @@ const AuthAPI = {
 	login: async (request: LoginRequest) => {
 		let res = axios.post(`${baseUrl}/login`, request);
 		let temp = (await res).data;
-		console.log(temp);
 
 		localStorage.setItem("token", temp.access_token);
-		console.log(temp.access_token);
-		console.log(localStorage.getItem("token"));
+
+		axios.defaults.headers.common[
+			"Authorization"
+		] = `Bearer ${temp.access_token}`;
 
 		return res;
 	},

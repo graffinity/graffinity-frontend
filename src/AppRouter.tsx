@@ -1,4 +1,4 @@
-import Header from "components/common/Header";
+import HeaderNew from "components/common/HeaderNew";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./AppRouter.css";
@@ -29,7 +29,7 @@ const AppRouter = () => {
 			}}
 		>
 			{/* <NavBar /> */}
-			<Header />
+			<HeaderNew />
 			<div
 				style={{
 					width: "100%",

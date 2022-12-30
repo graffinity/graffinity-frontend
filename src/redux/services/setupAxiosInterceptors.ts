@@ -30,10 +30,12 @@ const setupAxiosInterceptors = () => {
 	axios.interceptors.request.use(
 		(config) => {
 			const token = localStorage.getItem("token");
+			console.log("token", token);
 			if (token) {
-				if (config.headers !== undefined) {
-					config.headers.Authorization = `Bearer ${token}`;
-					console.log(config);
+				if (config.headers) {
+					axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+					config.headers["Authorization"] = `Bearer ${token}`;
+					console.log("config", config);
 				}
 			}
 			return config;
