@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable jsx-a11y/alt-text 
+// eslint-disable @typescript-eslint/no-unused-vars 
 import { Button, TextField, Typography } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
