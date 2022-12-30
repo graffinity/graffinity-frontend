@@ -78,7 +78,6 @@ const Sandbox = () => {
 			let response = await GraffitiPhotoAPI.create(formData);
 			console.log("response: ", response);
 		}
-		console.log("no file :(");
 	};
 
 	return (
@@ -173,6 +172,7 @@ const Sandbox = () => {
 					file: null,
 				}}
 				onSubmit={onSubmit}
+				npx
 			>
 				{(formik: FormikProps<any>) => (
 					<>
@@ -193,7 +193,13 @@ const Sandbox = () => {
 								}}
 							/>
 						</label>
-						<Button type="submit" variant="contained">
+						<Button
+							type="submit"
+							variant="contained"
+							onClick={() => {
+								onSubmit(formik.values);
+							}}
+						>
 							Submit
 						</Button>
 					</>

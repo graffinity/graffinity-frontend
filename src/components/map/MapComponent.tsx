@@ -8,7 +8,7 @@ import {
 	useJsApiLoader,
 } from "@react-google-maps/api";
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng,
@@ -17,6 +17,7 @@ import { ReactComponent as location } from "assets/svg/location.svg";
 import "./Map.css";
 import mapStyles from "./mapStyles";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import { MarkerData } from "pages/home/HomePage";
 
 // interface MarkerData {
 // 	lat: number;
@@ -37,20 +38,23 @@ interface MapComponentProps {
 	width: number;
 	height: number | null;
 	graffitis: GraffitiResponse[];
+	markers: MarkerData[];
 }
 
 const maxWidthForDesktopView = 900;
-const markers = [
-	{
-		id: 1,
-		name: "PLZ, WORK",
-		position: { lat: 54.687431, lng: 25.281231 },
-		image: "src/assets/images/testPic.jpg",
-		// ../../assets/images/testPic.jpg
-	},
-];
+// const markers = [
+// 	{
+// 		id: 1,
+// 		name: "PLZ, WORK",
+// 		position: { lat: 54.687431, lng: 25.281231 },
+// 		image: "src/assets/images/testPic.jpg",
+// 		// ../../assets/images/testPic.jpg
+// 	},
+// ];
 
 export default function MapComponent(props: MapComponentProps) {
+	const { graffitis, markers } = props;
+
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 		libraries: ["places"],
@@ -61,6 +65,7 @@ export default function MapComponent(props: MapComponentProps) {
 	// const [selected, setSelected] = useState<MarkerData | null>(null);
 	const mapRef = useRef<google.maps.Map | null>(null);
 	const [selectedMarker, setSelectedMarker] = useState("");
+	const [isLol, setIsLol] = useState(false);
 
 	const [activeMarker, setActiveMarker] = useState(null);
 
@@ -70,6 +75,10 @@ export default function MapComponent(props: MapComponentProps) {
 		}
 		setActiveMarker(marker);
 	};
+
+	useEffect(() => {
+		console.log("Markers", markers);
+	}, [markers]);
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
@@ -85,12 +94,16 @@ export default function MapComponent(props: MapComponentProps) {
 	// 	}
 	// }, []);
 
-	const onMapLoad = useCallback((map: google.maps.Map) => {
-		mapRef.current = map;
-		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
-		setMap(map);
-	}, []);
+	const onMapLoad = useCallback(
+		(map: google.maps.Map) => {
+			mapRef.current = map;
+			const bounds = new window.google.maps.LatLngBounds(center);
+			map.fitBounds(bounds);
+			setMap(map);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	const panTo = useCallback((coords: google.maps.LatLngLiteral) => {
 		if (mapRef.current) {
@@ -130,16 +143,16 @@ export default function MapComponent(props: MapComponentProps) {
 					onUnmount={onUnmount}
 					onClick={() => setActiveMarker(null)}
 				>
-					{markers.map(({ id, name, position, image }) => (
+					{markers.map((marker) => (
 						<Marker
-							key={id}
-							position={position}
-							onClick={() => handleActiveMarker(id)}
+							key={marker.id}
+							position={marker.position}
+							onClick={() => handleActiveMarker(marker.id)}
 						>
-							{activeMarker === id ? (
+							{activeMarker === marker.id ? (
 								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
 									<>
-										<div>{name}</div>
+										<div>{marker.name}</div>
 										<img
 											src={require("../../assets/images/testPic.jpg")}
 											width="250"
@@ -242,4 +255,7 @@ function Search(props: LocateAndSearchProps) {
 	// 		</Combobox>
 	// 	</div>
 	// );
+}
+function setEffect(arg0: () => void, arg1: never[]) {
+	throw new Error("Function not implemented.");
 }

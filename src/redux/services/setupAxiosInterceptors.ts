@@ -16,7 +16,7 @@ const setupAxiosInterceptors = () => {
 		(response) => {
 			if (response.data) {
 				if (response.status === 200 || response.status === 201) {
-					return response;
+					return response.data;
 				}
 				return Promise.reject(response);
 			}
