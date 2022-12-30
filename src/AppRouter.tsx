@@ -1,10 +1,9 @@
-import { FooterContainer } from "./components/common/Footer";
-import Header from "./components/common/Header";
-import NavBar from "./components/common/NavBar";
-import routes from "./constants/routes";
-import RouteItem from "./models/routes/RouteItem";
 import { Route, Routes } from "react-router-dom";
 import "./AppRouter.css";
+import { FooterContainer } from "./components/common/Footer";
+import Header from "./components/common/Header";
+import routes from "./constants/routes";
+import RouteItem from "./models/routes/RouteItem";
 
 const AppRouter = () => {
 	return (
@@ -16,7 +15,7 @@ const AppRouter = () => {
 				flexDirection: "column",
 			}}
 		>
-			<NavBar />
+			{/* <NavBar /> */}
 			<Header />
 			<div
 				style={{

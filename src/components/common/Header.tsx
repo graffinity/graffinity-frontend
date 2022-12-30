@@ -1,6 +1,7 @@
+import routes from "constants/routes";
 import { ThemeProvider } from "@emotion/react";
 import BrushIcon from "@mui/icons-material/Brush";
-import { Toolbar } from "@mui/material";
+import { Link, Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -67,10 +68,29 @@ const Header = () => {
 						style={{
 							display: "flex",
 							alignItems: "center",
-							justifyContent: "flex-end",
+							justifyContent: "flex-start",
 							width: "100%",
+							gap: "8px",
 						}}
-					></div>
+					>
+						{[...routes[0].items, ...routes[1].items].map((item) => (
+							<Link key={item.key} href={item.path}>
+								<Typography
+									variant="h6"
+									noWrap
+									sx={{
+										color: "white",
+										fontFamily: "Times, Times New Roman, serif",
+										letterSpacing: ".3rem",
+										textDecoration: "none",
+										fontWeight: 300,
+									}}
+								>
+									{item.pageTitle}
+								</Typography>
+							</Link>
+						))}
+					</div>
 					<div
 						style={{
 							display: "flex",
@@ -204,6 +224,13 @@ const Header = () => {
 						}}
 					>
 						<SwipeableEdgeDrawer />
+						{[...routes[0].items, ...routes[1].items].map((item) => (
+							<Link key={item.key} href={item.path}>
+								<Typography sx={{ color: "white" }}>
+									{item.pageTitle}
+								</Typography>
+							</Link>
+						))}
 					</div>
 					<div
 						style={{

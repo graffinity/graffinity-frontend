@@ -15,7 +15,7 @@ const routes: RouteGroup[] = [
 			{
 				path: "/sandbox",
 				key: "sandbox",
-				pageTitle: "Sandbox",
+				pageTitle: "Upload",
 				element: <Sandbox />,
 			},
 		],
