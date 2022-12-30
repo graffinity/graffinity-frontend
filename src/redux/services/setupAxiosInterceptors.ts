@@ -35,7 +35,6 @@ const setupAxiosInterceptors = () => {
 				if (config.headers) {
 					axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 					config.headers["Authorization"] = `Bearer ${token}`;
-					console.log("config", config);
 				}
 			}
 			return config;
