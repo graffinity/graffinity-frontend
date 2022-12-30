@@ -37,7 +37,7 @@ const Sandbox = () => {
 	// const [images, setImages] = useState<ImageListType>([]);
 
 	useEffect(() => {
-		// getGraffitiPosts();
+		getGraffitiPosts();
 	}, []);
 
 	const onChange = (addUpdateIndex: number[] | undefined) => {
@@ -45,8 +45,9 @@ const Sandbox = () => {
 	};
 
 	const getGraffitiPosts = async () => {
-		let response = await GraffitiPostAPI.findAll();
-		setGraffitiPosts(response);
+		// let response = await GraffitiPostAPI.findAll();
+		let response = await GraffitiPostAPI.findById(1);
+		// setGraffitiPosts(response);
 		console.log(response);
 	};
 

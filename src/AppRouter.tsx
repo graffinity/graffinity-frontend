@@ -1,11 +1,24 @@
+import HeaderNew from "components/common/HeaderNew";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./AppRouter.css";
+import "./AppRouter.css";
 import { FooterContainer } from "./components/common/Footer";
-import Header from "./components/common/Header";
 import routes from "./constants/routes";
 import RouteItem from "./models/routes/RouteItem";
+import AuthAPI from "api/AuthAPI";
 
 const AppRouter = () => {
+	useEffect(() => {
+		// common.getStatus();
+		getProfile();
+	}, []);
+
+	const getProfile = async () => {
+		let res = await AuthAPI.getProfile();
+		console.log("profile", res);
+	};
+
 	return (
 		<div
 			style={{
@@ -16,7 +29,7 @@ const AppRouter = () => {
 			}}
 		>
 			{/* <NavBar /> */}
-			<Header />
+			<HeaderNew />
 			<div
 				style={{
 					width: "100%",

@@ -1,7 +1,6 @@
-import routes from "constants/routes";
 import { ThemeProvider } from "@emotion/react";
 import BrushIcon from "@mui/icons-material/Brush";
-import { Link, Toolbar } from "@mui/material";
+import { Button, Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -14,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import "./Common.css";
 import SwipeableEdgeDrawer from "./Drawer";
+import LoginDialog from "../login/LoginDialog";
 
 const theme = createTheme({
 	palette: {
@@ -25,9 +25,10 @@ const theme = createTheme({
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Header = () => {
+const HeaderOld = () => {
 	// const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
 
 	// const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 	//   setAnchorElNav(event.currentTarget);
@@ -43,6 +44,14 @@ const Header = () => {
 	// const handleCloseNavMenu = () => {
 	//   setAnchorElNav(null);
 	// };
+
+	const handleOpenLoginDialog = () => {
+		setLoginDialogOpen(true);
+	};
+
+	const handleCloseLoginDialog = () => {
+		setLoginDialogOpen(false);
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -68,29 +77,10 @@ const Header = () => {
 						style={{
 							display: "flex",
 							alignItems: "center",
-							justifyContent: "flex-start",
+							justifyContent: "flex-end",
 							width: "100%",
-							gap: "8px",
 						}}
-					>
-						{[...routes[0].items, ...routes[1].items].map((item) => (
-							<Link key={item.key} href={item.path}>
-								<Typography
-									variant="h6"
-									noWrap
-									sx={{
-										color: "white",
-										fontFamily: "Times, Times New Roman, serif",
-										letterSpacing: ".3rem",
-										textDecoration: "none",
-										fontWeight: 300,
-									}}
-								>
-									{item.pageTitle}
-								</Typography>
-							</Link>
-						))}
-					</div>
+					></div>
 					<div
 						style={{
 							display: "flex",
@@ -162,35 +152,38 @@ const Header = () => {
 									<Avatar alt="Remy Sharp" />
 								</IconButton>
 							</Tooltip>
-							<Menu
-								id="menu-appbar"
-								disableScrollLock
-								sx={{
-									mt: "45px",
-									display: { xs: "none", md: "block" },
-								}}
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								{settings.map((setting) => (
-									<MenuItem key={setting} onClick={handleCloseUserMenu}>
-										<Typography textAlign="center">{setting}</Typography>
-									</MenuItem>
-								))}
-							</Menu>
 						</Box>
 					</div>
+					<Button variant="outlined" onClick={handleOpenLoginDialog}>
+						<Typography color="#FFFFFF">Login</Typography>
+					</Button>
 				</Toolbar>
+				<Menu
+					id="menu-appbar"
+					disableScrollLock
+					sx={{
+						mt: "45px",
+						display: { xs: "none", md: "block" },
+					}}
+					anchorEl={anchorElUser}
+					anchorOrigin={{
+						vertical: "top",
+						horizontal: "right",
+					}}
+					keepMounted
+					transformOrigin={{
+						vertical: "top",
+						horizontal: "right",
+					}}
+					open={Boolean(anchorElUser)}
+					onClose={handleCloseUserMenu}
+				>
+					{settings.map((setting) => (
+						<MenuItem key={setting} onClick={handleCloseUserMenu}>
+							<Typography textAlign="center">{setting}</Typography>
+						</MenuItem>
+					))}
+				</Menu>
 			</AppBar>
 			{/* appbar for mobile device  */}
 			<AppBar
@@ -224,13 +217,6 @@ const Header = () => {
 						}}
 					>
 						<SwipeableEdgeDrawer />
-						{[...routes[0].items, ...routes[1].items].map((item) => (
-							<Link key={item.key} href={item.path}>
-								<Typography sx={{ color: "white" }}>
-									{item.pageTitle}
-								</Typography>
-							</Link>
-						))}
 					</div>
 					<div
 						style={{
@@ -280,6 +266,7 @@ const Header = () => {
 							alignItems: "center",
 							justifyContent: "flex-end",
 							width: "100%",
+							gap: "16px",
 						}}
 					>
 						<Box sx={{ flexGrow: 0 }}>
@@ -288,33 +275,42 @@ const Header = () => {
 									<Avatar alt="Avatar" />
 								</IconButton>
 							</Tooltip>
-							<Menu
-								sx={{ display: { xs: "block", md: "none" } }}
-								id="menu-appbar"
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: "bottom",
-									horizontal: "center",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "bottom",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								{settings.map((setting) => (
-									<MenuItem key={setting} onClick={handleCloseUserMenu}>
-										<Typography textAlign="center">{setting}</Typography>
-									</MenuItem>
-								))}
-							</Menu>
 						</Box>
+						<div style={{}}>
+							<Button variant="outlined" onClick={handleOpenLoginDialog}>
+								Login
+							</Button>
+						</div>
 					</div>
 				</Toolbar>
 			</AppBar>
+			<Menu
+				sx={{ display: { xs: "block", md: "none" } }}
+				id="menu-appbar"
+				anchorEl={anchorElUser}
+				anchorOrigin={{
+					vertical: "bottom",
+					horizontal: "center",
+				}}
+				keepMounted
+				transformOrigin={{
+					vertical: "bottom",
+					horizontal: "right",
+				}}
+				open={Boolean(anchorElUser)}
+				onClose={handleCloseUserMenu}
+			>
+				{settings.map((setting) => (
+					<MenuItem key={setting} onClick={handleCloseUserMenu}>
+						<Typography textAlign="center">{setting}</Typography>
+					</MenuItem>
+				))}
+			</Menu>
+			<LoginDialog
+				open={loginDialogOpen}
+				handleClose={handleCloseLoginDialog}
+			/>
 		</ThemeProvider>
 	);
 };
-export default Header;
+export default HeaderOld;
