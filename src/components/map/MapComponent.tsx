@@ -11,15 +11,16 @@ import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng,
 } from "use-places-autocomplete";
+import { ReactComponent as location } from "assets/svg/location.svg";
 import "./Map.css";
 import mapStyles from "./mapStyles";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 
-interface MarkerData {
-	lat: number;
-	lng: number;
-	time: Date;
-}
+// interface MarkerData {
+// 	lat: number;
+// 	lng: number;
+// 	time: Date;
+// }
 
 const center = {
 	lat: 54.6872,
@@ -37,6 +38,15 @@ interface MapComponentProps {
 }
 
 const maxWidthForDesktopView = 900;
+const markers = [
+	{
+		id: 1,
+		name: "PLZ, WORK",
+		position: { lat: 54.687431, lng: 25.281231 },
+		image: "src/assets/images/testPic.jpg",
+		// ../../assets/images/testPic.jpg
+	},
+];
 
 export default function MapComponent(props: MapComponentProps) {
 	const { isLoaded } = useJsApiLoader({
@@ -44,24 +54,34 @@ export default function MapComponent(props: MapComponentProps) {
 		libraries: ["places"],
 	});
 
-	const [markers, setMarkers] = useState<MarkerData[]>([]);
+	// const [markers, setMarkers] = useState<MarkerData[]>([]);
 	const [map, setMap] = useState<google.maps.Map | null>(null);
-	const [selected, setSelected] = useState<MarkerData | null>(null);
+	// const [selected, setSelected] = useState<MarkerData | null>(null);
 	const mapRef = useRef<google.maps.Map | null>(null);
+	const [selectedMarker, setSelectedMarker] = useState("");
+
+	const [activeMarker, setActiveMarker] = useState(null);
+
+	const handleActiveMarker = (marker: any) => {
+		if (marker === activeMarker) {
+			return;
+		}
+		setActiveMarker(marker);
+	};
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
 	}, []);
-	const onMapClick = useCallback((event: google.maps.MapMouseEvent) => {
-		if (event.latLng) {
-			let newMarker: MarkerData = {
-				lat: event.latLng.lat(),
-				lng: event.latLng.lng(),
-				time: new Date(),
-			};
-			setMarkers((previous) => [...previous, newMarker]);
-		}
-	}, []);
+	// const onMapClick = useCallback((event: google.maps.MapMouseEvent) => {
+	// 	if (event.latLng) {
+	// 		let newMarker: MarkerData = {
+	// 			lat: event.latLng.lat(),
+	// 			lng: event.latLng.lng(),
+	// 			time: new Date(),
+	// 		};
+	// 		setMarkers((previous) => [...previous, newMarker]);
+	// 	}
+	// }, []);
 
 	const onMapLoad = useCallback((map: google.maps.Map) => {
 		mapRef.current = map;
@@ -73,7 +93,7 @@ export default function MapComponent(props: MapComponentProps) {
 	const panTo = useCallback((coords: google.maps.LatLngLiteral) => {
 		if (mapRef.current) {
 			mapRef.current?.panTo(coords);
-			mapRef.current?.setZoom(18);
+			mapRef.current?.setZoom(16);
 			setMap(mapRef.current);
 		}
 	}, []);
@@ -103,44 +123,31 @@ export default function MapComponent(props: MapComponentProps) {
 					}}
 					center={center}
 					options={options}
-					onClick={onMapClick}
+					// onClick={onMapClick}
 					onLoad={onMapLoad}
 					onUnmount={onUnmount}
+					onClick={() => setActiveMarker(null)}
 				>
-					{markers.map((marker) => (
+					{markers.map(({ id, name, position, image }) => (
 						<Marker
-							key={marker.time.toISOString()}
-							position={{
-								lat: marker.lat,
-								lng: marker.lng,
-							}}
-							// icon={{
-							// 	url: './location.svg',
-							// 	origin: new window.google.maps.Point(0, 0),
-							// 	anchor: new window.google.maps.Point(15, 15),
-							// 	scaledSize: new window.google.maps.Size(30, 30),
-							// }}
-							onClick={() => {
-								setSelected(marker);
-							}}
-						/>
-					))}
-					{selected && (
-						<InfoWindow
-							position={{
-								lat: selected.lat,
-								lng: selected.lng,
-							}}
-							onCloseClick={() => {
-								setSelected(null);
-							}}
+							key={id}
+							position={position}
+							onClick={() => handleActiveMarker(id)}
 						>
-							<div>
-								<p>Graffiti spotted watch out !</p>
-								{/* <p>Spotted {formatRelative(selected.time, new Date())}</p> */}
-							</div>
-						</InfoWindow>
-					)}
+							{activeMarker === id ? (
+								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
+									<>
+										<div>{name}</div>
+										<img
+											src={require("../../assets/images/testPic.jpg")}
+											width="250"
+											height="250"
+										/>
+									</>
+								</InfoWindow>
+							) : null}
+						</Marker>
+					))}
 				</GoogleMap>
 			)}
 		</div>
@@ -211,7 +218,7 @@ function Search(props: LocateAndSearchProps) {
 			console.log("😱 Error: ", error);
 		}
 	};
-	return <div>search</div>;
+	return <div></div>;
 
 	// return (
 	// 	<div className='search'>
