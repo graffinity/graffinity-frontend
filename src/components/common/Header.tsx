@@ -1,25 +1,10 @@
-import routes from "constants/routes";
-import { ThemeProvider } from "@emotion/react";
-import BrushIcon from "@mui/icons-material/Brush";
-import { Link, Toolbar } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import AppTheme from "AppTheme";
-
 import { useNavigate } from "react-router-dom";
-
-import "./Common.css";
+import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
 import { useState } from "react";
-import AuthAPI from "api/AuthAPI";
+import "./Common.css";
 
 const Header = () => {
 	const navigate = useNavigate();

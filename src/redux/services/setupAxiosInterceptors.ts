@@ -28,15 +28,15 @@ const setupAxiosInterceptors = () => {
 	);
 
 	axios.interceptors.request.use(
-		(request) => {
+		(config) => {
 			const token = localStorage.getItem("token");
 			if (token) {
-				if (request.headers !== undefined) {
-					request.headers.Authorization = `Bearer ${token}`;
-					console.log(request);
+				if (config.headers !== undefined) {
+					config.headers.Authorization = `Bearer ${token}`;
+					console.log(config);
 				}
 			}
-			return request;
+			return config;
 		},
 		(error: AxiosError) => {
 			return Promise.reject(error);
