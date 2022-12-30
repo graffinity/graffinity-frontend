@@ -30,7 +30,12 @@ const AuthAPI = {
 
 	getProfile: (): Promise<any> => axios.get(`${baseUrl}/profile`),
 
-	logout: (): Promise<StatusResponse> => axios.get(`${baseUrl}/logout`),
+	logout: (): Promise<StatusResponse> => {
+		axios.post(`${baseUrl}/logout`);
+		localStorage.removeItem("token");
+		axios.defaults.headers.common["Authorization"] = "";
+		return axios.get(`${baseUrl}/status`);
+	},
 };
 
 export default AuthAPI;

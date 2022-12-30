@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./Common.css";
 import LoginDialog from "components/login/LoginDialog";
 import { useState } from "react";
+import AuthAPI from "api/AuthAPI";
 
 const Header = () => {
 	const navigate = useNavigate();
@@ -17,6 +18,11 @@ const Header = () => {
 
 	const handleCloseLoginDialog = () => {
 		setLoginDialogOpen(false);
+	};
+
+	const handleLogout = async () => {
+		let res = await AuthAPI.logout();
+		console.log("logout res", res);
 	};
 
 	return (
@@ -52,6 +58,9 @@ const Header = () => {
 						<Button onClick={handleOpenLoginDialog}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
+						</Button>
+						<Button onClick={handleLogout}>
+							<Typography>Logout</Typography>
 						</Button>
 
 						{/* <AccountInfo me={me} logoff={logoff} /> */}
