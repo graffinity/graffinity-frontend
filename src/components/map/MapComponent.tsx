@@ -138,16 +138,19 @@ export default function MapComponent(props: MapComponentProps) {
 							onClick={() => handleActiveMarker(id)}
 						>
 							{activeMarker === id ? (
+
 								<InfoWindow onCloseClick={() =>
 									setActiveMarker(null)}>
 									<>
 										<div>{name}</div>
-										<img
-											src=
-											{require("../../assets/images/testPic.jpg")}
-											width="250"
-											height="250"
-										/>
+										<a href="#">
+											<img
+												src=
+												{require("../../assets/images/testPic.jpg")}
+												width="250"
+												height="250"
+											/>
+										</a>
 									</>
 								</InfoWindow>
 							) : null}
