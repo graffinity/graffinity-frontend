@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IconButton } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import {
 	GoogleMap,
 	InfoWindow,
@@ -8,26 +8,19 @@ import {
 	useJsApiLoader,
 } from "@react-google-maps/api";
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import { MarkerData } from "pages/home/HomePage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng,
 } from "use-places-autocomplete";
-import { ReactComponent as location } from "assets/svg/location.svg";
 import "./Map.css";
 import mapStyles from "./mapStyles";
-import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import { MarkerData } from "pages/home/HomePage";
-
-// interface MarkerData {
-// 	lat: number;
-// 	lng: number;
-// 	time: Date;
-// }
 
 const center = {
-	lat: 54.6872,
-	lng: 25.2797,
+	lat: 54.69,
+	lng: 25.28,
 };
 const options = {
 	styles: mapStyles,
@@ -37,68 +30,40 @@ const options = {
 interface MapComponentProps {
 	width: number;
 	height: number | null;
-	graffitis: GraffitiResponse[];
 	markers: MarkerData[];
 }
 
 const maxWidthForDesktopView = 900;
-// const markers = [
-// 	{
-// 		id: 1,
-// 		name: "PLZ, WORK",
-// 		position: { lat: 54.687431, lng: 25.281231 },
-// 		image: "src/assets/images/testPic.jpg",
-// 		// ../../assets/images/testPic.jpg
-// 	},
-// ];
 
 export default function MapComponent(props: MapComponentProps) {
-	const { graffitis, markers } = props;
+	const { markers } = props;
 
+	let apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+		googleMapsApiKey: apiKey,
 		libraries: ["places"],
 	});
 
-	// const [markers, setMarkers] = useState<MarkerData[]>([]);
 	const [map, setMap] = useState<google.maps.Map | null>(null);
-	// const [selected, setSelected] = useState<MarkerData | null>(null);
-	const mapRef = useRef<google.maps.Map | null>(null);
-	const [selectedMarker, setSelectedMarker] = useState("");
-	const [isLol, setIsLol] = useState(false);
-
 	const [activeMarker, setActiveMarker] = useState(null);
 
+	const mapRef = useRef<google.maps.Map | null>(null);
+	const popupRef = useRef<HTMLDivElement | null>(null);
+
 	const handleActiveMarker = (marker: any) => {
-		if (marker === activeMarker) {
-			return;
-		}
 		setActiveMarker(marker);
 	};
-
-	useEffect(() => {
-		console.log("Markers", markers);
-	}, [markers]);
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
 	}, []);
-	// const onMapClick = useCallback((event: google.maps.MapMouseEvent) => {
-	// 	if (event.latLng) {
-	// 		let newMarker: MarkerData = {
-	// 			lat: event.latLng.lat(),
-	// 			lng: event.latLng.lng(),
-	// 			time: new Date(),
-	// 		};
-	// 		setMarkers((previous) => [...previous, newMarker]);
-	// 	}
-	// }, []);
 
 	const onMapLoad = useCallback(
 		(map: google.maps.Map) => {
 			mapRef.current = map;
 			const bounds = new window.google.maps.LatLngBounds(center);
 			map.fitBounds(bounds);
+			map.setZoom(8);
 			setMap(map);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +73,7 @@ export default function MapComponent(props: MapComponentProps) {
 	const panTo = useCallback((coords: google.maps.LatLngLiteral) => {
 		if (mapRef.current) {
 			mapRef.current?.panTo(coords);
-			mapRef.current?.setZoom(16);
+			mapRef.current?.setZoom(2);
 			setMap(mapRef.current);
 		}
 	}, []);
@@ -138,7 +103,6 @@ export default function MapComponent(props: MapComponentProps) {
 					}}
 					center={center}
 					options={options}
-					// onClick={onMapClick}
 					onLoad={onMapLoad}
 					onUnmount={onUnmount}
 					onClick={() => setActiveMarker(null)}
@@ -149,18 +113,29 @@ export default function MapComponent(props: MapComponentProps) {
 							position={marker.position}
 							onClick={() => handleActiveMarker(marker.id)}
 						>
-							{activeMarker === marker.id ? (
-								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
-									<>
-										<div>{marker.name}</div>
-										<img
-											src={require("../../assets/images/testPic.jpg")}
-											width="250"
-											height="250"
-										/>
-									</>
-								</InfoWindow>
-							) : null}
+							{activeMarker === marker.id && (
+								<div ref={popupRef}>
+									<InfoWindow onCloseClick={() => setActiveMarker(null)}>
+										<div
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												alignItems: "center",
+											}}
+										>
+											<Typography variant="body2">{marker.name}</Typography>
+											<Box
+												component="img"
+												src={marker.images[0]}
+												style={{
+													maxWidth: popupRef.current?.clientWidth && popupRef.current.clientWidth * 0.8
+												}}
+											/>
+											{/* <img src={marker.images[0]} style={{}} /> */}
+										</div>
+									</InfoWindow>
+								</div>
+							)}
 						</Marker>
 					))}
 				</GoogleMap>

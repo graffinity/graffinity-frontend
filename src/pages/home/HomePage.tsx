@@ -6,6 +6,7 @@ import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
+import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 
 export interface MarkerData {
 	id: number;
@@ -14,7 +15,7 @@ export interface MarkerData {
 		lat: number;
 		lng: number;
 	};
-	image: string;
+	images: string[];
 }
 
 const HomePage = () => {
@@ -50,16 +51,30 @@ const HomePage = () => {
 
 	const getGraffitis = async () => {
 		let response = await GraffitiPostAPI.findAll();
-
 		getMarkers(response);
 		console.log("graffitis", response);
 		setGraffitis(response);
 	};
 
-	const getMarkers = (graffitis: GraffitiResponse[]) => {
-		console.log("KRWWWWWs", graffitis);
-		console.log("lol");
-		let markersKrc = graffitis.map((graffiti) => {
+	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
+		let fetchedPhotos = photos.map(async (photo) => {
+			let res = await fetch(photo.url);
+			let blob = await res.blob();
+			let objectURL = URL.createObjectURL(blob);
+			return objectURL;
+		});
+		let response = await Promise.all(fetchedPhotos).then((values) => {
+			console.log(values);
+			return values;
+		});
+		console.log("photos", response);
+		return response;
+	};
+
+	const getMarkers = async (graffitis: GraffitiResponse[]) => {
+		let markers = graffitis.map(async (graffiti) => {
+			let photos = await getGraffitiPhotos(graffiti.photos);
+
 			let loc = graffiti.location.split(",");
 			let lat1 = parseFloat(loc[0]);
 			let lng1 = parseFloat(loc[1]);
@@ -71,15 +86,17 @@ const HomePage = () => {
 					lat: lat1,
 					lng: lng1,
 				},
-				image:
-					"/Users/kernius/graffinity/frontend-graffinity/src/components/map/testPic.jpg",
+				images: photos,
 			};
 
 			return newMarker;
 		});
-		console.log("matkers", markersKrc);
-		setMarkers(markersKrc);
-		return markersKrc;
+		let response = await Promise.all(markers).then((values) => {
+			setMarkers(values);
+			console.log(values);
+			return values;
+		});
+		return response;
 	};
 
 	return (
@@ -104,12 +121,7 @@ const HomePage = () => {
 						maxWidth: "50vw",
 					}}
 				>
-					<MapComponent
-						width={width}
-						height={height}
-						graffitis={graffitis}
-						markers={markers}
-					/>
+					<MapComponent width={width} height={height} markers={markers} />
 				</Container>
 			</div>
 		</div>
