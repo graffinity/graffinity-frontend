@@ -61,8 +61,8 @@ export default function MapComponent(props: MapComponentProps) {
 	const onMapLoad = useCallback(
 		(map: google.maps.Map) => {
 			mapRef.current = map;
-			const bounds = new window.google.maps.LatLngBounds(center);
-			map.fitBounds(bounds);
+			// const bounds = new window.google.maps.LatLngBounds(center);
+			// map.fitBounds(bounds);
 			map.setZoom(8);
 			setMap(map);
 		},
@@ -128,7 +128,9 @@ export default function MapComponent(props: MapComponentProps) {
 												component="img"
 												src={marker.images[0]}
 												style={{
-													maxWidth: popupRef.current?.clientWidth && popupRef.current.clientWidth * 0.8
+													maxWidth:
+														popupRef.current?.clientWidth &&
+														popupRef.current.clientWidth * 0.8,
 												}}
 											/>
 											{/* <img src={marker.images[0]} style={{}} /> */}
