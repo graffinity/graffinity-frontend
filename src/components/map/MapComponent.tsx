@@ -45,13 +45,17 @@ export default function MapComponent(props: MapComponentProps) {
 	});
 
 	const [map, setMap] = useState<google.maps.Map | null>(null);
-	const [activeMarker, setActiveMarker] = useState(null);
+	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
 
 	const mapRef = useRef<google.maps.Map | null>(null);
-	const popupRef = useRef<HTMLDivElement | null>(null);
 
-	const handleActiveMarker = (marker: any) => {
+	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
+		if (mapRef.current) {
+			mapRef.current.panTo(marker.position);
+			mapRef.current.setZoom(16);
+		}
+
 	};
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
@@ -61,22 +65,23 @@ export default function MapComponent(props: MapComponentProps) {
 	const onMapLoad = useCallback(
 		(map: google.maps.Map) => {
 			mapRef.current = map;
-			// const bounds = new window.google.maps.LatLngBounds(center);
-			// map.fitBounds(bounds);
-			map.setZoom(8);
+			map.setZoom(12);
 			setMap(map);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
-	const panTo = useCallback((coords: google.maps.LatLngLiteral) => {
-		if (mapRef.current) {
-			mapRef.current?.panTo(coords);
-			mapRef.current?.setZoom(2);
-			setMap(mapRef.current);
-		}
-	}, []);
+	const panTo = useCallback(
+		(coords: google.maps.LatLngLiteral, zoom?: number) => {
+			if (mapRef.current) {
+				mapRef.current?.panTo(coords);
+				mapRef.current?.setZoom(zoom ? zoom : 14);
+				setMap(mapRef.current);
+			}
+		},
+		[]
+	);
 
 	return (
 		<div
@@ -111,32 +116,31 @@ export default function MapComponent(props: MapComponentProps) {
 						<Marker
 							key={marker.id}
 							position={marker.position}
-							onClick={() => handleActiveMarker(marker.id)}
+							onClick={() => handleActiveMarker(marker)}
 						>
-							{activeMarker === marker.id && (
-								<div ref={popupRef}>
-									<InfoWindow onCloseClick={() => setActiveMarker(null)}>
-										<div
+							{activeMarker?.id === marker.id && (
+								// <div ref={popupRef}>
+								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											alignItems: "center",
+											gap: "8px",
+										}}
+									>
+										<Typography variant="body2">{marker.name}</Typography>
+										<Box
+											component="img"
+											src={marker.images[0]}
 											style={{
-												display: "flex",
-												flexDirection: "column",
-												alignItems: "center",
+												maxWidth: "100%",
 											}}
-										>
-											<Typography variant="body2">{marker.name}</Typography>
-											<Box
-												component="img"
-												src={marker.images[0]}
-												style={{
-													maxWidth:
-														popupRef.current?.clientWidth &&
-														popupRef.current.clientWidth * 0.8,
-												}}
-											/>
-											{/* <img src={marker.images[0]} style={{}} /> */}
-										</div>
-									</InfoWindow>
-								</div>
+										/>
+										{/* <img src={marker.images[0]} style={{}} /> */}
+									</div>
+								</InfoWindow>
+								// </div>
 							)}
 						</Marker>
 					))}
