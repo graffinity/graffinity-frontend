@@ -55,7 +55,6 @@ export default function MapComponent(props: MapComponentProps) {
 			mapRef.current.panTo(marker.position);
 			mapRef.current.setZoom(16);
 		}
-
 	};
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
