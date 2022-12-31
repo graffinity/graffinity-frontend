@@ -27,10 +27,8 @@ const Sandbox = () => {
 	const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
 		let newFiles = event.target.files;
 		setImages(newFiles);
-		console.log("newFiles", newFiles);
 		if (newFiles) {
 			let url = URL.createObjectURL(newFiles[0]);
-			console.log("url", url);
 		}
 	};
 
@@ -48,13 +46,11 @@ const Sandbox = () => {
 		// let response = await GraffitiPostAPI.findAll();
 		let response = await GraffitiPostAPI.findById(1);
 		// setGraffitiPosts(response);
-		console.log(response);
 	};
 
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
 		if (file) {
-			console.log("file", file);
 			let url = URL.createObjectURL(file);
 			let formData = new FormData();
 			formData.append("file", file);
@@ -186,7 +182,6 @@ const Sandbox = () => {
 								onChange={(event) => {
 									if (event.currentTarget.files) {
 										formik.setFieldValue("file", event.currentTarget.files[0]);
-										console.log("event", event.currentTarget.files);
 									} else {
 										formik.setFieldValue("file", null);
 									}

@@ -33,7 +33,6 @@ const HomePage = () => {
 			return;
 		}
 		setHeight(window.innerHeight);
-		console.log("height", height);
 	});
 	useEffect(() => {
 		getGraffitis();
@@ -52,7 +51,7 @@ const HomePage = () => {
 	const getGraffitis = async () => {
 		let response = await GraffitiPostAPI.findAll();
 		getMarkers(response);
-		console.log("graffitis", response);
+
 		setGraffitis(response);
 	};
 
@@ -64,10 +63,9 @@ const HomePage = () => {
 			return objectURL;
 		});
 		let response = await Promise.all(fetchedPhotos).then((values) => {
-			console.log(values);
 			return values;
 		});
-		console.log("photos", response);
+
 		return response;
 	};
 
@@ -93,7 +91,6 @@ const HomePage = () => {
 		});
 		let response = await Promise.all(markers).then((values) => {
 			setMarkers(values);
-			console.log(values);
 			return values;
 		});
 		return response;

@@ -16,7 +16,9 @@ const AppRouter = () => {
 
 	const getProfile = async () => {
 		let res = await AuthAPI.getProfile();
-		console.log("profile", res);
+		if (res) {
+			console.log("profile", res);
+		}
 	};
 
 	return (

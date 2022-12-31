@@ -8,13 +8,9 @@ import {
 	useJsApiLoader,
 } from "@react-google-maps/api";
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
-import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { MarkerData } from "pages/home/HomePage";
-import { useCallback, useEffect, useRef, useState } from "react";
-import usePlacesAutocomplete, {
-	getGeocode,
-	getLatLng,
-} from "use-places-autocomplete";
+import { useCallback, useRef, useState } from "react";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
 import mapStyles from "./mapStyles";
 
@@ -38,10 +34,13 @@ const maxWidthForDesktopView = 900;
 export default function MapComponent(props: MapComponentProps) {
 	const { markers } = props;
 
-	let apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-	const { isLoaded } = useJsApiLoader({
+	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+	const [libraries] = useState<
+		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
+	>(["places"]);
+	const { isLoaded, loadError } = useJsApiLoader({
 		googleMapsApiKey: apiKey,
-		libraries: ["places"],
+		libraries: libraries,
 	});
 
 	const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -57,6 +56,21 @@ export default function MapComponent(props: MapComponentProps) {
 		}
 	};
 
+	const {
+		init,
+		ready,
+		value,
+		suggestions: { status, data },
+		setValue,
+		clearSuggestions,
+	} = usePlacesAutocomplete({
+		initOnMount: false,
+		requestOptions: {
+			// location: { lat: () => 43.6532, lng: () => -79.3832 },
+			radius: 100 * 1000,
+		},
+	});
+
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
 	}, []);
@@ -66,6 +80,7 @@ export default function MapComponent(props: MapComponentProps) {
 			mapRef.current = map;
 			map.setZoom(12);
 			setMap(map);
+			init();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
@@ -182,37 +197,42 @@ function Locate(props: LocateAndSearchProps) {
 
 function Search(props: LocateAndSearchProps) {
 	const { panTo } = props;
-	const {
-		ready,
-		value,
-		suggestions: { status, data },
-		setValue,
-		clearSuggestions,
-	} = usePlacesAutocomplete({
-		requestOptions: {
-			// location: { lat: () => 43.6532, lng: () => -79.3832 },
-			radius: 100 * 1000,
-		},
-	});
+
+	// const { init } = usePlacesAutocomplete({
+	// 	initOnMount: false, // Disable initializing when the component mounts, default is true
+	//   });
+
+	// const {
+	// 	ready,
+	// 	value,
+	// 	suggestions: { status, data },
+	// 	setValue,
+	// 	clearSuggestions,
+	// } = usePlacesAutocomplete({
+	// 	requestOptions: {
+	// 		// location: { lat: () => 43.6532, lng: () => -79.3832 },
+	// 		radius: 100 * 1000,
+	// 	},
+	// });
 
 	// https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
-	const handleInput = (e: { target: { value: string } }) => {
-		setValue(e.target.value);
-	};
+	// const handleInput = (e: { target: { value: string } }) => {
+	// 	setValue(e.target.value);
+	// };
 
-	const handleSelect = async (address: string) => {
-		setValue(address, false);
-		clearSuggestions();
+	// const handleSelect = async (address: string) => {
+	// 	setValue(address, false);
+	// 	clearSuggestions();
 
-		try {
-			let results = await getGeocode({ address });
-			let coords = getLatLng(results[0]);
-			panTo(coords);
-		} catch (error) {
-			console.log("😱 Error: ", error);
-		}
-	};
+	// 	try {
+	// 		let results = await getGeocode({ address });
+	// 		let coords = getLatLng(results[0]);
+	// 		panTo(coords);
+	// 	} catch (error) {
+	// 		console.log("😱 Error: ", error);
+	// 	}
+	// };
 	return <div></div>;
 
 	// return (
@@ -235,7 +255,4 @@ function Search(props: LocateAndSearchProps) {
 	// 		</Combobox>
 	// 	</div>
 	// );
-}
-function setEffect(arg0: () => void, arg1: never[]) {
-	throw new Error("Function not implemented.");
 }
