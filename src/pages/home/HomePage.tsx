@@ -21,7 +21,7 @@ export interface MarkerData {
 const HomePage = () => {
 	const [width, setWidth] = useState<number>(window.innerWidth);
 	const [graffitis, setGraffitis] = useState<GraffitiResponse[]>([]);
-	const [height, setHeight] = useState<number | null>(null);
+	const [height, setHeight] = useState<number>(window.innerHeight);
 	const [markers, setMarkers] = useState<MarkerData[]>([]);
 
 	window.addEventListener("resize", () => {
@@ -114,7 +114,7 @@ const HomePage = () => {
 					ref={containerRef}
 					className="right"
 					style={{
-						height: "100%",
+						maxHeight: "100vh",
 						maxWidth: "50vw",
 					}}
 				>

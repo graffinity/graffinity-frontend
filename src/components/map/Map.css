@@ -43,3 +43,15 @@
 	border: none;
 	z-index: 10;
 }
+@media screen and (max-width: 900px) {
+	.map {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-items: center;
+		width: 100vw !important;
+		height: 150vw !important;
+		align-content: center;
+		margin: 16px 0 0 0;
+	}
+}

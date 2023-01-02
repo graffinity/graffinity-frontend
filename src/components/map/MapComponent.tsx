@@ -26,7 +26,7 @@ const options = {
 };
 interface MapComponentProps {
 	width: number;
-	height: number | null;
+	height: number;
 	markers: MarkerData[];
 }
 
@@ -104,13 +104,12 @@ export default function MapComponent(props: MapComponentProps) {
 		<div
 			className="map-container"
 			style={{
-				width: "100%",
 				flex: 1,
 				display: "flex",
 				flexDirection: "column",
 			}}
 		>
-			<Search panTo={panTo} />
+			{/* <Search panTo={panTo} /> */}
 			<Locate panTo={panTo} />
 
 			{isLoaded && (
@@ -121,7 +120,9 @@ export default function MapComponent(props: MapComponentProps) {
 							props.width > maxWidthForDesktopView
 								? `calc(${props.width}px /2)`
 								: "100%",
-						height: props.height ? props.height : "80%",
+						// height: props.height ? props.height : "80%",
+						height: props.height > maxWidthForDesktopView ? `calc(${props.height}%)`
+							: "100%",
 					}}
 					center={center}
 					options={options}
