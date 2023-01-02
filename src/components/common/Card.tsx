@@ -4,8 +4,10 @@ import "./Common.css";
 const MultiActionAreaCard = () => (
 	<Card
 		className="card"
-		sx={{
+		style={{
 			background: "transparent",
+		}}
+		sx={{
 			border: "none",
 			boxShadow: "none",
 			display: { xs: "none", md: "block" },

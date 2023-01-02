@@ -27,10 +27,8 @@ const Sandbox = () => {
 	const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
 		let newFiles = event.target.files;
 		setImages(newFiles);
-		console.log("newFiles", newFiles);
 		if (newFiles) {
 			let url = URL.createObjectURL(newFiles[0]);
-			console.log("url", url);
 		}
 	};
 
@@ -48,13 +46,11 @@ const Sandbox = () => {
 		// let response = await GraffitiPostAPI.findAll();
 		let response = await GraffitiPostAPI.findById(1);
 		// setGraffitiPosts(response);
-		console.log(response);
 	};
 
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
 		if (file) {
-			console.log("file", file);
 			let url = URL.createObjectURL(file);
 			let formData = new FormData();
 			formData.append("file", file);
@@ -78,7 +74,6 @@ const Sandbox = () => {
 			let response = await GraffitiPhotoAPI.create(formData);
 			console.log("response: ", response);
 		}
-		console.log("no file :(");
 	};
 
 	return (
@@ -173,6 +168,7 @@ const Sandbox = () => {
 					file: null,
 				}}
 				onSubmit={onSubmit}
+				npx
 			>
 				{(formik: FormikProps<any>) => (
 					<>
@@ -186,14 +182,19 @@ const Sandbox = () => {
 								onChange={(event) => {
 									if (event.currentTarget.files) {
 										formik.setFieldValue("file", event.currentTarget.files[0]);
-										console.log("event", event.currentTarget.files);
 									} else {
 										formik.setFieldValue("file", null);
 									}
 								}}
 							/>
 						</label>
-						<Button type="submit" variant="contained">
+						<Button
+							type="submit"
+							variant="contained"
+							onClick={() => {
+								onSubmit(formik.values);
+							}}
+						>
 							Submit
 						</Button>
 					</>

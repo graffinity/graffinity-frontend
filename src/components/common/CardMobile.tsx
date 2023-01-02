@@ -3,8 +3,10 @@ import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 const MultiActionAreaCardMobile = () => (
 	<Card
 		className="card"
-		sx={{
+		style={{
 			background: "transparent",
+		}}
+		sx={{
 			border: "none",
 			boxShadow: "none",
 			display: { xs: "block", md: "none" },

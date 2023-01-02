@@ -30,7 +30,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 const Root = styled("div")(({ theme }) => ({
 	height: "100%",
-	backgroundColor: "transparent",
+	background: "transparent",
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
