@@ -1,0 +1,9 @@
+.PeperStepper {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+}
+div {
+	margin: 0;
+	padding: 0;
+}

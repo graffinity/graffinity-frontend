@@ -10,6 +10,7 @@ import {
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
 import { MarkerData } from "pages/home/HomePage";
 import { useCallback, useRef, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
 import mapStyles from "./mapStyles";
@@ -97,6 +98,8 @@ export default function MapComponent(props: MapComponentProps) {
 		[]
 	);
 
+	const navigate = useNavigate();
+
 	return (
 		<div
 			className="map-container"
@@ -144,12 +147,16 @@ export default function MapComponent(props: MapComponentProps) {
 										}}
 									>
 										<Typography variant="body2">{marker.name}</Typography>
+
+
 										<Box
 											component="img"
 											src={marker.images[0]}
 											style={{
 												maxWidth: "100%",
 											}}
+											sx={{ ":hover": { cursor: "pointer" } }}
+											onClick={() => { navigate("/graffiti/view") }}
 										/>
 										{/* <img src={marker.images[0]} style={{}} /> */}
 									</div>

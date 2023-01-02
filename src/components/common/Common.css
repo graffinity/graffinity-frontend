@@ -76,3 +76,10 @@ div {
 		margin-bottom: 16px;
 	}
 }
+.ImageSlider {
+	display: flex;
+	align-content: stretch;
+	justify-content: center;
+	padding: 0;
+	margin: 0;
+}

@@ -1,9 +1,11 @@
+import SwipeableTextMobileStepper from "components/common/ImageSlider";
 import React from "react";
+import './GraffitiFulView.css'
 
 export default function GraffitiFullView() {
     return (
-        <>
-            eminem
-        </>
+        <div className="PeperStepper">
+            <SwipeableTextMobileStepper />
+        </div>
     )
 }

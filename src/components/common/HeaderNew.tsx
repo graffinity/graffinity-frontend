@@ -1,15 +1,23 @@
-import { AppBar, Button, Link, List, Toolbar, Typography } from "@mui/material";
-import AppTheme from "AppTheme";
+import { AppBar, Button, IconButton, Link, List, Menu, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
 import { useState } from "react";
 import "./Common.css";
 import routes from "constants/routes";
-
+import MenuIcon from '@mui/icons-material/Menu';
+import React from "react";
 const Header = () => {
 	const navigate = useNavigate();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	const handleOpenLoginDialog = () => {
 		setLoginDialogOpen(true);
@@ -25,11 +33,17 @@ const Header = () => {
 	};
 
 	return (
-		<AppBar position="static">
+		<AppBar position="static" sx={{
+			display: 'block',
+			background: 'transparent',
+			boxShadow: 'none'
+		}}>
 			<Toolbar
 				disableGutters={true}
 				style={{
 					backgroundColor: "rgb(32, 32, 36)",
+					borderRadius: "0 0 16px 16px",
+
 				}}
 			>
 				<div
@@ -41,38 +55,77 @@ const Header = () => {
 						width: "100%",
 					}}
 				>
-					<List
-						style={{
-							width: "100%",
-							display: "flex",
-							flexDirection: "row",
-							gap: "12px",
+					<IconButton
+						aria-controls={open ? 'basic-menu' : undefined}
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="menu"
+						aria-haspopup="true"
+						aria-expanded={open ? 'true' : undefined}
+						onClick={handleClick}
+						sx={{ mr: 2 }}
+					>
+						<MenuIcon />
+					</IconButton>
+					<Menu
+						sx={{ display: 'flex', alignContent: 'center', justifyContent: 'center', }}
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button',
 						}}
 					>
-						{[...routes[0].items, ...routes[1].items].map((item) => (
-							<Link key={item.key} href={item.path}>
-								{item.pageTitle}
-							</Link>
-						))}
-					</List>
-					<div style={{ marginLeft: "20px" }}>
+						<List
+							style={{
+								marginLeft: '16px',
+								marginRight: '16px',
+								width: "100%",
+								display: "flex",
+								alignContent: 'center',
+								justifyContent: 'center',
+								flexDirection: "column",
+								gap: "12px",
+							}}
+						>
+							{[...routes[0].items, ...routes[1].items].map((item) => (
+								<Link
+									sx={{ color: "black" }}
+									underline="none"
+									key={item.key} href={item.path}>
+									{item.pageTitle}
+								</Link>
+							))}
+						</List>
 						<Button
 							variant={"text"}
 							onClick={() => navigate("/pagalba")}
-							style={{
-								color: AppTheme.palette.primary.main,
-							}}
+							// style={{
+							// 	color: AppTheme.palette.primary.main,
+							// }}
+							sx={{ color: 'black' }}
 						>
 							help
 						</Button>
+
+					</Menu>
+
+
+
+					<div style={{ marginLeft: "20px" }}>
+
 					</div>
 
 					<div>
-						<Button onClick={handleOpenLoginDialog}>
+						<Button onClick={handleOpenLoginDialog}
+							sx={{ color: "white" }}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
-						<Button onClick={handleLogout}>
+						<Button onClick={handleLogout}
+							sx={{ color: "white" }}>
 							<Typography>Logout</Typography>
 						</Button>
 
@@ -84,7 +137,7 @@ const Header = () => {
 				open={loginDialogOpen}
 				handleClose={handleCloseLoginDialog}
 			/>
-		</AppBar>
+		</AppBar >
 	);
 };
 
