@@ -2,9 +2,9 @@ import RouteGroup from "models/routes/RouteGroup";
 import PlaygroundPage from "pages/auth/Playground";
 import SignupPage from "pages/auth/SignupPage";
 import CreateGrafiitiPage from "pages/graffiti/CreateGraffitiPage";
+import GraffitiFullView from "pages/GraffitiFullView/GraffitiFullView";
 import HomePage from "pages/home/HomePage";
 import Sandbox from "pages/sandbox/Sandbox";
-
 const routes: RouteGroup[] = [
 	{
 		group: "Menu",
@@ -38,6 +38,12 @@ const routes: RouteGroup[] = [
 				key: "graffiti-create",
 				pageTitle: "Create Graffiti",
 				element: <CreateGrafiitiPage />,
+			},
+			{
+				path: "/graffiti/view",
+				key: "graffiti-view",
+				pageTitle: "Full View",
+				element: <GraffitiFullView />,
 			},
 		],
 	},

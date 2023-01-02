@@ -1,10 +1,11 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Link, List, Toolbar, Typography } from "@mui/material";
 import AppTheme from "AppTheme";
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
 import { useState } from "react";
 import "./Common.css";
+import routes from "constants/routes";
 
 const Header = () => {
 	const navigate = useNavigate();
@@ -40,6 +41,20 @@ const Header = () => {
 						width: "100%",
 					}}
 				>
+					<List
+						style={{
+							width: "100%",
+							display: "flex",
+							flexDirection: "row",
+							gap: "12px",
+						}}
+					>
+						{[...routes[0].items, ...routes[1].items].map((item) => (
+							<Link key={item.key} href={item.path}>
+								{item.pageTitle}
+							</Link>
+						))}
+					</List>
 					<div style={{ marginLeft: "20px" }}>
 						<Button
 							variant={"text"}
