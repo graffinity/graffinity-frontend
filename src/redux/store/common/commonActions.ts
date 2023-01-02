@@ -3,7 +3,7 @@ import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
 import { RootState } from "../rootReducer";
 import { commonSlice } from "./commonSlice";
-import LoginResponse from "@/models/auth/LoginResponse";
+import LoginResponse from "models/auth/LoginResponse";
 
 const commonActions = commonSlice.actions;
 

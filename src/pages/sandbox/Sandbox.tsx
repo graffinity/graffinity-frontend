@@ -5,14 +5,14 @@ import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import IFile from "models/file/IFile";
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import "./Sandbox.css"
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import "./Sandbox.css";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -36,17 +36,15 @@ const Sandbox = () => {
 	const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
 		let newFiles = event.target.files;
 		setImages(newFiles);
-		console.log("newFiles", newFiles);
 		if (newFiles) {
 			let url = URL.createObjectURL(newFiles[0]);
-			console.log("url", url);
 		}
 	};
 
 	// const [images, setImages] = useState<ImageListType>([]);
 
 	useEffect(() => {
-		// getGraffitiPosts();
+		getGraffitiPosts();
 	}, []);
 
 	const onChange = (addUpdateIndex: number[] | undefined) => {
@@ -54,15 +52,14 @@ const Sandbox = () => {
 	};
 
 	const getGraffitiPosts = async () => {
-		let response = await GraffitiPostAPI.findAll();
-		setGraffitiPosts(response);
-		console.log(response);
+		// let response = await GraffitiPostAPI.findAll();
+		let response = await GraffitiPostAPI.findById(1);
+		// setGraffitiPosts(response);
 	};
 
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
 		if (file) {
-			console.log("file", file);
 			let url = URL.createObjectURL(file);
 			let formData = new FormData();
 			formData.append("file", file);
@@ -86,122 +83,139 @@ const Sandbox = () => {
 			let response = await GraffitiPhotoAPI.create(formData);
 			console.log("response: ", response);
 		}
-		console.log("no file :(");
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
-
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: 'center',
-					padding: "24px",
-					height: "100%",
-					gap: "8px",
-				}}
-			>
-				<div>
-					<Typography color="common.white" sx={{
-						mb: '12px',
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				padding: "24px",
+				height: "100%",
+				gap: "8px",
+			}}
+		>
+			<div>
+				<Typography
+					color="common.white"
+					sx={{
+						mb: "12px",
 						fontFamily: "Times, Times New Roman, serif",
-					}}>
-						Enter the name of the graffiti
-					</Typography>
-					<TextField
-						id="outlined-multiline-flexible demo-helper-text-misaligned-
-					no-helper"
-						fullWidth
-						multiline
-						label="Name"
-						variant="outlined"
-					/>
-					<Typography color="common.white" sx={{ mt: '12px', mb: '12px', fontFamily: "Times, Times New Roman, serif", }}>
-						Enter a short description
-					</Typography>
-					<TextField
-						id="outlined-multiline-flexible demo-helper-text-misaligned-
-					no-helper"
-						fullWidth
-						multiline
-						label="Description"
-						variant="outlined"
-					/>
-					<Typography color="common.white" sx={{ mt: '12px', mb: '12px', fontFamily: "Times, Times New Roman, serif", }}>
-						Enter an address of the graffiti
-					</Typography>
-					<Paper
-						component="form"
-						sx=
-						{{
-							p: '2px 4px', display: 'flex', alignItems: 'center',
-							width: 400,
-							mb: '12px', fontFamily: "Times, Times New Roman, serif",
-						}}
-					>
-
-						<InputBase
-							sx={{
-								ml: 5, flex: 1,
-								fontFamily: "Times, Times New Roman, serif",
-							}}
-							placeholder="Search Google Maps"
-							inputProps={{ 'aria-label': 'search google maps' }}
-						/>
-						<IconButton type="button" sx={{ p: '10px' }}
-							aria-label="search">
-							<SearchIcon />
-						</IconButton>
-						<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-						<IconButton color="primary" sx={{ p: '10px' }}
-							aria-label="directions">
-							<DirectionsIcon />
-						</IconButton>
-					</Paper>
-				</div>
-				<Formik
-					validationSchema={validationSchema}
-					initialValues={{
-						file: null,
 					}}
-					onSubmit={onSubmit}
 				>
-					{(formik: FormikProps<any>) => (
-						<>
-							<label className="drop-container">
-								<span className="drop-title">Drop files here</span>
-								or
-								<input
-									id="file"
-									name="file"
-									type="file"
-									onChange={(event) => {
-										if (event.currentTarget.files) {
-											formik.setFieldValue("file",
-												event.currentTarget.files[0]);
-											console.log("event",
-												event.currentTarget.files);
-										} else {
-											formik.setFieldValue("file", null);
-										}
-									}}
-								/>
-							</label>
-							<Button type="submit" variant="contained">
-								Submit
-							</Button>
-						</>
-					)}
-				</Formik>
-				{images &&
-					Array.from(images).map((image) => (
-						<div key={image.name}>
-							<img src={URL.createObjectURL(image)} alt={image.name} />
-						</div>
-					))}
+					Enter the name of the graffiti
+				</Typography>
+				<TextField
+					id="outlined-multiline-flexible demo-helper-text-misaligned-
+					no-helper"
+					fullWidth
+					multiline
+					label="Name"
+					variant="outlined"
+				/>
+				<Typography
+					color="common.white"
+					sx={{
+						mt: "12px",
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
+					Enter a short description
+				</Typography>
+				<TextField
+					id="outlined-multiline-flexible demo-helper-text-misaligned-
+					no-helper"
+					fullWidth
+					multiline
+					label="Description"
+					variant="outlined"
+				/>
+				<Typography
+					color="common.white"
+					sx={{
+						mt: "12px",
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
+					Enter an address of the graffiti
+				</Typography>
+				<Paper
+					component="form"
+					sx={{
+						p: "2px 4px",
+						display: "flex",
+						alignItems: "center",
+						width: 400,
+						mb: "12px",
+						fontFamily: "Times, Times New Roman, serif",
+					}}
+				>
+					<InputBase
+						sx={{ ml: 5, flex: 1, fontFamily: "Times, Times New Roman, serif" }}
+						placeholder="Search Google Maps"
+						inputProps={{ "aria-label": "search google maps" }}
+					/>
+					<IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+						<SearchIcon />
+					</IconButton>
+					<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+					<IconButton
+						color="primary"
+						sx={{ p: "10px" }}
+						aria-label="directions"
+					>
+						<DirectionsIcon />
+					</IconButton>
+				</Paper>
 			</div>
-		</ThemeProvider>
+			<Formik
+				validationSchema={validationSchema}
+				initialValues={{
+					file: null,
+				}}
+				onSubmit={onSubmit}
+				npx
+			>
+				{(formik: FormikProps<any>) => (
+					<>
+						<label className="drop-container">
+							<span className="drop-title">Drop files here</span>
+							or
+							<input
+								id="file"
+								name="file"
+								type="file"
+								onChange={(event) => {
+									if (event.currentTarget.files) {
+										formik.setFieldValue("file", event.currentTarget.files[0]);
+									} else {
+										formik.setFieldValue("file", null);
+									}
+								}}
+							/>
+						</label>
+						<Button
+							type="submit"
+							variant="contained"
+							onClick={() => {
+								onSubmit(formik.values);
+							}}
+						>
+							Submit
+						</Button>
+					</>
+				)}
+			</Formik>
+			{images &&
+				Array.from(images).map((image) => (
+					<div key={image.name}>
+						<img src={URL.createObjectURL(image)} alt={image.name} />
+					</div>
+				))}
+		</div>
 	);
 };
 

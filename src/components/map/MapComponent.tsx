@@ -1,34 +1,22 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-restricted-globals */
+import { Box, IconButton, Typography } from "@mui/material";
 import {
 	GoogleMap,
 	InfoWindow,
 	Marker,
 	useJsApiLoader,
 } from "@react-google-maps/api";
-import { useCallback, useRef, useState } from "react";
-import usePlacesAutocomplete, {
-	getGeocode,
-	getLatLng,
-} from "use-places-autocomplete";
-import { ReactComponent as location } from "assets/svg/location.svg";
-
-import { IconButton } from "@mui/material";
-// import { formatRelative } from "date-fns";
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
+import { MarkerData } from "pages/home/HomePage";
+import { useCallback, useRef, useState } from "react";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
 import mapStyles from "./mapStyles";
 
-// interface MarkerData {
-// 	lat: number;
-// 	lng: number;
-// 	time: Date;
-// }
-
 const center = {
-	lat: 54.6872,
-	lng: 25.2797,
+	lat: 54.69,
+	lng: 25.28,
 };
 const options = {
 	styles: mapStyles,
@@ -38,69 +26,76 @@ const options = {
 interface MapComponentProps {
 	width: number;
 	height: number | null;
+	markers: MarkerData[];
 }
 
 const maxWidthForDesktopView = 900;
-const markers = [
-	{
-		id: 1,
-		name: "PLZ, WORK",
-		position: { lat: 54.687431, lng: 25.281231 },
-		image: "src/assets/images/testPic.jpg"
-		// ../../assets/images/testPic.jpg
-	}
-];
 
 export default function MapComponent(props: MapComponentProps) {
-	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-		libraries: ["places"],
+	const { markers } = props;
+
+	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+	const [libraries] = useState<
+		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
+	>(["places"]);
+	const { isLoaded, loadError } = useJsApiLoader({
+		googleMapsApiKey: apiKey,
+		libraries: libraries,
 	});
 
-	// const [markers, setMarkers] = useState<MarkerData[]>([]);
 	const [map, setMap] = useState<google.maps.Map | null>(null);
-	// const [selected, setSelected] = useState<MarkerData | null>(null);
+	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
+
 	const mapRef = useRef<google.maps.Map | null>(null);
-	const [selectedMarker, setSelectedMarker] = useState("");
 
-
-	const [activeMarker, setActiveMarker] = useState(null);
-
-	const handleActiveMarker = (marker: any) => {
-		if (marker === activeMarker) {
-			return;
-		}
+	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
+		if (mapRef.current) {
+			mapRef.current.panTo(marker.position);
+			mapRef.current.setZoom(16);
+		}
 	};
+
+	const {
+		init,
+		ready,
+		value,
+		suggestions: { status, data },
+		setValue,
+		clearSuggestions,
+	} = usePlacesAutocomplete({
+		initOnMount: false,
+		requestOptions: {
+			// location: { lat: () => 43.6532, lng: () => -79.3832 },
+			radius: 100 * 1000,
+		},
+	});
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
 	}, []);
-	// const onMapClick = useCallback((event: google.maps.MapMouseEvent) => {
-	// 	if (event.latLng) {
-	// 		let newMarker: MarkerData = {
-	// 			lat: event.latLng.lat(),
-	// 			lng: event.latLng.lng(),
-	// 			time: new Date(),
-	// 		};
-	// 		setMarkers((previous) => [...previous, newMarker]);
-	// 	}
-	// }, []);
 
-	const onMapLoad = useCallback((map: google.maps.Map) => {
-		mapRef.current = map;
-		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
-		setMap(map);
-	}, []);
+	const onMapLoad = useCallback(
+		(map: google.maps.Map) => {
+			mapRef.current = map;
+			map.setZoom(12);
+			setMap(map);
+			init();
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
-	const panTo = useCallback((coords: google.maps.LatLngLiteral) => {
-		if (mapRef.current) {
-			mapRef.current?.panTo(coords);
-			mapRef.current?.setZoom(16);
-			setMap(mapRef.current);
-		}
-	}, []);
+	const panTo = useCallback(
+		(coords: google.maps.LatLngLiteral, zoom?: number) => {
+			if (mapRef.current) {
+				mapRef.current?.panTo(coords);
+				mapRef.current?.setZoom(zoom ? zoom : 14);
+				setMap(mapRef.current);
+			}
+		},
+		[]
+	);
 
 	return (
 		<div
@@ -127,39 +122,45 @@ export default function MapComponent(props: MapComponentProps) {
 					}}
 					center={center}
 					options={options}
-					// onClick={onMapClick}
 					onLoad={onMapLoad}
 					onUnmount={onUnmount}
-					onClick={() => setActiveMarker(null)} >
-					{markers.map(({ id, name, position, image }) => (
+					onClick={() => setActiveMarker(null)}
+				>
+					{markers.map((marker) => (
 						<Marker
-							key={id}
-							position={position}
-							onClick={() => handleActiveMarker(id)}
+							key={marker.id}
+							position={marker.position}
+							onClick={() => handleActiveMarker(marker)}
 						>
-							{activeMarker === id ? (
-
-								<InfoWindow onCloseClick={() =>
-									setActiveMarker(null)}>
-									<>
-										<div>{name}</div>
-										<a href="#">
-											<img
-												src=
-												{require("../../assets/images/testPic.jpg")}
-												width="250"
-												height="250"
-											/>
-										</a>
-									</>
+							{activeMarker?.id === marker.id && (
+								// <div ref={popupRef}>
+								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											alignItems: "center",
+											gap: "8px",
+										}}
+									>
+										<Typography variant="body2">{marker.name}</Typography>
+										<Box
+											component="img"
+											src={marker.images[0]}
+											style={{
+												maxWidth: "100%",
+											}}
+										/>
+										{/* <img src={marker.images[0]} style={{}} /> */}
+									</div>
 								</InfoWindow>
-							) : null}
+								// </div>
+							)}
 						</Marker>
 					))}
 				</GoogleMap>
-			)
-			}
-		</div >
+			)}
+		</div>
 	);
 }
 
@@ -196,37 +197,42 @@ function Locate(props: LocateAndSearchProps) {
 
 function Search(props: LocateAndSearchProps) {
 	const { panTo } = props;
-	const {
-		ready,
-		value,
-		suggestions: { status, data },
-		setValue,
-		clearSuggestions,
-	} = usePlacesAutocomplete({
-		requestOptions: {
-			// location: { lat: () => 43.6532, lng: () => -79.3832 },
-			radius: 100 * 1000,
-		},
-	});
+
+	// const { init } = usePlacesAutocomplete({
+	// 	initOnMount: false, // Disable initializing when the component mounts, default is true
+	//   });
+
+	// const {
+	// 	ready,
+	// 	value,
+	// 	suggestions: { status, data },
+	// 	setValue,
+	// 	clearSuggestions,
+	// } = usePlacesAutocomplete({
+	// 	requestOptions: {
+	// 		// location: { lat: () => 43.6532, lng: () => -79.3832 },
+	// 		radius: 100 * 1000,
+	// 	},
+	// });
 
 	// https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
-	const handleInput = (e: { target: { value: string } }) => {
-		setValue(e.target.value);
-	};
+	// const handleInput = (e: { target: { value: string } }) => {
+	// 	setValue(e.target.value);
+	// };
 
-	const handleSelect = async (address: string) => {
-		setValue(address, false);
-		clearSuggestions();
+	// const handleSelect = async (address: string) => {
+	// 	setValue(address, false);
+	// 	clearSuggestions();
 
-		try {
-			let results = await getGeocode({ address });
-			let coords = getLatLng(results[0]);
-			panTo(coords);
-		} catch (error) {
-			console.log("😱 Error: ", error);
-		}
-	}
+	// 	try {
+	// 		let results = await getGeocode({ address });
+	// 		let coords = getLatLng(results[0]);
+	// 		panTo(coords);
+	// 	} catch (error) {
+	// 		console.log("😱 Error: ", error);
+	// 	}
+	// };
 	return <div></div>;
 
 	// return (

@@ -1,4 +1,4 @@
-import LoginResponse from "@/models/auth/LoginResponse";
+import LoginResponse from "models/auth/LoginResponse";
 import {
 	getStatus,
 	handleLogin,
