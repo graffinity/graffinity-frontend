@@ -83,3 +83,46 @@ div {
 	padding: 0;
 	margin: 0;
 }
+.WholeContainer {
+	display: flex;
+	margin-left: 24px;
+	margin-top: 36px;
+	margin-right: 16px;
+	margin-bottom: 16px;
+}
+.CardImage {
+	width: 100%;
+	max-width: 400px;
+	max-height: 400px;
+	height: 100%;
+	border-radius: 15px;
+}
+.ContentContainer {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-left: 1.2em;
+}
+.Title,
+.Location,
+.Date,
+.Description {
+	color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 12px;
+}
+.Title {
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	font-size: 25px;
+}
+.Location {
+	font-weight: 500;
+	letter-spacing: 0.25em;
+	font-size: 16px;
+}
+.Description {
+	width: 40%;
+	font-size: 12px;
+	font-weight: 500;
+}

@@ -113,6 +113,11 @@ const Sandbox = () => {
 					multiline
 					label="Name"
 					variant="outlined"
+					inputProps={{ style: { color: "white" } }}
+					sx={{
+						"& .MuiInputLabel-root": { color: 'white' },
+						"& .MuiFilledInput-input": { border: '1px solid white', borderRadius: 1 }
+					}}
 				/>
 				<Typography
 					color="common.white"
@@ -131,7 +136,11 @@ const Sandbox = () => {
 					multiline
 					label="Description"
 					variant="outlined"
-				/>
+					inputProps={{ style: { color: "white" } }}
+					sx={{
+						"& .MuiInputLabel-root": { color: 'white' },
+						"& .MuiFilledInput-input": { border: '1px solid white', borderRadius: 1 }
+					}} />
 				<Typography
 					color="common.white"
 					sx={{
