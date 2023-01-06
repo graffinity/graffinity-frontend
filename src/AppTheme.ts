@@ -46,6 +46,69 @@ const AppTheme = createTheme({
 				},
 			],
 		},
+		MuiInputBase: {
+			styleOverrides: {
+				input: {
+					color: "#E5E5E5 !important",
+					"&.MuiOutlinedInput-input": {
+						padding: "13.5px 16px",
+						height: "21px",
+					},
+					"& 	.Mui-focused": {
+						border: "2px solid #d9d9d9 !important",
+					},
+					root: {
+						"&.MuiOutlinedInput-root": {
+							color: "#ddd8",
+							"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+								border: "2px solid #d9d9d9 !important",
+							},
+
+							"& fieldset": {
+								border: "none",
+							},
+						},
+						"& .MuiOutlinedInput-root .Mui-focused": {
+							"& .MuiOutlinedInput-notchedOutline": {
+
+								border: "2px solid #d9d9d9 !important",
+							}
+						},
+					},
+				},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+				},
+				notchedOutline: {
+					border: "1px solid #fff7",
+				},
+			},
+		},
+
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					"&:hover .MuiOutlinedInput-notchedOutline": {
+						borderColor: "#FFFFFF",
+					},
+					
+				},
+			},
+		},
+		MuiAutocomplete: {
+			styleOverrides: {
+				root: {
+					"& .MuiOutlinedInput-root": {
+						"& .MuiAutocomplete-input": {
+							padding: "4.5px 4px 4.5px 6px",
+						},
+					},
+				},
+			},
+		},
 	},
 	typography: {
 		fontFamily: "Inter",
@@ -116,7 +179,6 @@ const AppTheme = createTheme({
 			extraLight: "#7A8BC7",
 		},
 		text: {
-			primary: "#171440",
 			secondary: "rgba(23, 20, 64, 0.6)",
 			light: "#F8F8F8",
 			disabled: "rgba(24, 29, 43, 0.6)",
@@ -131,6 +193,18 @@ const AppTheme = createTheme({
 		warning: {
 			main: "#FFC107",
 			contrastText: "#3A3500",
+		},
+		red: {
+			50: "#FEEBEE",
+			100: "#FECDD2",
+			200: "#EF9A9A",
+			300: "#E57373",
+			400: "#EF5350",
+			500: "#F44336",
+			600: "#E53935",
+			700: "#D32F2F",
+			800: "#C62828",
+			900: "#B71C1C",
 		},
 	},
 });
@@ -160,6 +234,22 @@ declare module "@mui/material/styles" {
 	}
 }
 declare module "@mui/material/styles/createPalette" {
+	interface Palette {
+		specific: Palette["primary"];
+		neutral: Palette["primary"];
+		error: Palette["primary"];
+		red: Palette["grey"];
+		green: Palette["grey"];
+	}
+
+	interface PaletteOptions {
+		specific?: PaletteOptions["primary"];
+		neutral?: PaletteOptions["primary"];
+		error?: PaletteOptions["primary"];
+		red?: PaletteOptions["grey"];
+		green?: PaletteOptions["grey"];
+	}
+
 	interface TypeText {
 		light: string;
 	}
