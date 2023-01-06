@@ -46,6 +46,13 @@ const AppTheme = createTheme({
 				},
 			],
 		},
+		MuiAppBar: {
+			styleOverrides: {
+				root: {
+					position: "relative",
+				},
+			},
+		},
 	},
 	typography: {
 		fontFamily: "Inter",

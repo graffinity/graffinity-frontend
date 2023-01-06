@@ -10,8 +10,8 @@ export function FooterContainer() {
 		<AppBar
 			position="static"
 			color="primary"
-			sx={{ display: { xs: "none", md: "block" } }}
 			style={{
+				display: 'relative',
 				width: "100%",
 				bottom: "0",
 				background: "#202024",
