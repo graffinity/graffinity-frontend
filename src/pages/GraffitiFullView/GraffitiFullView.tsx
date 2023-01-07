@@ -7,7 +7,9 @@ export default function GraffitiFullView() {
     return (
         <div className="PeperStepper">
             <SwipeableTextMobileStepper />
-            <LikeButton />
+            <div className="Button">
+                <LikeButton />
+            </div>
         </div>
     )
 }
