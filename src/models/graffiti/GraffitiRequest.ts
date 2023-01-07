@@ -6,6 +6,7 @@ interface GraffitiRequest {
 	createdAt: Date;
 	authorId: number;
 	categoryIds: number[];
+	artistIds: number[];
 }
 
 export default GraffitiRequest;

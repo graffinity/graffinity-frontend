@@ -5,6 +5,12 @@
 	gap: 8px;
 }
 
+.textfield-input {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
 .textfield-title-container {
 	display: flex;
 	justify-content: space-between;
