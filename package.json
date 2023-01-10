@@ -1,7 +1,7 @@
 {
 	"name": "graffinity",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
@@ -39,7 +39,8 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"lint": "npx prettier --write .",
-		"eslint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+		"eslint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+		"deploy": "npm ci && npm run build && npm run start:prod"
 	},
 	"eslintConfig": {
 		"extends": [

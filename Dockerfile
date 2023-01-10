@@ -1,6 +1,8 @@
-# Stage 1: Build the app
-# Use official node image as the base image
-FROM node:16 as build
+###################
+# BUILD FOR PRODUCTION
+###################
+
+FROM node:18 as build
 ENV NODE_ENV production
 
 LABEL version="0.4.0"
@@ -19,8 +21,11 @@ RUN npm install
 # Generate the build of the application
 RUN npm run build
 
-# Stage 2: Serve app with nginx server
-# Use official nginx image as the base image
+
+###################
+# BUILD FOR PRODUCTION
+###################
+
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
@@ -31,4 +36,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # Expose port 80 & 443
 EXPOSE 80
 EXPOSE 443
-CMD ["nginx", "-g", "daemon off;"]
+
+# Run nginx
+# CMD ["nginx", "-g", "daemon off;"]
