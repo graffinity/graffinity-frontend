@@ -3,6 +3,7 @@ const apiEndpoints = {
 	auth: "/api/v1/auth",
 	user: "/api/v1/user",
 	graffitiPhoto: "/api/v1/graffiti-photo",
+	artist: "/api/v1/artist",
 };
 
 export default apiEndpoints;

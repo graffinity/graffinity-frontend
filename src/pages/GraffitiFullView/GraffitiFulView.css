@@ -1,0 +1,14 @@
+.PeperStepper {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	flex-direction: column;
+}
+div {
+	margin: 0;
+	padding: 0;
+}
+.Button {
+	display: flex;
+	justify-content: center;
+}

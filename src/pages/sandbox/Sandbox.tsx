@@ -1,6 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, TextField, Typography } from "@mui/material";
+import {
+	Button,
+	createTheme,
+	styled,
+	TextField,
+	ThemeProvider,
+	Typography,
+} from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
@@ -19,6 +26,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as yup from "yup";
 
 const maxNumber = 6900000;
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#ffff",
+		},
+	},
+});
 
 const Sandbox = () => {
 	const [graffitiPosts, setGraffitiPosts] = useState<GraffitiResponse[]>();
@@ -104,6 +119,14 @@ const Sandbox = () => {
 					multiline
 					label="Name"
 					variant="outlined"
+					inputProps={{ style: { color: "white" } }}
+					sx={{
+						"& .MuiInputLabel-root": { color: "white" },
+						"& .MuiFilledInput-input": {
+							border: "1px solid white",
+							borderRadius: 1,
+						},
+					}}
 				/>
 				<Typography
 					color="common.white"
@@ -122,6 +145,14 @@ const Sandbox = () => {
 					multiline
 					label="Description"
 					variant="outlined"
+					inputProps={{ style: { color: "white" } }}
+					sx={{
+						"& .MuiInputLabel-root": { color: "white" },
+						"& .MuiFilledInput-input": {
+							border: "1px solid white",
+							borderRadius: 1,
+						},
+					}}
 				/>
 				<Typography
 					color="common.white"

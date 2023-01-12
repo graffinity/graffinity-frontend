@@ -1,14 +1,41 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
-import AppTheme from "AppTheme";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+	AppBar,
+	Button,
+	IconButton,
+	Link,
+	List,
+	Menu,
+	Toolbar,
+	Typography,
+} from "@mui/material";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
-import { useState } from "react";
+import SignUpDialog from "components/login/SignupDialog";
+import routes from "constants/routes";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Common.css";
-
 const Header = () => {
 	const navigate = useNavigate();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [signUpDialogOpen, setSignUpDialogOpen] = useState<boolean>(false);
+
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+	const handleOpenSignUpDialog = () => {
+		setSignUpDialogOpen(true);
+	};
+	const handleCloseSignUpDialog = () => {
+		setSignUpDialogOpen(false);
+	};
 
 	const handleOpenLoginDialog = () => {
 		setLoginDialogOpen(true);
@@ -24,11 +51,19 @@ const Header = () => {
 	};
 
 	return (
-		<AppBar position="static">
+		<AppBar
+			position="static"
+			sx={{
+				display: "block",
+				background: "transparent",
+				boxShadow: "none",
+			}}
+		>
 			<Toolbar
 				disableGutters={true}
 				style={{
 					backgroundColor: "rgb(32, 32, 36)",
+					borderRadius: "0 0 16px 16px",
 				}}
 			>
 				<div
@@ -40,24 +75,79 @@ const Header = () => {
 						width: "100%",
 					}}
 				>
-					<div style={{ marginLeft: "20px" }}>
-						<Button
-							variant={"text"}
-							onClick={() => navigate("/pagalba")}
+					<IconButton
+						aria-controls={open ? "basic-menu" : undefined}
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="menu"
+						aria-haspopup="true"
+						aria-expanded={open ? "true" : undefined}
+						onClick={handleClick}
+						sx={{ mr: 2 }}
+					>
+						<MenuIcon />
+					</IconButton>
+					<Menu
+						sx={{
+							display: "flex",
+							alignContent: "center",
+							justifyContent: "center",
+						}}
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						MenuListProps={{
+							"aria-labelledby": "basic-button",
+						}}
+					>
+						<List
 							style={{
-								color: AppTheme.palette.primary.main,
+								marginLeft: "16px",
+								marginRight: "16px",
+								width: "100%",
+								display: "flex",
+								alignContent: "center",
+								justifyContent: "center",
+								flexDirection: "column",
+								gap: "12px",
 							}}
 						>
+							{[...routes[0].items, ...routes[1].items].map((item) => (
+								<Link
+									sx={{ color: "black" }}
+									underline="none"
+									key={item.key}
+									href={item.path}
+								>
+									{item.pageTitle}
+								</Link>
+							))}
+						</List>
+						{/* <Button
+							variant={"text"}
+							onClick={() => navigate("/pagalba")}
+							// style={{
+							// 	color: AppTheme.palette.primary.main,
+							// }}
+							sx={{ color: "black" }}
+						>
 							help
-						</Button>
-					</div>
+						</Button> */}
+					</Menu>
+
+					<div style={{ marginLeft: "20px" }}></div>
 
 					<div>
-						<Button onClick={handleOpenLoginDialog}>
+						<Button onClick={handleOpenSignUpDialog} sx={{ color: "white" }}>
+							<Typography>Sign Up</Typography>
+						</Button>
+						<Button onClick={handleOpenLoginDialog} sx={{ color: "white" }}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
-						<Button onClick={handleLogout}>
+						<Button onClick={handleLogout} sx={{ color: "white" }}>
 							<Typography>Logout</Typography>
 						</Button>
 
@@ -68,6 +158,13 @@ const Header = () => {
 			<LoginDialog
 				open={loginDialogOpen}
 				handleClose={handleCloseLoginDialog}
+			/>
+			<SignUpDialog
+				open={signUpDialogOpen}
+				handleClose={handleCloseSignUpDialog}
+				handleLoginOpen={function (): void {
+					throw new Error("Function not implemented.");
+				}}
 			/>
 		</AppBar>
 	);
