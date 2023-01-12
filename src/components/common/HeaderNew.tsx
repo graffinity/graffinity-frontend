@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
+import SignUpDialog from "components/login/SignupDialog";
 import { useState } from "react";
 import "./Common.css";
 import routes from "constants/routes";
@@ -20,12 +21,20 @@ const Header = () => {
 	const navigate = useNavigate();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [signUpDialogOpen, setSignUpDialogOpen] = useState<boolean>(false);
+
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+	const handleOpenSignUpDialog = () => {
+		setSignUpDialogOpen(true);
+	}
+	const handleCloseSignUpDialog = () => {
+		setSignUpDialogOpen(false);
 	};
 
 	const handleOpenLoginDialog = () => {
@@ -116,7 +125,7 @@ const Header = () => {
 								</Link>
 							))}
 						</List>
-						<Button
+						{/* <Button
 							variant={"text"}
 							onClick={() => navigate("/pagalba")}
 							// style={{
@@ -125,13 +134,19 @@ const Header = () => {
 							sx={{ color: "black" }}
 						>
 							help
-						</Button>
+						</Button> */}
+
 					</Menu>
 
 					<div style={{ marginLeft: "20px" }}></div>
 
 					<div>
-						<Button onClick={handleOpenLoginDialog} sx={{ color: "white" }}>
+						<Button onClick={handleOpenSignUpDialog}
+							sx={{ color: "white" }}>
+							<Typography>Sign Up</Typography>
+						</Button>
+						<Button onClick={handleOpenLoginDialog}
+							sx={{ color: "white" }}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
@@ -147,7 +162,12 @@ const Header = () => {
 				open={loginDialogOpen}
 				handleClose={handleCloseLoginDialog}
 			/>
-		</AppBar>
+			<SignUpDialog
+				open={signUpDialogOpen}
+				handleClose={handleCloseSignUpDialog} handleLoginOpen={function (): void {
+					throw new Error("Function not implemented.");
+				}} />
+		</AppBar >
 	);
 };
 

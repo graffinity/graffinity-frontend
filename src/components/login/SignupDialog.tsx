@@ -86,26 +86,27 @@ const SignupDialog = (props: SignupProps) => {
 				>
 					{(formik: FormikProps<RegistrationValues>) => (
 						<Form className="register-dialog-container">
-							<div className="input-container">
+							<div className="input-container"
+								style={{ margin: '16px' }}>
 								<FormTextField
 									name="name"
 									label="Name"
 									value={formik.values.name}
 								/>
-								<FormTextField
+								{/* <FormTextField
 									name="lastname"
 									label="Lastname"
 									value={formik.values.lastname}
-								/>
+								/> */}
 
 								<FormTextField
 									name="email"
 									label="Email"
 									value={formik.values.email}
 								/>
-
+								<Typography>Password</Typography>
 								<ReadableHiddenPasswordField name="password" />
-								<FormTextField
+								{/* <FormTextField
 									name="personalCode"
 									label="Personal Code"
 									value={formik.values.personalCode}
@@ -119,7 +120,7 @@ const SignupDialog = (props: SignupProps) => {
 									name="address"
 									label="Address"
 									value={formik.values.address}
-								/>
+								/> */}
 							</div>
 							<Button
 								fullWidth
@@ -147,32 +148,32 @@ const SignupDialog = (props: SignupProps) => {
 
 interface RegistrationValues {
 	name: string;
-	lastname: string;
+	// lastname: string;
 	email: string;
 	password: string;
-	personalCode: string;
-	phoneNumber: string;
-	address: string;
+	// personalCode: string;
+	// phoneNumber: string;
+	// address: string;
 }
 
 const initialValues: RegistrationValues = {
 	name: "",
-	lastname: "",
+	// lastname: "",
 	email: "",
 	password: "",
-	personalCode: "",
-	phoneNumber: "",
-	address: "",
+	// personalCode: "",
+	// phoneNumber: "",
+	// address: "",
 };
 
 const validationSchema = yup.object({
 	name: yup.string().required("Name is required"),
-	lastname: yup.string().required("Lastname is required"),
+	// lastname: yup.string().required("Lastname is required"),
 	email: yup.string().email("Invalid email").required("Email is required"),
 	password: yup.string().required("Password is required"),
-	personalCode: yup.string().required("Personal code is required"),
-	phoneNumber: yup.string().required("Phone number is required"),
-	address: yup.string().required("Address is required"),
+	// personalCode: yup.string().required("Personal code is required"),
+	// phoneNumber: yup.string().required("Phone number is required"),
+	// address: yup.string().required("Address is required"),
 });
 
 export default SignupDialog;

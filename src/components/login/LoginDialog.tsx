@@ -17,9 +17,10 @@ interface LoginDialogProps {
 const LoginDialog = (props: LoginDialogProps) => {
 	const { open, loginSuccess, handleClose } = props;
 
-	const handleSubmit = (values: LoginRequest) => {
+	const handleSubmit = async (values: LoginRequest) => {
 		console.log("login", values);
-		AuthAPI.login(values);
+		await AuthAPI.login(values);
+		handleClose();
 	};
 
 	const ref = useRef<HTMLInputElement>(null);
@@ -105,7 +106,7 @@ const LoginDialog = (props: LoginDialogProps) => {
 									}}
 								>
 									<Typography variant="h5" color="#FFFFFF">
-										Prisijungti
+										Login
 									</Typography>
 								</Button>
 							</div>
