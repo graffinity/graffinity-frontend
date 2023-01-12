@@ -47,7 +47,7 @@ export default function TextMobileStepper() {
 
     return (
         <div className='ImageSlider'>
-            <Box sx={{ maxHeight: "100vh" }}>
+            <Box sx={{ maxHeight: "100vw" }}>
                 <Paper
                     square
                     elevation={0}

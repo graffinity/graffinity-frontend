@@ -108,7 +108,7 @@ const Header = () => {
 								</Link>
 							))}
 						</List>
-						<Button
+						{/* <Button
 							variant={"text"}
 							onClick={() => navigate("/pagalba")}
 							// style={{
@@ -117,7 +117,7 @@ const Header = () => {
 							sx={{ color: 'black' }}
 						>
 							help
-						</Button>
+						</Button> */}
 
 					</Menu>
 

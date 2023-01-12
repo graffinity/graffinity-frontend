@@ -4,7 +4,7 @@ import './ButtonStyle.css';
 export default function LikeButton() {
 
     const [likeCount, setLikeCount] = useState(50);
-    const [dislikeCount, setDislikeCount] = useState(25);
+    // const [dislikeCount, setDislikeCount] = useState(25);
 
     const [activeBtn, setActiveBtn] = useState("none");
 
@@ -21,28 +21,28 @@ export default function LikeButton() {
             return;
         }
 
-        if (activeBtn === "dislike") {
-            setLikeCount(likeCount + 1);
-            setDislikeCount(dislikeCount - 1);
-            setActiveBtn("like");
-        }
-    };
+        // if (activeBtn === "dislike") {
+        //     setLikeCount(likeCount + 1);
+        //     setDislikeCount(dislikeCount - 1);
+        //     setActiveBtn("like");
+        // }
+        // };
 
-    const handleDisikeClick = () => {
-        if (activeBtn === "none") {
-            setDislikeCount(dislikeCount + 1);
-            setActiveBtn("dislike");
-            return;
-        }
+        // const handleDisikeClick = () => {
+        //     if (activeBtn === "none") {
+        //         setDislikeCount(dislikeCount + 1);
+        //         setActiveBtn("dislike");
+        //         return;
+        //     }
 
-        if (activeBtn === 'dislike') {
-            setDislikeCount(dislikeCount - 1);
-            setActiveBtn("none");
-            return;
-        }
+        // if (activeBtn === 'dislike') {
+        //     setDislikeCount(dislikeCount - 1);
+        //     setActiveBtn("none");
+        //     return;
+        // }
 
         if (activeBtn === "like") {
-            setDislikeCount(dislikeCount + 1);
+            // setDislikeCount(dislikeCount + 1);
             setLikeCount(likeCount - 1);
             setActiveBtn("dislike");
         }
@@ -60,13 +60,13 @@ export default function LikeButton() {
                     Like {likeCount}
                 </button>
 
-                <button
+                {/* <button
                     className={`btn ${activeBtn === 'dislike' ? 'dislike-active' : ''}`}
                     onClick={handleDisikeClick}
                 >
                     <span className="material-symbols-rounded">thumb_down</span>
                     Dislike {dislikeCount}
-                </button>
+                </button> */}
             </div>
         </div>
     );

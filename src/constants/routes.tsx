@@ -22,18 +22,18 @@ const routes: RouteGroup[] = [
 				pageTitle: "Upload",
 				element: <Sandbox />,
 			},
-			{
-				path: "/playground",
-				key: "playground",
-				pageTitle: "Playground",
-				element: <PlaygroundPage />,
-			},
-			{
-				path: "/signup",
-				key: "signup",
-				pageTitle: "Signup",
-				element: <SignupPage />,
-			},
+			// {
+			// 	path: "/playground",
+			// 	key: "playground",
+			// 	pageTitle: "Playground",
+			// 	element: <PlaygroundPage />,
+			// },
+			// {
+			// 	path: "/signup",
+			// 	key: "signup",
+			// 	pageTitle: "Signup",
+			// 	element: <SignupPage />,
+			// },
 			{
 				path: "/graffiti/create",
 				key: "graffiti-create",
