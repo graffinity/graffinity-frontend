@@ -86,8 +86,7 @@ const SignupDialog = (props: SignupProps) => {
 				>
 					{(formik: FormikProps<RegistrationValues>) => (
 						<Form className="register-dialog-container">
-							<div className="input-container"
-								style={{ margin: '16px' }}>
+							<div className="input-container" style={{ margin: "16px" }}>
 								<FormTextField
 									name="name"
 									label="Name"

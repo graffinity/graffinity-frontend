@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import MenuIcon from "@mui/icons-material/Menu";
 import {
 	AppBar,
 	Button,
@@ -8,15 +10,13 @@ import {
 	Toolbar,
 	Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
 import SignUpDialog from "components/login/SignupDialog";
-import { useState } from "react";
-import "./Common.css";
 import routes from "constants/routes";
-import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Common.css";
 const Header = () => {
 	const navigate = useNavigate();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const Header = () => {
 	};
 	const handleOpenSignUpDialog = () => {
 		setSignUpDialogOpen(true);
-	}
+	};
 	const handleCloseSignUpDialog = () => {
 		setSignUpDialogOpen(false);
 	};
@@ -135,18 +135,15 @@ const Header = () => {
 						>
 							help
 						</Button> */}
-
 					</Menu>
 
 					<div style={{ marginLeft: "20px" }}></div>
 
 					<div>
-						<Button onClick={handleOpenSignUpDialog}
-							sx={{ color: "white" }}>
+						<Button onClick={handleOpenSignUpDialog} sx={{ color: "white" }}>
 							<Typography>Sign Up</Typography>
 						</Button>
-						<Button onClick={handleOpenLoginDialog}
-							sx={{ color: "white" }}>
+						<Button onClick={handleOpenLoginDialog} sx={{ color: "white" }}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
@@ -164,10 +161,12 @@ const Header = () => {
 			/>
 			<SignUpDialog
 				open={signUpDialogOpen}
-				handleClose={handleCloseSignUpDialog} handleLoginOpen={function (): void {
+				handleClose={handleCloseSignUpDialog}
+				handleLoginOpen={function (): void {
 					throw new Error("Function not implemented.");
-				}} />
-		</AppBar >
+				}}
+			/>
+		</AppBar>
 	);
 };
 

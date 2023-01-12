@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import RouteGroup from "models/routes/RouteGroup";
 import PlaygroundPage from "pages/auth/Playground";
 import SignupPage from "pages/auth/SignupPage";

@@ -30,7 +30,6 @@ const images = [
 		imgPath:
 			"https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9505.JPG",
 	},
-
 ];
 
 export default function TextMobileStepper() {
