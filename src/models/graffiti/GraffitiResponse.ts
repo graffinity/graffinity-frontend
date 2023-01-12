@@ -6,7 +6,8 @@ interface GraffitiResponse {
 	name: string;
 	photos: GraffitiPhotoResponse[];
 	description: string;
-	location: string;
+	latitude: number;
+	longitude: number;
 	authorId: number;
 	creationDate: Date;
 }

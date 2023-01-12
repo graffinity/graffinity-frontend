@@ -36,7 +36,7 @@ const HomePage = () => {
 	});
 	useEffect(() => {
 		getGraffitis();
-		// getMarkers(graffitis);
+		getMarkers(graffitis);
 
 		if (containerRef.current) {
 			setHeight(containerRef.current.clientHeight);
@@ -73,16 +73,15 @@ const HomePage = () => {
 		let markers = graffitis.map(async (graffiti) => {
 			let photos = await getGraffitiPhotos(graffiti.photos);
 
-			let loc = graffiti.location.split(",");
-			let lat1 = parseFloat(loc[0]);
-			let lng1 = parseFloat(loc[1]);
+			let lat = Number(graffiti.latitude);
+			let lng = Number(graffiti.longitude);
 
 			const newMarker: MarkerData = {
 				id: graffiti.id,
 				name: graffiti.name,
 				position: {
-					lat: lat1,
-					lng: lng1,
+					lat: lat,
+					lng: lng,
 				},
 				images: photos,
 			};
