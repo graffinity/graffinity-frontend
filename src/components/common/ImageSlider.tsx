@@ -11,25 +11,26 @@ import "./Common.css";
 
 const images = [
     {
-        label: 'San Francisco – Oakland Bay Bridge, United States',
+        label: 'Lukiškės prison, Lithuania',
         imgPath:
-            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+            'https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9507.JPG',
     },
     {
-        label: 'Bird',
+        label: 'Lukiškės prison, Lithuania',
         imgPath:
-            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+            'https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9506.JPG',
     },
     {
-        label: 'Bali, Indonesia',
+        label: 'Lukiškės prison, Lithuania',
         imgPath:
-            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+            'https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9504.JPG ',
     },
     {
-        label: 'Goč, Serbia',
+        label: 'Lukiškės prison, Lithuania',
         imgPath:
-            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+            'https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9505.JPG',
     },
+
 ];
 
 export default function TextMobileStepper() {
