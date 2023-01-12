@@ -5,7 +5,7 @@ import CreateGrafiitiPage from "pages/graffiti/CreateGraffitiPage";
 import GraffitiFullView from "pages/GraffitiFullView/GraffitiFullView";
 import HomePage from "pages/home/HomePage";
 import Sandbox from "pages/sandbox/Sandbox";
-import GrafittiLibrary from 'pages/GrafittyLibrary/GraffitiLibrary';
+import GrafittiLibrary from "pages/GrafittyLibrary/GraffitiLibrary";
 const routes: RouteGroup[] = [
 	{
 		group: "Menu",

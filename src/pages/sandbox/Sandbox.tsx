@@ -1,6 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, createTheme, styled, TextField, ThemeProvider, Typography } from "@mui/material";
+import {
+	Button,
+	createTheme,
+	styled,
+	TextField,
+	ThemeProvider,
+	Typography,
+} from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
@@ -19,7 +26,6 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as yup from "yup";
 
 const maxNumber = 6900000;
-
 
 const theme = createTheme({
 	palette: {
@@ -115,8 +121,11 @@ const Sandbox = () => {
 					variant="outlined"
 					inputProps={{ style: { color: "white" } }}
 					sx={{
-						"& .MuiInputLabel-root": { color: 'white' },
-						"& .MuiFilledInput-input": { border: '1px solid white', borderRadius: 1 }
+						"& .MuiInputLabel-root": { color: "white" },
+						"& .MuiFilledInput-input": {
+							border: "1px solid white",
+							borderRadius: 1,
+						},
 					}}
 				/>
 				<Typography
@@ -138,9 +147,13 @@ const Sandbox = () => {
 					variant="outlined"
 					inputProps={{ style: { color: "white" } }}
 					sx={{
-						"& .MuiInputLabel-root": { color: 'white' },
-						"& .MuiFilledInput-input": { border: '1px solid white', borderRadius: 1 }
-					}} />
+						"& .MuiInputLabel-root": { color: "white" },
+						"& .MuiFilledInput-input": {
+							border: "1px solid white",
+							borderRadius: 1,
+						},
+					}}
+				/>
 				<Typography
 					color="common.white"
 					sx={{

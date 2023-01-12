@@ -70,9 +70,8 @@ const AppTheme = createTheme({
 						},
 						"& .MuiOutlinedInput-root .Mui-focused": {
 							"& .MuiOutlinedInput-notchedOutline": {
-
 								border: "2px solid #d9d9d9 !important",
-							}
+							},
 						},
 					},
 				},
@@ -80,8 +79,7 @@ const AppTheme = createTheme({
 		},
 		MuiOutlinedInput: {
 			styleOverrides: {
-				root: {
-				},
+				root: {},
 				notchedOutline: {
 					border: "1px solid #fff7",
 				},
@@ -94,7 +92,6 @@ const AppTheme = createTheme({
 					"&:hover .MuiOutlinedInput-notchedOutline": {
 						borderColor: "#FFFFFF",
 					},
-					
 				},
 			},
 		},

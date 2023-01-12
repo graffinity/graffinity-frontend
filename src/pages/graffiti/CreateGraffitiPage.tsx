@@ -9,9 +9,9 @@ import ArtistResponse from "models/artist/ArtistResponse";
 import IFile from "models/file/IFile";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import { useEffect, useState } from "react";
-import { initialState } from "redux/store/common/commonSlice";
 import * as yup from "yup";
 
 const CreateGrafiitiPage = () => {
@@ -61,10 +61,12 @@ const CreateGrafiitiPage = () => {
 			let graffitiReq: GraffitiRequest = {
 				name: values.name,
 				description: values.description,
-				location: values.location,
+				latitude: values.latitude,
+				longitude: values.longitude,
 				createdAt: new Date(),
 				authorId: values.authorId,
 				artistIds: values.authorId,
+				status: GraffitiStatus.SUBMITTED,
 				categoryIds: [],
 			};
 			formData.append("body", JSON.stringify(request));
@@ -179,7 +181,8 @@ const CreateGrafiitiPage = () => {
 interface CreateGrafiitiValues {
 	name: string;
 	description: string;
-	location: string;
+	latitude: string;
+	longitude: string;
 	authorId: number;
 	file: any;
 }
@@ -187,7 +190,8 @@ interface CreateGrafiitiValues {
 const initialValues: CreateGrafiitiValues = {
 	name: "",
 	description: "",
-	location: "",
+	latitude: "",
+	longitude: "",
 	authorId: 0,
 	file: null,
 };

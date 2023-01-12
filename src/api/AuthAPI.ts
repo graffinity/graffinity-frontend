@@ -7,23 +7,26 @@ const baseUrl = apiEndpoints.auth;
 
 const AuthAPI = {
 	login: async (request: LoginRequest) => {
-		let res = axios.post(`${baseUrl}/login`, request);
-		let temp = (await res).data;
+		let res: {
+			access_token: string;
+		} = await axios.post(`${baseUrl}/login`, request);
 
-		localStorage.setItem("token", temp.access_token);
+		console.log("res", res);
+		let access_token = res.access_token;
+		if (access_token) {
+			localStorage.setItem("token", access_token);
 
-		axios.defaults.headers.common[
-			"Authorization"
-		] = `Bearer ${temp.access_token}`;
+			axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+		}
 
 		return res;
 	},
 
 	signup: async (request: LoginRequest) => {
 		let res = axios.post(`${baseUrl}/signup`, request);
-		let temp = (await res).data;
+		let temp = await res;
 
-		localStorage.setItem("token", temp.accessToken);
+		localStorage.setItem("token", temp.data.access_token);
 		return res;
 	},
 

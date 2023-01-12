@@ -1,11 +1,20 @@
-import { AppBar, Button, IconButton, Link, List, Menu, Toolbar, Typography } from "@mui/material";
+import {
+	AppBar,
+	Button,
+	IconButton,
+	Link,
+	List,
+	Menu,
+	Toolbar,
+	Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AuthAPI from "api/AuthAPI";
 import LoginDialog from "components/login/LoginDialog";
 import { useState } from "react";
 import "./Common.css";
 import routes from "constants/routes";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 const Header = () => {
 	const navigate = useNavigate();
@@ -33,17 +42,19 @@ const Header = () => {
 	};
 
 	return (
-		<AppBar position="static" sx={{
-			display: 'block',
-			background: 'transparent',
-			boxShadow: 'none'
-		}}>
+		<AppBar
+			position="static"
+			sx={{
+				display: "block",
+				background: "transparent",
+				boxShadow: "none",
+			}}
+		>
 			<Toolbar
 				disableGutters={true}
 				style={{
 					backgroundColor: "rgb(32, 32, 36)",
 					borderRadius: "0 0 16px 16px",
-
 				}}
 			>
 				<div
@@ -56,36 +67,40 @@ const Header = () => {
 					}}
 				>
 					<IconButton
-						aria-controls={open ? 'basic-menu' : undefined}
+						aria-controls={open ? "basic-menu" : undefined}
 						size="large"
 						edge="start"
 						color="inherit"
 						aria-label="menu"
 						aria-haspopup="true"
-						aria-expanded={open ? 'true' : undefined}
+						aria-expanded={open ? "true" : undefined}
 						onClick={handleClick}
 						sx={{ mr: 2 }}
 					>
 						<MenuIcon />
 					</IconButton>
 					<Menu
-						sx={{ display: 'flex', alignContent: 'center', justifyContent: 'center', }}
+						sx={{
+							display: "flex",
+							alignContent: "center",
+							justifyContent: "center",
+						}}
 						id="basic-menu"
 						anchorEl={anchorEl}
 						open={open}
 						onClose={handleClose}
 						MenuListProps={{
-							'aria-labelledby': 'basic-button',
+							"aria-labelledby": "basic-button",
 						}}
 					>
 						<List
 							style={{
-								marginLeft: '16px',
-								marginRight: '16px',
+								marginLeft: "16px",
+								marginRight: "16px",
 								width: "100%",
 								display: "flex",
-								alignContent: 'center',
-								justifyContent: 'center',
+								alignContent: "center",
+								justifyContent: "center",
 								flexDirection: "column",
 								gap: "12px",
 							}}
@@ -94,7 +109,9 @@ const Header = () => {
 								<Link
 									sx={{ color: "black" }}
 									underline="none"
-									key={item.key} href={item.path}>
+									key={item.key}
+									href={item.path}
+								>
 									{item.pageTitle}
 								</Link>
 							))}
@@ -105,27 +122,20 @@ const Header = () => {
 							// style={{
 							// 	color: AppTheme.palette.primary.main,
 							// }}
-							sx={{ color: 'black' }}
+							sx={{ color: "black" }}
 						>
 							help
 						</Button>
-
 					</Menu>
 
-
-
-					<div style={{ marginLeft: "20px" }}>
-
-					</div>
+					<div style={{ marginLeft: "20px" }}></div>
 
 					<div>
-						<Button onClick={handleOpenLoginDialog}
-							sx={{ color: "white" }}>
+						<Button onClick={handleOpenLoginDialog} sx={{ color: "white" }}>
 							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 							<Typography>Login</Typography>
 						</Button>
-						<Button onClick={handleLogout}
-							sx={{ color: "white" }}>
+						<Button onClick={handleLogout} sx={{ color: "white" }}>
 							<Typography>Logout</Typography>
 						</Button>
 
@@ -137,7 +147,7 @@ const Header = () => {
 				open={loginDialogOpen}
 				handleClose={handleCloseLoginDialog}
 			/>
-		</AppBar >
+		</AppBar>
 	);
 };
 

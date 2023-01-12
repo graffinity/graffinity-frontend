@@ -121,8 +121,10 @@ export default function MapComponent(props: MapComponentProps) {
 								? `calc(${props.width}px /2)`
 								: "100%",
 						// height: props.height ? props.height : "80%",
-						height: props.height > maxWidthForDesktopView ? `calc(${props.height}%)`
-							: "100%",
+						height:
+							props.height > maxWidthForDesktopView
+								? `calc(${props.height}%)`
+								: "100%",
 					}}
 					center={center}
 					options={options}
@@ -149,7 +151,6 @@ export default function MapComponent(props: MapComponentProps) {
 									>
 										<Typography variant="body2">{marker.name}</Typography>
 
-
 										<Box
 											component="img"
 											src={marker.images[0]}
@@ -157,7 +158,9 @@ export default function MapComponent(props: MapComponentProps) {
 												maxWidth: "100%",
 											}}
 											sx={{ ":hover": { cursor: "pointer" } }}
-											onClick={() => { navigate("/graffiti/view") }}
+											onClick={() => {
+												navigate("/graffiti/view");
+											}}
 										/>
 										{/* <img src={marker.images[0]} style={{}} /> */}
 									</div>

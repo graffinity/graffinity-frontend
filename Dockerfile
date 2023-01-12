@@ -7,7 +7,6 @@ ENV NODE_ENV production
 
 LABEL version="0.4.0"
 LABEL description="Graffinity Frontend Dockerfile"
-# LABEL maintainer = ["abc@gmail.com", "anc@gmail.com"]
 
 # Set the working directory
 WORKDIR /usr/local/app/frontend/
@@ -38,4 +37,4 @@ EXPOSE 80
 EXPOSE 443
 
 # Run nginx
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
