@@ -5,6 +5,7 @@ node_modules
 public
 dist
 .vscode
+nginx/
 
 # Ignore all files of these formats:
 *.html

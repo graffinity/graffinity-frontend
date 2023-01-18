@@ -4,22 +4,21 @@ permissions:
   id-token: write
   contents: read
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-  AWS_REGION: eu-central-1
-  REMOTE_HOST: graffinity.art
-  REMOTE_USERNAME: ubuntu
-  REMOTE_KEY: ${{ secrets.KEY }}
-  REMOTE_PORT: 22
-  REMOTE_PASSPHRASE: ${{ secrets.PASSPHRASE }}
-
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
   workflow_dispatch:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+  REMOTE_USERNAME: ${{ secrets.REMOTE_USERNAME }}
+  REMOTE_KEY: ${{ secrets.REMOTE_KEY }}
+  REMOTE_PORT: 22
 
 jobs:
   build:
@@ -40,18 +39,18 @@ jobs:
       - name: Run prettier
         run: npx prettier --check .
 
-        
-
       - name: build
         run: npm run build
 
   deploy:
-    if: ${{ github.event_name != 'pull_request' }}
+    # if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     needs: [ build ]
+
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -62,14 +61,14 @@ jobs:
       - name: publish
         run: |
           sh publish.sh
-      - name: restart apps
+
+      - name: Restart apps in remote
         uses: appleboy/ssh-action@master
         with:
           host: ${{env.REMOTE_HOST}}
           username: ${{env.REMOTE_USERNAME}}
           key: ${{env.REMOTE_KEY}}
           port: ${{env.REMOTE_PORT}}
-          passphrase: ${{env.REMOTE_PASSPHRASE}}
           script: |
             sh start.sh
 
