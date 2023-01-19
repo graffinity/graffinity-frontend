@@ -116,15 +116,20 @@ export default function MapComponent(props: MapComponentProps) {
 				<GoogleMap
 					mapContainerClassName="map"
 					mapContainerStyle={{
-						width:
-							props.width > maxWidthForDesktopView
-								? `calc(${props.width}px /2)`
-								: "100%",
+						// width: 'fit-content',
+						minWidth: "min-content !important",
+						minHeight: "100%",
+						width: "1400px",
+						maxWidth: "2000px",
+						// width:
+						// 	props.width > maxWidthForDesktopView
+						// 		? `calc(${props.width}px /2)`
+						// 		: "100%",
 						// height: props.height ? props.height : "80%",
-						height:
-							props.height > maxWidthForDesktopView
-								? `calc(${props.height}%)`
-								: "100%",
+						// height:
+						// 	props.height > maxWidthForDesktopView
+						// 		? `calc(${props.height}%)`
+						// 		: "100%",
 					}}
 					center={center}
 					options={options}
@@ -132,10 +137,11 @@ export default function MapComponent(props: MapComponentProps) {
 					onUnmount={onUnmount}
 					onClick={() => setActiveMarker(null)}
 				>
-					{markers.map((marker) => (
+					{markers.map((marker, index) => (
 						<Marker
 							key={marker.id}
 							position={marker.position}
+
 							onClick={() => handleActiveMarker(marker)}
 						>
 							{activeMarker?.id === marker.id && (

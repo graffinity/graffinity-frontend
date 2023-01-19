@@ -11,7 +11,7 @@ export function FooterContainer() {
 			position="static"
 			color="primary"
 			style={{
-				display: "relative",
+				// display: "absolute",
 				width: "100%",
 				bottom: "0",
 				background: "#202024",

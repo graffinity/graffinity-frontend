@@ -26,6 +26,7 @@ const AppRouter = () => {
 			style={{
 				width: "100%",
 				display: "flex",
+				height: "100%",
 				flexDirection: "column",
 			}}
 		>
@@ -34,7 +35,9 @@ const AppRouter = () => {
 			<div
 				style={{
 					width: "100%",
+					// height: "100%",
 					display: "flex",
+					flex: 1,
 					flexDirection: "column",
 				}}
 			>

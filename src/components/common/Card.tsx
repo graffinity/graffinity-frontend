@@ -14,7 +14,23 @@ const MultiActionAreaCard = () => (
 			ml: "16px",
 		}}
 	>
-		<CardMedia component="img" src="graf.png" alt="graf logo" />
+		<div
+			style={{
+				width: "100%",
+				display: "flex",
+				justifyContent: "center",
+			}}
+		>
+			<CardMedia
+				component="img"
+				src="graf.png"
+				alt="graf logo"
+				style={{
+					width: "50%",
+					height: "50%",
+				}}
+			/>
+		</div>
 		<CardContent>
 			<Typography
 				gutterBottom

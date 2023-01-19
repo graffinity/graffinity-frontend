@@ -57,9 +57,11 @@ const HomePage = () => {
 
 	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
 		let fetchedPhotos = photos.map(async (photo) => {
+			console.log("photo", photo)
 			let res = await fetch(photo.url);
 			let blob = await res.blob();
 			let objectURL = URL.createObjectURL(blob);
+			console.log("objectURL", objectURL);
 			return objectURL;
 		});
 		let response = await Promise.all(fetchedPhotos).then((values) => {
@@ -105,19 +107,30 @@ const HomePage = () => {
 			}}
 		>
 			<div className="homepage-container">
-				<div className="left">
-					<MultiActionAreaCard />
-				</div>
+				{/* <div className="left"> */}
+				{/* </div> */}
 
 				<Container
 					ref={containerRef}
 					className="right"
-					style={{
-						maxHeight: "100vh",
-						maxWidth: "50vw",
-					}}
 				>
+					<div
+					style={{
+						// marginTop: "36px",/
+					}}
+					>
+
 					<MapComponent width={width} height={height} markers={markers} />
+					</div>
+					<div
+						style={{
+							width: "100%",
+							height: "100%",
+							marginTop: "36px",
+						}}
+					>
+						<MultiActionAreaCard />
+					</div>
 				</Container>
 			</div>
 		</div>
