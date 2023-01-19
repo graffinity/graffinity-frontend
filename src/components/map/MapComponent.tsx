@@ -161,7 +161,7 @@ export default function MapComponent(props: MapComponentProps) {
 
 										<Box
 											component="img"
-											src={require(marker.images[0])}
+											src={require(`${marker.images[0]}`)}
 											style={{
 												maxWidth: "100%",
 											}}
