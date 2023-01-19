@@ -22,8 +22,6 @@
 		"jsx": "react-jsx",
 		"typeRoots": ["./environment.d.ts", "./node_modules/@types"],
 		"baseUrl": "./src",
-		"outDir": "./dist",
-
 		"paths": {
 			"@src/*": ["src/* "],
 			"@api/*": ["src/api/*"],

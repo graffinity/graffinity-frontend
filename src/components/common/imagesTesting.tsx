@@ -36,7 +36,7 @@ export default [
 	{
 		id: 4,
 		title: "Zirmunai",
-		location: "Lenkijoj",
+		location: "Lorem Ipsum",
 		googleMapsUrl: "https://goo.gl/maps/dMotZjczjJimaqfG8",
 		startDate: "01 Oct, 2021",
 		endDate: "8 Nov, 2021",
