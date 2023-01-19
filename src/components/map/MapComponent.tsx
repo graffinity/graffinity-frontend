@@ -141,7 +141,6 @@ export default function MapComponent(props: MapComponentProps) {
 						<Marker
 							key={marker.id}
 							position={marker.position}
-
 							onClick={() => handleActiveMarker(marker)}
 						>
 							{activeMarker?.id === marker.id && (
@@ -165,7 +164,7 @@ export default function MapComponent(props: MapComponentProps) {
 											}}
 											sx={{ ":hover": { cursor: "pointer" } }}
 											onClick={() => {
-												navigate("/graffiti/view");
+												navigate(`/graffiti/view/${marker.id}`);
 											}}
 										/>
 										{/* <img src={marker.images[0]} style={{}} /> */}

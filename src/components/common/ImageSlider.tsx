@@ -1,41 +1,67 @@
-import * as React from "react";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import AppTheme from "AppTheme";
+import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Common.css";
 
-const images = [
-	{
-		label: "Lukiškės prison, Lithuania",
-		imgPath:
-			"https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9507.JPG",
-	},
-	{
-		label: "Lukiškės prison, Lithuania",
-		imgPath:
-			"https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9506.JPG",
-	},
-	{
-		label: "Lukiškės prison, Lithuania",
-		imgPath:
-			"https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9504.JPG ",
-	},
-	{
-		label: "Lukiškės prison, Lithuania",
-		imgPath:
-			"https://graffinity-images.s3.eu-central-1.amazonaws.com/IMG_9505.JPG",
-	},
-];
+interface PhotoObject {
+	label: string;
+	imgPath: string;
+}
 
-export default function TextMobileStepper() {
-	const theme = useTheme();
-	const [activeStep, setActiveStep] = React.useState(0);
-	const maxSteps = images.length;
+const TextMobileStepper = () => {
+	const { id } = useParams();
+
+	const [activeStep, setActiveStep] = useState<number>(0);
+
+	const [photos, setPhotos] = useState<PhotoObject[]>([]);
+
+	useEffect(() => {
+		console.log("graffitiId", id);
+		getGraffiti();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const getGraffiti = async () => {
+		if (id) {
+			let response = await GraffitiPostAPI.findById(+id);
+			let res = await getGraffitiPhotos(response);
+			console.log("res", res);
+		}
+	};
+
+	const getGraffitiPhotos = async (graffiti: GraffitiResponse) => {
+		if (graffiti) {
+			let photos = graffiti.photos.map(async (photo) => {
+				let blobPath = await fetch(photo.url, {
+					headers: {
+						"Allow-Control-Allow-Origin": "*",
+					},
+				}).then((res) => res.blob());
+				let photoObject = {
+					label: graffiti.name,
+					imgPath: URL.createObjectURL(blobPath),
+				};
+
+				return photoObject;
+			});
+			let res: PhotoObject[] = await Promise.all(photos).then((values) => {
+				return values;
+			});
+			setPhotos(res);
+			return res;
+		}
+		setPhotos([]);
+		return [];
+	};
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -60,12 +86,12 @@ export default function TextMobileStepper() {
 					}}
 				>
 					<Typography sx={{ color: "white" }}>
-						{images[activeStep].label}
+						{photos && photos.length > 0 && photos[activeStep].label}
 					</Typography>
 				</Paper>
 				<Box
 					component={"img"}
-					src={images[activeStep].imgPath}
+					src={photos && photos.length > 0 ? photos[activeStep].imgPath : ""}
 					sx={{
 						width: "100vh",
 						display: "flex",
@@ -83,18 +109,18 @@ export default function TextMobileStepper() {
 						backgroundColor: "transparent",
 					}}
 					variant="dots"
-					steps={maxSteps}
+					steps={photos.length}
 					position="static"
 					activeStep={activeStep}
 					nextButton={
 						<Button
 							size="small"
 							onClick={handleNext}
-							disabled={activeStep === maxSteps - 1}
+							disabled={activeStep === photos.length - 1}
 							sx={{ color: "white" }}
 						>
 							Next
-							{theme.direction === "rtl" ? (
+							{AppTheme.direction === "rtl" ? (
 								<KeyboardArrowLeft />
 							) : (
 								<KeyboardArrowRight />
@@ -108,7 +134,7 @@ export default function TextMobileStepper() {
 							disabled={activeStep === 0}
 							sx={{ color: "white" }}
 						>
-							{theme.direction === "rtl" ? (
+							{AppTheme.direction === "rtl" ? (
 								<KeyboardArrowRight />
 							) : (
 								<KeyboardArrowLeft />
@@ -120,4 +146,6 @@ export default function TextMobileStepper() {
 			</Box>
 		</div>
 	);
-}
+};
+
+export default TextMobileStepper;

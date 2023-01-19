@@ -42,7 +42,7 @@ const routes: RouteGroup[] = [
 				element: <CreateGrafiitiPage />,
 			},
 			{
-				path: "/graffiti/view",
+				path: "/graffiti/view/:id",
 				key: "graffiti-view",
 				pageTitle: "Full View",
 				element: <GraffitiFullView />,
