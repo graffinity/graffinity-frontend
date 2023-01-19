@@ -57,8 +57,12 @@ const HomePage = () => {
 
 	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
 		let fetchedPhotos = photos.map(async (photo) => {
-			console.log("photo", photo)
-			let res = await fetch(photo.url);
+			console.log("photo", photo);
+			let res = await fetch(photo.url, {
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+				},
+			});
 			let blob = await res.blob();
 			let objectURL = URL.createObjectURL(blob);
 			console.log("objectURL", objectURL);
@@ -110,17 +114,15 @@ const HomePage = () => {
 				{/* <div className="left"> */}
 				{/* </div> */}
 
-				<Container
-					ref={containerRef}
-					className="right"
-				>
+				<Container ref={containerRef} className="right">
 					<div
-					style={{
-						// marginTop: "36px",/
-					}}
+						style={
+							{
+								// marginTop: "36px",/
+							}
+						}
 					>
-
-					<MapComponent width={width} height={height} markers={markers} />
+						<MapComponent width={width} height={height} markers={markers} />
 					</div>
 					<div
 						style={{
