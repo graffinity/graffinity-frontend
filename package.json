@@ -65,6 +65,8 @@
 		]
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.20.7",
+		"@babel/core": "^7.20.12",
 		"@svgr/webpack": "^6.5.1",
 		"@types/moment": "^2.13.0",
 		"@types/moment-timezone": "^0.5.30",
@@ -72,6 +74,7 @@
 		"@types/react-swipeable-views-utils": "^0.13.4",
 		"@typescript-eslint/eslint-plugin": "^5.48.2",
 		"@typescript-eslint/parser": "^5.48.2",
+		"babel-preset-react-app": "^10.0.1",
 		"dotenv": "^16.0.3",
 		"eslint": "^8.32.0",
 		"eslint-config-prettier": "^8.6.0",
@@ -82,5 +85,15 @@
 		"tsconfig-paths": "^4.1.2",
 		"url-loader": "^4.1.1"
 	},
-	"proxy": "http://localhost:8080"
+	"proxy": "http://localhost:8080",
+	"main": "index.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/graffinity/graffinity-frontend.git"
+	},
+	"keywords": [],
+	"bugs": {
+		"url": "https://github.com/graffinity/graffinity-frontend/issues"
+	},
+	"homepage": "https://github.com/graffinity/graffinity-frontend#readme"
 }
