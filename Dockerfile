@@ -5,21 +5,20 @@
 FROM node:18 as build
 ENV NODE_ENV production
 
-LABEL version="0.4.0"
+LABEL version="1.0.0"
 LABEL description="Graffinity Frontend Dockerfile"
 
 # Set the working directory
 WORKDIR /usr/local/app/frontend/
 
 # Add the source code to app/frontend
-COPY ./ /usr/local/app/frontend/
+COPY . .
 
 # Install all the dependencies
 RUN npm install
 
 # Generate the build of the application
 RUN npm run build
-
 
 ###################
 # BUILD FOR PRODUCTION

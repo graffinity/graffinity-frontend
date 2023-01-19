@@ -58,6 +58,7 @@ const HomePage = () => {
 	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
 		let fetchedPhotos = photos.map(async (photo) => {
 			let res = await fetch(photo.url, {
+				mode: "no-cors",
 				headers: {
 					"Access-Control-Allow-Origin": "*",
 				},

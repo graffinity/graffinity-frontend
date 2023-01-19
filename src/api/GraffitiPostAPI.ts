@@ -6,7 +6,7 @@ import GraffitiResponse from "models/graffiti/GraffitiResponse";
 const baseUrl = apiEndpoints.graffiti;
 
 const GraffitiPostAPI = {
-	findAll: (): Promise<GraffitiResponse[]> => axios.get(baseUrl),
+	findAll: (): Promise<GraffitiResponse[]> => axios.get(`${baseUrl}`),
 	findById: (id: number): Promise<GraffitiResponse> =>
 		axios.get(`${baseUrl}/${id}`),
 	create: (request: GraffitiRequest): Promise<GraffitiResponse> =>

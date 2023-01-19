@@ -41,6 +41,7 @@ const TextMobileStepper = () => {
 		if (graffiti) {
 			let photos = graffiti.photos.map(async (photo) => {
 				let blobPath = await fetch(photo.url, {
+					mode: "cors",
 					headers: {
 						"Allow-Control-Allow-Origin": "*",
 					},
