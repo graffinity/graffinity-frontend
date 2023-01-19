@@ -11,11 +11,17 @@ LABEL description="Graffinity Frontend Dockerfile"
 # Set the working directory
 WORKDIR /usr/local/app/frontend/
 
-# Add the source code to app/frontend
-COPY . .
+# Add the node_modules to the PATH
+ENV PATH ./node_modules/.bin:$PATH
+
+# Copy the package.json and package-lock.json to install dependencies
+COPY package*.json ./
 
 # Install all the dependencies
 RUN npm install
+
+# Add the source code to app/frontend
+COPY . .
 
 # Generate the build of the application
 RUN npm run build

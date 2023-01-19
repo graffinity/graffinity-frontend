@@ -43,6 +43,8 @@ export default function MapComponent(props: MapComponentProps) {
 		googleMapsApiKey: apiKey,
 		libraries: libraries,
 	});
+	console.log("isLoaded: ", isLoaded);
+	console.log("loadError: ", loadError);
 
 	const [map, setMap] = useState<google.maps.Map | null>(null);
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
@@ -71,6 +73,7 @@ export default function MapComponent(props: MapComponentProps) {
 			radius: 100 * 1000,
 		},
 	});
+	console.log("suggestions: ", { status, data });
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
 		setMap(null);
@@ -158,11 +161,11 @@ export default function MapComponent(props: MapComponentProps) {
 
 										<Box
 											component="img"
-											src={marker.images[0]}
+											src={require(marker.images[0])}
 											style={{
 												maxWidth: "100%",
 											}}
-											sx={{ ":hover": { cursor: "pointer" } }}
+											sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
 											onClick={() => {
 												navigate(`/graffiti/view/${marker.id}`);
 											}}
