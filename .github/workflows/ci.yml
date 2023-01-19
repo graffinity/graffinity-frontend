@@ -34,7 +34,7 @@ jobs:
           cache: "npm"
 
       - name: Npm install
-        run: npm install
+        run: npm ci
 
       - name: Run prettier
         run: npx prettier --check .
