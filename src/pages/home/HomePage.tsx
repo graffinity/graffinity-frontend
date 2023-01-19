@@ -57,7 +57,6 @@ const HomePage = () => {
 
 	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
 		let fetchedPhotos = photos.map(async (photo) => {
-			console.log("photo", photo);
 			let res = await fetch(photo.url, {
 				headers: {
 					"Access-Control-Allow-Origin": "*",
@@ -65,7 +64,6 @@ const HomePage = () => {
 			});
 			let blob = await res.blob();
 			let objectURL = URL.createObjectURL(blob);
-			console.log("objectURL", objectURL);
 			return objectURL;
 		});
 		let response = await Promise.all(fetchedPhotos).then((values) => {

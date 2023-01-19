@@ -33,8 +33,7 @@ const TextMobileStepper = () => {
 	const getGraffiti = async () => {
 		if (id) {
 			let response = await GraffitiPostAPI.findById(+id);
-			let res = await getGraffitiPhotos(response);
-			console.log("res", res);
+			await getGraffitiPhotos(response);
 		}
 	};
 

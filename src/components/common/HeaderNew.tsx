@@ -119,7 +119,7 @@ const Header = () => {
 									sx={{ color: "black" }}
 									underline="none"
 									key={item.key}
-									href={item.path}
+									href={item.path.replaceAll(":id", "1")}
 								>
 									{item.pageTitle}
 								</Link>

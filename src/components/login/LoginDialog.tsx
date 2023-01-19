@@ -18,7 +18,6 @@ const LoginDialog = (props: LoginDialogProps) => {
 	const { open, loginSuccess, handleClose } = props;
 
 	const handleSubmit = async (values: LoginRequest) => {
-		console.log("login", values);
 		await AuthAPI.login(values);
 		handleClose();
 	};
