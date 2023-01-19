@@ -40,7 +40,11 @@ jobs:
         run: npx prettier --check .
 
       - name: build
-        run: npm run build
+        run: npm run build --if-present
+
+      - name: Try to build docker image
+        run: |
+          sh build.sh
 
   deploy:
     # if: ${{ github.event_name != 'pull_request' }}
@@ -67,8 +71,8 @@ jobs:
         with:
           host: ${{env.REMOTE_HOST}}
           username: ${{env.REMOTE_USERNAME}}
-          key: ${{env.REMOTE_KEY}}
           port: ${{env.REMOTE_PORT}}
+          key: ${{env.REMOTE_KEY}}
           script: |
             sh start.sh
 
