@@ -161,7 +161,7 @@ export default function MapComponent(props: MapComponentProps) {
 
 										<Box
 											component="img"
-											src={require(`${marker.images[0]}`)}
+											src={`${marker.images[0]}`}
 											style={{
 												maxWidth: "100%",
 											}}
@@ -170,7 +170,8 @@ export default function MapComponent(props: MapComponentProps) {
 												navigate(`/graffiti/view/${marker.id}`);
 											}}
 										/>
-										{/* <img src={marker.images[0]} style={{}} /> */}
+										<img src={marker.images[0]} />
+										<img src={`${marker.images[0]}`} />
 									</div>
 								</InfoWindow>
 								// </div>
