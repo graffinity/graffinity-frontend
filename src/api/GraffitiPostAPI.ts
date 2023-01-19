@@ -17,4 +17,4 @@ const GraffitiPostAPI = {
 		axios.delete(`${baseUrl}/${id}`),
 };
 
-export default GraffitiPostAPI
+export default GraffitiPostAPI;
