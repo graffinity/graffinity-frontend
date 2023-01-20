@@ -124,20 +124,19 @@ export default function MapComponent(props: MapComponentProps) {
 			{isLoaded && (
 				<GoogleMap
 					mapContainerClassName="map"
-					mapContainerStyle={
-						{
-							// width: 'fit-content',
-							// width:
-							// 	props.width > maxWidthForDesktopView
-							// 		? `calc(${props.width}px /2)`
-							// 		: "100%",
-							// height: props.height ? props.height : "80%",
-							// height:
-							// 	props.height > maxWidthForDesktopView
-							// 		? `calc(${props.height}%)`
-							// 		: "100%",
-						}
-					}
+					mapContainerStyle={{
+						width:
+							props.width > maxWidthForDesktopView
+								? `calc(${props.width}px /1.3)`
+								: "100%",
+						// width: "100%",
+
+						// width:
+						// 	props.width > maxWidthForDesktopView
+						// 		? `calc(${props.width}px /2)`
+						// 		: "100%",
+						height: props.height * 1.7,
+					}}
 					center={center}
 					options={options}
 					onLoad={onMapLoad}
