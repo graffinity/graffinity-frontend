@@ -130,7 +130,7 @@ const CreateGrafiitiPage = () => {
 							name="authorId"
 							options={artistIds}
 							title="Artist"
-							titleProps={{
+							titleprops={{
 								style: { color: "#FFFFFF" },
 							}}
 						/>

@@ -10,7 +10,7 @@ import {
 import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
 import { MarkerData } from "pages/home/HomePage";
 import { useCallback, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
 import mapStyles from "./mapStyles";
@@ -33,21 +33,38 @@ interface MapComponentProps {
 const maxWidthForDesktopView = 900;
 
 export default function MapComponent(props: MapComponentProps) {
-	const { markers } = props;
-
 	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 	const [libraries] = useState<
 		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
 	>(["places"]);
+
 	const { isLoaded, loadError } = useJsApiLoader({
 		googleMapsApiKey: apiKey,
 		libraries: libraries,
+		// authReferrerPolicy: "origin",
 	});
 
-	const [map, setMap] = useState<google.maps.Map | null>(null);
+	const { markers } = props;
+	const navigate = useNavigate();
+
+	// const [map, setMap] = useState<google.maps.Map | null>(null);
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
+	const [infoWindowElement, setInfoWindowElement] = useState<
+		HTMLElement | undefined
+	>();
 
 	const mapRef = useRef<google.maps.Map | null>(null);
+	let infoRef = useRef<any>();
+	const clientRef = useRef<HTMLElement | null>(null);
+	const imgContainerRef = useRef<HTMLDivElement | null>(null);
+
+	const GoogleMapConfig = {
+		key: apiKey,
+		libraries: libraries,
+	};
+
+	// console.log("isLoaded: ", isLoaded);
+	// console.log("loadError: ", loadError);
 
 	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
@@ -73,14 +90,14 @@ export default function MapComponent(props: MapComponentProps) {
 	});
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
-		setMap(null);
+		// setMap(null);
 	}, []);
 
 	const onMapLoad = useCallback(
 		(map: google.maps.Map) => {
 			mapRef.current = map;
 			map.setZoom(12);
-			setMap(map);
+			// setMap(map);
 			init();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,13 +109,11 @@ export default function MapComponent(props: MapComponentProps) {
 			if (mapRef.current) {
 				mapRef.current?.panTo(coords);
 				mapRef.current?.setZoom(zoom ? zoom : 14);
-				setMap(mapRef.current);
+				// setMap(mapRef.current);
 			}
 		},
 		[]
 	);
-
-	const navigate = useNavigate();
 
 	return (
 		<div
@@ -116,20 +131,17 @@ export default function MapComponent(props: MapComponentProps) {
 				<GoogleMap
 					mapContainerClassName="map"
 					mapContainerStyle={{
-						// width: 'fit-content',
-						minWidth: "min-content !important",
-						minHeight: "100%",
-						width: "1400px",
-						maxWidth: "2000px",
+						width:
+							props.width > maxWidthForDesktopView
+								? `calc(${props.width}px /1.3)`
+								: "100%",
+						// width: "100%",
+
 						// width:
 						// 	props.width > maxWidthForDesktopView
 						// 		? `calc(${props.width}px /2)`
 						// 		: "100%",
-						// height: props.height ? props.height : "80%",
-						// height:
-						// 	props.height > maxWidthForDesktopView
-						// 		? `calc(${props.height}%)`
-						// 		: "100%",
+						height: props.height * 1.7,
 					}}
 					center={center}
 					options={options}
@@ -137,37 +149,56 @@ export default function MapComponent(props: MapComponentProps) {
 					onUnmount={onUnmount}
 					onClick={() => setActiveMarker(null)}
 				>
-					{markers.map((marker, index) => (
+					{markers.map((marker) => (
 						<Marker
 							key={marker.id}
 							position={marker.position}
 							onClick={() => handleActiveMarker(marker)}
 						>
 							{activeMarker?.id === marker.id && (
-								// <div ref={popupRef}>
-								<InfoWindow onCloseClick={() => setActiveMarker(null)}>
+								// TODO: Dynamic InfoWindow height with mapRef and "maxHeight" useState hook
+								<InfoWindow
+									options={{}}
+									ref={infoRef}
+									onLoad={(infoWindow) => {
+										let infoWindowElement =
+											infoWindow.getContent() as HTMLElement;
+										setInfoWindowElement(infoWindowElement);
+
+										clientRef.current = infoWindowElement;
+
+										infoWindow.focus();
+										infoWindow.setContent(infoWindowElement);
+									}}
+									onCloseClick={() => setActiveMarker(null)}
+								>
 									<div
+										ref={imgContainerRef}
 										style={{
 											display: "flex",
 											flexDirection: "column",
 											alignItems: "center",
 											gap: "8px",
+											width: "100%",
+											padding: "16px",
+											boxSizing: "border-box",
 										}}
 									>
 										<Typography variant="body2">{marker.name}</Typography>
 
 										<Box
 											component="img"
-											src={marker.images[0]}
+											src={marker.photos[0].url}
 											style={{
+												// maxWidth: "80%",
 												maxWidth: "100%",
+												maxHeight: "100%",
 											}}
-											sx={{ ":hover": { cursor: "pointer" } }}
+											sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
 											onClick={() => {
 												navigate(`/graffiti/view/${marker.id}`);
 											}}
 										/>
-										{/* <img src={marker.images[0]} style={{}} /> */}
 									</div>
 								</InfoWindow>
 								// </div>

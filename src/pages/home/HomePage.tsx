@@ -4,9 +4,9 @@ import GraffitiPostAPI from "api/GraffitiPostAPI";
 import MultiActionAreaCard from "components/common/Card";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
-import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 
 export interface MarkerData {
 	id: number;
@@ -15,7 +15,7 @@ export interface MarkerData {
 		lat: number;
 		lng: number;
 	};
-	images: string[];
+	photos: GraffitiPhotoResponse[];
 }
 
 const HomePage = () => {
@@ -55,29 +55,8 @@ const HomePage = () => {
 		setGraffitis(response);
 	};
 
-	const getGraffitiPhotos = async (photos: GraffitiPhotoResponse[]) => {
-		let fetchedPhotos = photos.map(async (photo) => {
-			let res = await fetch(photo.url, {
-				mode: "no-cors",
-				headers: {
-					"Access-Control-Allow-Origin": "*",
-				},
-			});
-			let blob = await res.blob();
-			let objectURL = URL.createObjectURL(blob);
-			return objectURL;
-		});
-		let response = await Promise.all(fetchedPhotos).then((values) => {
-			return values;
-		});
-
-		return response;
-	};
-
 	const getMarkers = async (graffitis: GraffitiResponse[]) => {
 		let markers = graffitis.map(async (graffiti) => {
-			let photos = await getGraffitiPhotos(graffiti.photos);
-
 			let lat = Number(graffiti.latitude);
 			let lng = Number(graffiti.longitude);
 
@@ -88,7 +67,7 @@ const HomePage = () => {
 					lat: lat,
 					lng: lng,
 				},
-				images: photos,
+				photos: graffiti.photos,
 			};
 
 			return newMarker;

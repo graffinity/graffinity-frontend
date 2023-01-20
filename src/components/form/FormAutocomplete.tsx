@@ -22,7 +22,7 @@ interface OtherProps extends OutlinedTextFieldProps {
 	titleRightClickableIcon?: JSX.Element;
 	titleRightClickableIconAction?: () => void;
 	description?: string;
-	titleProps?: TypographyProps;
+	titleprops?: TypographyProps;
 	descriptionProps?: TypographyProps;
 	errorProps?: TypographyProps;
 	tooltip?: string;
@@ -71,7 +71,7 @@ function FormAutocomplete(prop: OtherProps & FieldHookConfig<string>) {
 					<Typography
 						color={AppTheme.palette.text.primary}
 						variant="h5"
-						{...other.titleProps}
+						{...other.titleprops}
 					>
 						{title}
 					</Typography>

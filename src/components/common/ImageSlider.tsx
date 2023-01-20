@@ -7,22 +7,17 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import AppTheme from "AppTheme";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
-import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Common.css";
-
-interface PhotoObject {
-	label: string;
-	imgPath: string;
-}
 
 const TextMobileStepper = () => {
 	const { id } = useParams();
 
 	const [activeStep, setActiveStep] = useState<number>(0);
 
-	const [photos, setPhotos] = useState<PhotoObject[]>([]);
+	const [photos, setPhotos] = useState<GraffitiPhotoResponse[]>([]);
 
 	useEffect(() => {
 		console.log("graffitiId", id);
@@ -33,34 +28,8 @@ const TextMobileStepper = () => {
 	const getGraffiti = async () => {
 		if (id) {
 			let response = await GraffitiPostAPI.findById(+id);
-			await getGraffitiPhotos(response);
+			setPhotos(response.photos);
 		}
-	};
-
-	const getGraffitiPhotos = async (graffiti: GraffitiResponse) => {
-		if (graffiti) {
-			let photos = graffiti.photos.map(async (photo) => {
-				let blobPath = await fetch(photo.url, {
-					mode: "cors",
-					headers: {
-						"Allow-Control-Allow-Origin": "*",
-					},
-				}).then((res) => res.blob());
-				let photoObject = {
-					label: graffiti.name,
-					imgPath: URL.createObjectURL(blobPath),
-				};
-
-				return photoObject;
-			});
-			let res: PhotoObject[] = await Promise.all(photos).then((values) => {
-				return values;
-			});
-			setPhotos(res);
-			return res;
-		}
-		setPhotos([]);
-		return [];
 	};
 
 	const handleNext = () => {
@@ -86,12 +55,12 @@ const TextMobileStepper = () => {
 					}}
 				>
 					<Typography sx={{ color: "white" }}>
-						{photos && photos.length > 0 && photos[activeStep].label}
+						{photos && photos.length > 0 && photos[activeStep].url}
 					</Typography>
 				</Paper>
 				<Box
 					component={"img"}
-					src={photos && photos.length > 0 ? photos[activeStep].imgPath : ""}
+					src={photos && photos.length > 0 ? photos[activeStep].url : ""}
 					sx={{
 						width: "100vh",
 						display: "flex",
