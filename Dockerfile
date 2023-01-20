@@ -47,7 +47,7 @@ COPY --from=build /usr/local/app/package*.json ./
 # COPY --chown=node:node --from=build /usr/local/app/package*.json ./
 
 # Copy the environment variables
-COPY  --from=build /usr/local/app/prod.front.env ./
+# COPY  --from=build /usr/local/app/prod.front.env ./
 # COPY --chown=node:node  --from=build /usr/local/app/prod.front.env ./
 
 
