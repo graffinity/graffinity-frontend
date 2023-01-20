@@ -49,19 +49,19 @@ const AppTheme = createTheme({
 		MuiInputBase: {
 			styleOverrides: {
 				input: {
-					color: "#E5E5E5 !important",
+					// color: "#E5E5E5 !important",
 					"&.MuiOutlinedInput-input": {
 						padding: "13.5px 16px",
 						height: "21px",
 					},
 					"& 	.Mui-focused": {
-						border: "2px solid #d9d9d9 !important",
+						// border: "2px solid #d9d9d9 !important",
 					},
 					root: {
 						"&.MuiOutlinedInput-root": {
-							color: "#ddd8",
+							// color: "#ddd8",
 							"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-								border: "2px solid #d9d9d9 !important",
+								// border: "2px solid #d9d9d9 !important",
 							},
 
 							"& fieldset": {
@@ -70,7 +70,7 @@ const AppTheme = createTheme({
 						},
 						"& .MuiOutlinedInput-root .Mui-focused": {
 							"& .MuiOutlinedInput-notchedOutline": {
-								border: "2px solid #d9d9d9 !important",
+								// border: "2px solid #d9d9d9 !important",
 							},
 						},
 					},
@@ -81,7 +81,7 @@ const AppTheme = createTheme({
 			styleOverrides: {
 				root: {},
 				notchedOutline: {
-					border: "1px solid #fff7",
+					// border: "1px solid #fff7",
 				},
 			},
 		},
@@ -90,7 +90,7 @@ const AppTheme = createTheme({
 			styleOverrides: {
 				root: {
 					"&:hover .MuiOutlinedInput-notchedOutline": {
-						borderColor: "#FFFFFF",
+						// borderColor: "#FFFFFF",
 					},
 				},
 			},
@@ -183,6 +183,7 @@ const AppTheme = createTheme({
 			extraLight: "#7A8BC7",
 		},
 		text: {
+			primary: "#181D2B",
 			secondary: "rgba(23, 20, 64, 0.6)",
 			light: "#F8F8F8",
 			disabled: "rgba(24, 29, 43, 0.6)",

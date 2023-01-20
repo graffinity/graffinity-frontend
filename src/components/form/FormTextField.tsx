@@ -46,7 +46,7 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 		description,
 		...other
 	} = props;
-	const [field, meta] = useField(props);
+	const [field, meta] = useField(props.name);
 	return (
 		<div className="textfield-container">
 			{title && (
@@ -114,13 +114,13 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 						// 		borderColor: `#fff7`,
 						// 	},
 						// },
-						"& .MuiOutlinedInput-notchedOutline": {
-							// borderColor: `#fff7 !important`,
-							"&:hover": {
-								borderColor: `#ffffff`,
-								border: "1px solid #ffffff",
-							},
-						},
+						// "& .MuiOutlinedInput-notchedOutline": {
+						// 	// borderColor: `#fff7 !important`,
+						// 	"&:hover": {
+						// 		// borderColor: `#ffffff`,
+						// 		// border: "1px solid #ffffff",
+						// 	},
+						// },
 					}}
 				/>
 			) : (
