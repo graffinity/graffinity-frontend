@@ -35,7 +35,7 @@ USER node
 FROM nginx:latest As production
 
 # Copy the build output to replace the default nginx contents.
-COPY --chown=node:node --from=build /usr/local/app/build /usr/share/nginx/html
+COPY --from=build /usr/local/app/build /usr/share/nginx/html
 # COPY --chown=node:node --from=build /usr/local/app/build /usr/share/nginx/html
 
 # Copy the local nginx configuration file to the nginx conf.d folder
@@ -44,7 +44,7 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy the package.json and package-lock.json 
 COPY --from=build /usr/local/app/package*.json ./
-COPY --chown=node:node --from=build /usr/local/app/package*.json ./
+# COPY --chown=node:node --from=build /usr/local/app/package*.json ./
 
 # Copy the environment variables
 COPY  --from=build /usr/local/app/prod.front.env ./
