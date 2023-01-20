@@ -33,6 +33,17 @@ interface MapComponentProps {
 const maxWidthForDesktopView = 900;
 
 export default function MapComponent(props: MapComponentProps) {
+	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+	const [libraries] = useState<
+		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
+	>(["places"]);
+
+	const { isLoaded, loadError } = useJsApiLoader({
+		googleMapsApiKey: apiKey,
+		libraries: libraries,
+		// authReferrerPolicy: "origin",
+	});
+
 	const { markers } = props;
 	const navigate = useNavigate();
 
@@ -47,15 +58,10 @@ export default function MapComponent(props: MapComponentProps) {
 	const clientRef = useRef<HTMLElement | null>(null);
 	const imgContainerRef = useRef<HTMLDivElement | null>(null);
 
-	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
-	const [libraries] = useState<
-		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
-	>(["places"]);
-	const { isLoaded, loadError } = useJsApiLoader({
-		googleMapsApiKey: apiKey,
+	const GoogleMapConfig = {
+		key: apiKey,
 		libraries: libraries,
-	});
+	};
 
 	// console.log("isLoaded: ", isLoaded);
 	// console.log("loadError: ", loadError);
