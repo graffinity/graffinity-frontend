@@ -34,8 +34,8 @@ export const MapComponent = (props: MapComponentProps) => {
 		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
 	>(["places"]);
 
-	const { isLoaded, loadError } = useJsApiLoader({
-		googleMapsApiKey: apiKey,
+	const { isLoaded } = useJsApiLoader({
+		googleMapsApiKey: "AIzaSyB_YBV31ghRm2x-Tz8WcwBDP-qjZ0QiTKo",
 		libraries: libraries,
 		// authReferrerPolicy: "origin",
 	});
@@ -133,6 +133,7 @@ export const MapComponent = (props: MapComponentProps) => {
 
 			{isLoaded && (
 				<GoogleMap
+					key={apiKey}
 					mapContainerClassName="map"
 					mapContainerStyle={{
 						width:
