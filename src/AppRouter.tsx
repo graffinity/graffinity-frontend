@@ -1,19 +1,30 @@
+import AuthAPI from "api/AuthAPI";
 import HeaderNew from "components/common/HeaderNew";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import "./AppRouter.css";
+import common from "redux/common";
+import { useAppSelector } from "redux/store/hooks";
 import "./AppRouter.css";
 import { FooterContainer } from "./components/common/Footer";
 import routes from "./constants/routes";
 import RouteItem from "./models/routes/RouteItem";
-import AuthAPI from "api/AuthAPI";
-import common from "redux/common";
 
 const AppRouter = () => {
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+
 	useEffect(() => {
 		common.getStatus();
-		getProfile();
+		if (isLoggedIn) {
+			getProfile();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (isLoggedIn) {
+			getProfile();
+		}
+	}, [isLoggedIn]);
 
 	const getProfile = async () => {
 		let res = await AuthAPI.getProfile();
@@ -31,12 +42,10 @@ const AppRouter = () => {
 				flexDirection: "column",
 			}}
 		>
-			{/* <NavBar /> */}
 			<HeaderNew />
 			<div
 				style={{
 					width: "100%",
-					// height: "100%",
 					display: "flex",
 					flex: 1,
 					flexDirection: "column",

@@ -11,7 +11,6 @@ interface MarkerComponentProps {
 	imgContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 	handleActiveMarker: (marker: MarkerData) => void;
 	handleActiveMarkerNull: () => void;
-	handleSetInfoWindowElement: (element: HTMLElement) => void;
 }
 
 const MarkerComponent = (props: MarkerComponentProps) => {
@@ -23,7 +22,6 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 		imgContainerRef,
 		handleActiveMarker,
 		handleActiveMarkerNull,
-		handleSetInfoWindowElement,
 	} = props;
 
 	const navigate = useNavigate();
@@ -39,11 +37,7 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 					ref={infoRef}
 					onLoad={(infoWindow) => {
 						let infoWindowElement = infoWindow.getContent() as HTMLElement;
-						handleSetInfoWindowElement(infoWindowElement);
-
 						clientRef.current = infoWindowElement;
-
-						infoWindow.focus();
 						infoWindow.setContent(infoWindowElement);
 					}}
 					onCloseClick={() => handleActiveMarkerNull()}
@@ -66,7 +60,6 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 							component="img"
 							src={marker.photos[0].url}
 							style={{
-								// maxWidth: "80%",
 								maxWidth: "100%",
 								maxHeight: "100%",
 							}}

@@ -2,7 +2,6 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import MarkerData from "models/map/MarkerData";
 import { useCallback, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
 import MapLocate from "./MapLocate";
@@ -17,65 +16,43 @@ interface MapComponentProps {
 
 const maxWidthForDesktopView = 900;
 
-const center = {
-	lat: 54.69,
-	lng: 25.28,
-};
-
-const options = {
-	styles: mapStyles,
-	disableDefaultUI: true,
-	zoomControl: true,
-};
-
 export const MapComponent = (props: MapComponentProps) => {
-	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-	const [libraries] = useState<
-		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
-	>(["places"]);
+	const { markers } = props;
 
-	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "AIzaSyBMfzuPsW0IHNW1qFoFVPdbtirBf5cZ15o",
+	const [libraries] = useState<Libraries>(["places"]);
+
+	let environment = process.env.NODE_ENV;
+	let localApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+	let apiKey =
+		environment === "production"
+			? "AIzaSyBMfzuPsW0IHNW1qFoFVPdbtirBf5cZ15o"
+			: localApiKey;
+	const googleMapsConfig = {
+		key: apiKey,
+		googleMapsApiKey: apiKey,
 		libraries: libraries,
-		// authReferrerPolicy: "origin",
+	};
+	const { isLoaded } = useJsApiLoader({
+		...googleMapsConfig,
 	});
 
-	const { markers } = props;
-	const navigate = useNavigate();
-
-	// const [map, setMap] = useState<google.maps.Map | null>(null);
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
-	const [infoWindowElement, setInfoWindowElement] = useState<
-		HTMLElement | undefined
-	>();
 
 	const mapRef = useRef<google.maps.Map | null>(null);
 	let infoRef = useRef<any>();
 	const clientRef = useRef<HTMLElement | null>(null);
 	const imgContainerRef = useRef<HTMLDivElement | null>(null);
 
-	const GoogleMapConfig = {
-		key: apiKey,
-		libraries: libraries,
-	};
-
-	// console.log("isLoaded: ", isLoaded);
-	// console.log("loadError: ", loadError);
-
 	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
 		if (mapRef.current) {
 			mapRef.current.panTo(marker.position);
-			mapRef.current.setZoom(16);
+			mapRef.current.setZoom(14);
 		}
 	};
 
 	const handleActiveMarkerNull = () => {
 		setActiveMarker(null);
-	};
-
-	const handleSetInfoWindowElement = (element: HTMLElement) => {
-		setInfoWindowElement(element);
 	};
 
 	const {
@@ -94,14 +71,13 @@ export const MapComponent = (props: MapComponentProps) => {
 	});
 
 	const onUnmount = useCallback(function callback(map: google.maps.Map) {
-		// setMap(null);
+		mapRef.current = null;
 	}, []);
 
 	const onMapLoad = useCallback(
 		(map: google.maps.Map) => {
 			mapRef.current = map;
 			map.setZoom(12);
-			// setMap(map);
 			init();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,8 +88,7 @@ export const MapComponent = (props: MapComponentProps) => {
 		(coords: google.maps.LatLngLiteral, zoom?: number) => {
 			if (mapRef.current) {
 				mapRef.current?.panTo(coords);
-				mapRef.current?.setZoom(zoom ? zoom : 14);
-				// setMap(mapRef.current);
+				mapRef.current?.setZoom(zoom ? zoom : 15);
 			}
 		},
 		[]
@@ -140,12 +115,6 @@ export const MapComponent = (props: MapComponentProps) => {
 							props.width > maxWidthForDesktopView
 								? `calc(${props.width}px /1.3)`
 								: "100%",
-						// width: "100%",
-
-						// width:
-						// 	props.width > maxWidthForDesktopView
-						// 		? `calc(${props.width}px /2)`
-						// 		: "100%",
 						height: props.height * 1.7,
 					}}
 					center={center}
@@ -164,7 +133,6 @@ export const MapComponent = (props: MapComponentProps) => {
 							imgContainerRef={imgContainerRef}
 							handleActiveMarker={handleActiveMarker}
 							handleActiveMarkerNull={handleActiveMarkerNull}
-							handleSetInfoWindowElement={handleSetInfoWindowElement}
 						/>
 					))}
 				</GoogleMap>
@@ -174,3 +142,21 @@ export const MapComponent = (props: MapComponentProps) => {
 };
 
 export default MapComponent;
+type Libraries = (
+	| "geometry"
+	| "places"
+	| "drawing"
+	| "localContext"
+	| "visualization"
+)[];
+
+const center = {
+	lat: 54.69,
+	lng: 25.28,
+};
+
+const options = {
+	styles: mapStyles,
+	disableDefaultUI: true,
+	zoomControl: true,
+};
