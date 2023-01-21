@@ -4,6 +4,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import {
 	GoogleMap,
 	InfoWindow,
+	LoadScript,
 	Marker,
 	useJsApiLoader,
 } from "@react-google-maps/api";
@@ -32,7 +33,7 @@ interface MapComponentProps {
 
 const maxWidthForDesktopView = 900;
 
-export default function MapComponent(props: MapComponentProps) {
+const MapComponent = (props: MapComponentProps) => {
 	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 	const [libraries] = useState<
 		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
@@ -128,88 +129,92 @@ export default function MapComponent(props: MapComponentProps) {
 			<Locate panTo={panTo} />
 
 			{isLoaded && (
-				<GoogleMap
-					mapContainerClassName="map"
-					mapContainerStyle={{
-						width:
-							props.width > maxWidthForDesktopView
-								? `calc(${props.width}px /1.3)`
-								: "100%",
-						// width: "100%",
+				<LoadScript googleMapsApiKey="AIzaSyB_YBV31ghRm2x-Tz8WcwBDP-qjZ0QiTKo">
+					<GoogleMap
+						mapContainerClassName="map"
+						mapContainerStyle={{
+							width:
+								props.width > maxWidthForDesktopView
+									? `calc(${props.width}px /1.3)`
+									: "100%",
+							// width: "100%",
 
-						// width:
-						// 	props.width > maxWidthForDesktopView
-						// 		? `calc(${props.width}px /2)`
-						// 		: "100%",
-						height: props.height * 1.7,
-					}}
-					center={center}
-					options={options}
-					onLoad={onMapLoad}
-					onUnmount={onUnmount}
-					onClick={() => setActiveMarker(null)}
-				>
-					{markers.map((marker) => (
-						<Marker
-							key={marker.id}
-							position={marker.position}
-							onClick={() => handleActiveMarker(marker)}
-						>
-							{activeMarker?.id === marker.id && (
-								// TODO: Dynamic InfoWindow height with mapRef and "maxHeight" useState hook
-								<InfoWindow
-									options={{}}
-									ref={infoRef}
-									onLoad={(infoWindow) => {
-										let infoWindowElement =
-											infoWindow.getContent() as HTMLElement;
-										setInfoWindowElement(infoWindowElement);
+							// width:
+							// 	props.width > maxWidthForDesktopView
+							// 		? `calc(${props.width}px /2)`
+							// 		: "100%",
+							height: props.height * 1.7,
+						}}
+						center={center}
+						options={options}
+						onLoad={onMapLoad}
+						onUnmount={onUnmount}
+						onClick={() => setActiveMarker(null)}
+					>
+						{markers.map((marker) => (
+							<Marker
+								key={marker.id}
+								position={marker.position}
+								onClick={() => handleActiveMarker(marker)}
+							>
+								{activeMarker?.id === marker.id && (
+									// TODO: Dynamic InfoWindow height with mapRef and "maxHeight" useState hook
+									<InfoWindow
+										options={{}}
+										ref={infoRef}
+										onLoad={(infoWindow) => {
+											let infoWindowElement =
+												infoWindow.getContent() as HTMLElement;
+											setInfoWindowElement(infoWindowElement);
 
-										clientRef.current = infoWindowElement;
+											clientRef.current = infoWindowElement;
 
-										infoWindow.focus();
-										infoWindow.setContent(infoWindowElement);
-									}}
-									onCloseClick={() => setActiveMarker(null)}
-								>
-									<div
-										ref={imgContainerRef}
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											alignItems: "center",
-											gap: "8px",
-											width: "100%",
-											padding: "16px",
-											boxSizing: "border-box",
+											infoWindow.focus();
+											infoWindow.setContent(infoWindowElement);
 										}}
+										onCloseClick={() => setActiveMarker(null)}
 									>
-										<Typography variant="body2">{marker.name}</Typography>
-
-										<Box
-											component="img"
-											src={marker.photos[0].url}
+										<div
+											ref={imgContainerRef}
 											style={{
-												// maxWidth: "80%",
-												maxWidth: "100%",
-												maxHeight: "100%",
+												display: "flex",
+												flexDirection: "column",
+												alignItems: "center",
+												gap: "8px",
+												width: "100%",
+												padding: "16px",
+												boxSizing: "border-box",
 											}}
-											sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
-											onClick={() => {
-												navigate(`/graffiti/view/${marker.id}`);
-											}}
-										/>
-									</div>
-								</InfoWindow>
-								// </div>
-							)}
-						</Marker>
-					))}
-				</GoogleMap>
+										>
+											<Typography variant="body2">{marker.name}</Typography>
+
+											<Box
+												component="img"
+												src={marker.photos[0].url}
+												style={{
+													// maxWidth: "80%",
+													maxWidth: "100%",
+													maxHeight: "100%",
+												}}
+												sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
+												onClick={() => {
+													navigate(`/graffiti/view/${marker.id}`);
+												}}
+											/>
+										</div>
+									</InfoWindow>
+									// </div>
+								)}
+							</Marker>
+						))}
+					</GoogleMap>
+				</LoadScript>
 			)}
 		</div>
 	);
-}
+};
+
+export default MapComponent;
 
 interface LocateAndSearchProps {
 	panTo: (coords: google.maps.LatLngLiteral) => void;
