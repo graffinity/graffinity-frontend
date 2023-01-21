@@ -35,7 +35,7 @@ export const MapComponent = (props: MapComponentProps) => {
 	>(["places"]);
 
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "AIzaSyB_YBV31ghRm2x-Tz8WcwBDP-qjZ0QiTKo",
+		googleMapsApiKey: "AIzaSyBMfzuPsW0IHNW1qFoFVPdbtirBf5cZ15o",
 		libraries: libraries,
 		// authReferrerPolicy: "origin",
 	});
