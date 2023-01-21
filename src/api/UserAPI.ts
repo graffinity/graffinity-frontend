@@ -1,7 +1,6 @@
 import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
 import UserInfoResponse from "models/auth/UserInfoResponse";
-import UserExistsParams from "models/user/UserExistsParams";
 
 const baseUrl = apiEndpoints.user;
 

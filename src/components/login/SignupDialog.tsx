@@ -1,4 +1,4 @@
-import { ArrowBackIosNew, SixtyFpsSharp } from "@mui/icons-material";
+import { ArrowBackIosNew } from "@mui/icons-material";
 import { Button, Dialog, Typography } from "@mui/material";
 import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
@@ -9,7 +9,6 @@ import UserCreateRequest from "models/user/UserCreateRequest";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
 import "./Login.css";
-import { useEffect } from "react";
 
 interface SignupProps {
 	open: boolean;
