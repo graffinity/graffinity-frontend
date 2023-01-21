@@ -162,9 +162,7 @@ const Header = () => {
 			<SignUpDialog
 				open={signUpDialogOpen}
 				handleClose={handleCloseSignUpDialog}
-				handleLoginOpen={function (): void {
-					throw new Error("Function not implemented.");
-				}}
+				handleLoginOpen={handleOpenLoginDialog}
 			/>
 		</AppBar>
 	);

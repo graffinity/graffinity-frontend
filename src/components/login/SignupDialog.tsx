@@ -1,9 +1,11 @@
 import { ArrowBackIosNew } from "@mui/icons-material";
 import { Button, Dialog, Typography } from "@mui/material";
 import AuthAPI from "api/AuthAPI";
+import UserAPI from "api/UserAPI";
 import FormTextField from "components/form/FormTextField";
 import ReadableHiddenPasswordField from "components/form/ReadableHiddenPasswordField";
 import { Form, Formik, FormikProps } from "formik";
+import UserCreateRequest from "models/user/UserCreateRequest";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
 import "./Login.css";
@@ -16,9 +18,35 @@ interface SignupProps {
 
 const SignupDialog = (props: SignupProps) => {
 	const navigate = useNavigate();
+
+	const checkIfUserExistsByEmail = async (email: string) => {
+		if (email === "") {
+			return false;
+		}
+		let response = await UserAPI.existsByEmail(email);
+		console.log("exists: ", response);
+		return response;
+	};
+	const checkIfUserExistsByUsername = async (username: string) => {
+		if (username === "") {
+			return false;
+		}
+		let response = await UserAPI.existsByUsername(username);
+		console.log("exists: ", response);
+		return response;
+	};
+
 	const handleSubmit = async (values: RegistrationValues) => {
 		console.log("values", values);
-		let response = await AuthAPI.signup({ username: "l", password: "l" });
+		let request: UserCreateRequest = {
+			username: values.username,
+			email: values.email,
+			password: values.password,
+			name: values.name,
+			lastname: values.lastname,
+		};
+		let response = await AuthAPI.signup(request);
+		console.log("response", response);
 		props.handleClose();
 		navigate("/home");
 
@@ -27,11 +55,12 @@ const SignupDialog = (props: SignupProps) => {
 	return (
 		<Dialog
 			open={props.open}
-			onClose={props.handleClose}
 			PaperProps={{
 				style: {
 					boxSizing: "border-box",
-					minWidth: "600px",
+					width: "100%",
+					maxWidth: "500px",
+
 					boxShadow: "none",
 				},
 			}}
@@ -41,102 +70,156 @@ const SignupDialog = (props: SignupProps) => {
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
+					width: "100%",
 				}}
 			>
 				<div
-					className={"login-header-buttons"}
 					style={{
-						backgroundColor: "#F5F5F5",
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
 						width: "100%",
+						boxSizing: "border-box",
 					}}
 				>
-					<Button
-						className="button"
-						onClick={() => {
-							props.handleLoginOpen();
-							props.handleClose();
-						}}
-					>
-						<ArrowBackIosNew
-							style={{
-								height: "16px",
-								width: "16px",
-								marginRight: "4px",
-							}}
-						/>
-						<Typography variant="h5" className="login-header-return-button">
-							Back
-						</Typography>
-					</Button>
-					<Typography
-						variant="body"
-						className="login-header-return-button"
+					<div
+						className={"login-header-buttons"}
 						style={{
-							fontStyle: "italic",
-							marginRight: "24px",
+							display: "flex",
+							alignItems: "center",
+							gap: "24px",
+
+							backgroundColor: "#F5F5F5",
+							width: "100%",
 						}}
 					>
-						Signing up
-					</Typography>
+						<Button
+							className="button"
+							onClick={() => {
+								props.handleLoginOpen();
+								props.handleClose();
+							}}
+						>
+							<ArrowBackIosNew
+								style={{
+									height: "16px",
+									width: "16px",
+									marginRight: "4px",
+								}}
+							/>
+							<Typography variant="h5" className="login-header-return-button">
+								Back
+							</Typography>
+						</Button>
+						<Typography
+							variant="body"
+							className="login-header-return-button"
+							style={{
+								fontStyle: "italic",
+								marginRight: "24px",
+							}}
+						>
+							Signing up
+						</Typography>
+					</div>
 				</div>
+
 				<Formik
 					initialValues={initialValues}
 					validationSchema={validationSchema}
 					onSubmit={handleSubmit}
 				>
 					{(formik: FormikProps<RegistrationValues>) => (
-						<Form className="register-dialog-container">
-							<div className="input-container" style={{ margin: "16px" }}>
+						<Form
+							className="register-dialog-container"
+							style={{
+								width: "100%",
+							}}
+						>
+							<div
+								className="input-container"
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+									gap: "12px",
+									padding: "16px",
+									boxSizing: "border-box",
+									width: "100%",
+								}}
+							>
 								<FormTextField
+									title="Name"
 									name="name"
 									label="Name"
 									value={formik.values.name}
 								/>
-								{/* <FormTextField
+								<FormTextField
+									title="Lastname"
 									name="lastname"
 									label="Lastname"
 									value={formik.values.lastname}
-								/> */}
+								/>
 
 								<FormTextField
+									title="Username"
+									name="username"
+									label="Username"
+									value={formik.values.username}
+									onChange={(e: any) => {
+										formik.handleChange(e);
+
+										checkIfUserExistsByUsername(formik.values.username).then(
+											(response) => {
+												if (response) {
+													formik.setFieldError(
+														"username",
+														"Username already exists"
+													);
+												}
+											}
+										);
+									}}
+								/>
+								<FormTextField
+									title="Email"
 									name="email"
 									label="Email"
 									value={formik.values.email}
+									onChange={() => {
+										checkIfUserExistsByEmail(formik.values.email).then(
+											(response) => {
+												if (response) {
+													formik.setFieldError("email", "Email already exists");
+												}
+											}
+										);
+									}}
 								/>
-								<Typography>Password</Typography>
-								<ReadableHiddenPasswordField name="password" />
-								{/* <FormTextField
-									name="personalCode"
-									label="Personal Code"
-									value={formik.values.personalCode}
+
+								<ReadableHiddenPasswordField name="password" title="Password" />
+
+								<ReadableHiddenPasswordField
+									name="repeatPassword"
+									title="Repeat password"
 								/>
-								<FormTextField
-									name="phoneNumber"
-									label="Phone Number"
-									value={formik.values.phoneNumber}
-								/>
-								<FormTextField
-									name="address"
-									label="Address"
-									value={formik.values.address}
-								/> */}
+								<Button
+									fullWidth
+									type="submit"
+									color="primary"
+									variant="contained"
+									disabled={!formik.isValid || formik.isSubmitting}
+									style={{
+										textTransform: "none",
+										padding: "16px 32px",
+										boxSizing: "border-box",
+									}}
+								>
+									<Typography variant="h5" color="#FFFFFF">
+										Register
+									</Typography>
+								</Button>
 							</div>
-							<Button
-								fullWidth
-								onClick={() => formik.handleSubmit()}
-								type="submit"
-								color="primary"
-								variant="contained"
-								disabled={!formik.isValid || formik.isSubmitting}
-								style={{
-									textTransform: "none",
-									padding: "16px 40px",
-								}}
-							>
-								<Typography variant="h5" color="#FFFFFF">
-									Register
-								</Typography>
-							</Button>
 						</Form>
 					)}
 				</Formik>
@@ -147,32 +230,37 @@ const SignupDialog = (props: SignupProps) => {
 
 interface RegistrationValues {
 	name: string;
-	// lastname: string;
+	lastname: string;
+	username: string;
 	email: string;
 	password: string;
-	// personalCode: string;
-	// phoneNumber: string;
-	// address: string;
+	repeatPassword: string;
 }
 
 const initialValues: RegistrationValues = {
 	name: "",
-	// lastname: "",
+	lastname: "",
+	username: "",
 	email: "",
 	password: "",
-	// personalCode: "",
-	// phoneNumber: "",
-	// address: "",
+	repeatPassword: "",
 };
 
 const validationSchema = yup.object({
-	name: yup.string().required("Name is required"),
-	// lastname: yup.string().required("Lastname is required"),
-	email: yup.string().email("Invalid email").required("Email is required"),
-	password: yup.string().required("Password is required"),
-	// personalCode: yup.string().required("Personal code is required"),
-	// phoneNumber: yup.string().required("Phone number is required"),
-	// address: yup.string().required("Address is required"),
+	name: yup.string().nullable().required("Name is required"),
+	lastname: yup.string().nullable().required("Lastname is required"),
+	username: yup.string().nullable().required("Username is required"),
+	email: yup
+		.string()
+		.nullable()
+		.email("Invalid email")
+		.required("Email is required"),
+	password: yup.string().nullable().required("Password is required"),
+	repeatPassword: yup
+		.string()
+		.nullable()
+		.required("Repeat password is required")
+		.oneOf([yup.ref("password")], "Passwords must match"),
 });
 
 export default SignupDialog;

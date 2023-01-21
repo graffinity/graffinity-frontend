@@ -2,6 +2,7 @@ import axios from "axios";
 import apiEndpoints from "constants/apiEndpoints";
 import LoginRequest from "models/auth/LoginRequest";
 import StatusResponse from "models/auth/StatusResponse";
+import UserCreateRequest from "models/user/UserCreateRequest";
 
 const baseUrl = apiEndpoints.auth;
 
@@ -22,7 +23,7 @@ const AuthAPI = {
 		return res;
 	},
 
-	signup: async (request: LoginRequest) => {
+	signup: async (request: UserCreateRequest) => {
 		let res = axios.post(`${baseUrl}/signup`, request);
 		let temp = await res;
 

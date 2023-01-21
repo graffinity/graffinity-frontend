@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "./ButtonStyle.css";
+import { useState } from "react";
+import "./ButtonComponents.css";
 
-export default function LikeButton() {
+const LikeButton = () => {
 	const [likeCount, setLikeCount] = useState(50);
 	// const [dislikeCount, setDislikeCount] = useState(25);
 
@@ -48,10 +48,10 @@ export default function LikeButton() {
 	};
 
 	return (
-		<div className="container">
-			<div className="btn-container">
+		<div className="liek-button-container">
+			<div className="button-container">
 				<button
-					className={`btn ${activeBtn === "like" ? "like-active" : ""}`}
+					className={`btn ${activeBtn === "like" ? "like-button-active" : ""}`}
 					onClick={handleLikeClick}
 				>
 					<span className="material-symbols-rounded">thumb_up</span>
@@ -68,4 +68,6 @@ export default function LikeButton() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default LikeButton;

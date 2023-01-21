@@ -10,7 +10,7 @@ import GraffitiPostAPI from "api/GraffitiPostAPI";
 import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./Common.css";
+import "./ImageComponents.css";
 
 const TextMobileStepper = () => {
 	const { id } = useParams();
