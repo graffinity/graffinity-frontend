@@ -1,84 +1,51 @@
-import { Global } from "@emotion/react";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Drawer } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { grey } from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
-import * as React from "react";
+import routes from "constants/routes";
+import RouteItem from "models/routes/RouteItem";
 
-import MobileFooter from "components/common/MobileFooter";
-import MobileTitleCard from "components/common/MobileTitleCard";
-import "./Common.css";
+import { DrawerList } from "./DrawerList";
 
-const drawerBleeding = 56;
+const drawerWidth = 280;
 
-interface Props {
-	window?: () => Window;
+interface DrawerProps {
+	open: boolean;
+	handleClose: () => void;
+	setActivePage: (currentPage: RouteItem) => void;
+	children?: React.ReactNode;
 }
-const Puller = styled(Box)(({ theme }) => ({
-	width: 30,
-	height: 6,
-	backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
-	borderRadius: 3,
-	position: "absolute",
-	top: 8,
-	left: "calc(50% - 15px)",
-}));
-const Root = styled("div")(({ theme }) => ({
-	height: "100%",
-	background: "transparent",
-}));
 
-const StyledBox = styled(Box)(({ theme }) => ({
-	backgroundColor: `#404044`,
-}));
-
-export default function SwipeableEdgeDrawer(props: Props) {
-	// const { window } = props;
-	const [open, setOpen] = React.useState(false);
-
-	const toggleDrawer = (newOpen: boolean) => () => {
-		setOpen(newOpen);
-	};
+const DrawerComponent = (props: DrawerProps) => {
+	const { open, handleClose, setActivePage } = props;
 
 	return (
-		<Root sx={{ display: { md: "none", xs: "block", bottom: "0" } }}>
-			<Global
-				styles={{
-					".MuiDrawer-root > .MuiPaper-root": {
-						height: `calc(95% - ${drawerBleeding}px)`,
-						overflow: "visible",
+		<Box sx={{ display: "flex" }}>
+			<Drawer
+				disableScrollLock={true}
+				open={open}
+				onClose={handleClose}
+				sx={{
+					width: drawerWidth,
+					flexShrink: 0,
+					"& .MuiDrawer-paper": {
+						width: drawerWidth,
+						boxSizing: "border-box",
 					},
 				}}
-			/>
-			<IconButton sx={{ color: "white" }} onClick={toggleDrawer(true)}>
-				<MenuIcon></MenuIcon>
-			</IconButton>
-			<SwipeableDrawer
-				anchor="bottom"
-				open={open}
-				onClose={toggleDrawer(false)}
-				onOpen={toggleDrawer(true)}
-				swipeAreaWidth={drawerBleeding}
-				disableSwipeToOpen={true}
-				ModalProps={{
-					keepMounted: true,
-				}}
+				anchor="left"
 			>
-				<Puller />
-				<StyledBox
-					sx={{
-						px: 2,
-						pb: 2,
-						height: "100%",
-						overflow: "auto",
-					}}
-				>
-					<MobileTitleCard />
-					<MobileFooter />
-				</StyledBox>
-			</SwipeableDrawer>
-		</Root>
+				<Box>
+					<DrawerList
+						pathItems={routes}
+						setActivePage={setActivePage}
+						handleClose={handleClose}
+					/>
+				</Box>
+			</Drawer>
+			{/* <Box component="main" sx={{ flexGrow: 1, p: padding }}>
+				{children}
+			</Box> */}
+		</Box>
 	);
-}
+};
+
+export default DrawerComponent;

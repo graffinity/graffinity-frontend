@@ -1,38 +1,40 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-	AppBar,
-	Button,
-	IconButton,
-	Link,
-	List,
-	Menu,
-	Toolbar,
-	Typography,
-} from "@mui/material";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import AuthAPI from "api/AuthAPI";
+import DrawerComponent from "components/drawer/Drawer";
 import LoginDialog from "components/login/LoginDialog";
 import SignUpDialog from "components/login/SignupDialog";
-import routes from "constants/routes";
-import React, { useState } from "react";
+import RouteItem from "models/routes/RouteItem";
+import { useState } from "react";
+import { useAppSelector } from "redux/store/hooks";
 import "./Common.css";
 
-const Header = () => {
-	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-	const [signUpDialogOpen, setSignUpDialogOpen] = useState<boolean>(false);
+interface HeaderProps {
+	setActivePage: (currentPage: RouteItem) => void;
+}
 
-	const open = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+const Header = (props: HeaderProps) => {
+	const { setActivePage } = props;
+
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+
+	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+	const [signUpDialogOpen, setSignUpDialogOpen] = useState<boolean>(false);
+	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
 	const handleOpenSignUpDialog = () => {
 		setSignUpDialogOpen(true);
 	};
 	const handleCloseSignUpDialog = () => {
 		setSignUpDialogOpen(false);
+	};
+
+	const handleDrawerOpen = () => {
+		setDrawerOpen(true);
+	};
+
+	const handleDrawerClose = () => {
+		setDrawerOpen(false);
 	};
 
 	const handleOpenLoginDialog = () => {
@@ -74,69 +76,56 @@ const Header = () => {
 					}}
 				>
 					<IconButton
-						aria-controls={open ? "basic-menu" : undefined}
 						size="large"
 						edge="start"
 						color="inherit"
-						aria-label="menu"
-						aria-haspopup="true"
-						aria-expanded={open ? "true" : undefined}
-						onClick={handleClick}
+						onClick={handleDrawerOpen}
 						sx={{ mr: 2 }}
 					>
 						<MenuIcon />
 					</IconButton>
-					<Menu
-						sx={{
-							display: "flex",
-							alignContent: "center",
-							justifyContent: "center",
-						}}
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						MenuListProps={{
-							"aria-labelledby": "basic-button",
-						}}
-					>
-						<List
-							style={{
-								marginLeft: "16px",
-								marginRight: "16px",
-								width: "100%",
-								display: "flex",
-								alignContent: "center",
-								justifyContent: "center",
-								flexDirection: "column",
-								gap: "12px",
-							}}
-						>
-							{[...routes[0].items, ...routes[1].items].map((item) => (
-								<Link
-									sx={{ color: "black" }}
-									underline="none"
-									key={item.key}
-									href={item.path.replaceAll(":id", "1")}
-								>
-									{item.pageTitle}
-								</Link>
-							))}
-						</List>
-					</Menu>
+
 					<div style={{ marginLeft: "20px" }}></div>
 					<div>
-						<Button onClick={handleOpenSignUpDialog} sx={{ color: "white" }}>
-							<Typography>Sign Up</Typography>
-						</Button>
-						<Button onClick={handleOpenLoginDialog} sx={{ color: "white" }}>
-							{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
-							<Typography>Login</Typography>
-						</Button>
-						<Button onClick={handleLogout} sx={{ color: "white" }}>
-							<Typography>Logout</Typography>
-						</Button>
-
+						{!isLoggedIn ? (
+							<div>
+								<Button
+									onClick={handleOpenLoginDialog}
+									style={{ color: "white", paddingRight: "36px" }}
+								>
+									{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
+									<Typography
+										style={{
+											textTransform: "none",
+										}}
+									>
+										Login
+									</Typography>
+								</Button>
+								<Button
+									onClick={handleOpenSignUpDialog}
+									sx={{ color: "white" }}
+								>
+									<Typography
+										style={{
+											textTransform: "none",
+										}}
+									>
+										Sign Up
+									</Typography>
+								</Button>
+							</div>
+						) : (
+							<Button onClick={handleLogout} sx={{ color: "white" }}>
+								<Typography
+									style={{
+										textTransform: "none",
+									}}
+								>
+									Logout
+								</Typography>
+							</Button>
+						)}
 						{/* <AccountInfo me={me} logoff={logoff} /> */}
 					</div>
 				</div>
@@ -149,6 +138,11 @@ const Header = () => {
 				open={signUpDialogOpen}
 				handleClose={handleCloseSignUpDialog}
 				handleLoginOpen={handleOpenLoginDialog}
+			/>
+			<DrawerComponent
+				open={drawerOpen}
+				handleClose={handleDrawerClose}
+				setActivePage={setActivePage}
 			/>
 		</AppBar>
 	);
