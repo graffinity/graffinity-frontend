@@ -38,6 +38,7 @@ export function DrawerList(props: DrawerListProps) {
 		<div>
 			{pathItems.map((group) => (
 				<div
+					key={group.group}
 					style={{
 						marginTop: "18px",
 					}}
