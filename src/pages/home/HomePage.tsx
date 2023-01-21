@@ -4,19 +4,9 @@ import GraffitiPostAPI from "api/GraffitiPostAPI";
 import MultiActionAreaCard from "components/common/Card";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
+import MarkerData from "models/map/MarkerData";
 import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
-
-export interface MarkerData {
-	id: number;
-	name: string;
-	position: {
-		lat: number;
-		lng: number;
-	};
-	photos: GraffitiPhotoResponse[];
-}
 
 const HomePage = () => {
 	const [width, setWidth] = useState<number>(window.innerWidth);
