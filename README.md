@@ -1,10 +1,29 @@
-# Getting Started with Create React App
+# Graffinity
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Website status](https://img.shields.io/website?down_color=cb2432&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Fgraffinity.art)](https://graffinity.art)
 
-## Available Scripts
+[![frontend continuous integration](https://github.com/graffinity/graffinity-frontend/actions/workflows/ci.yml/badge.svg?branch=GRAF-83-further-improvements)](https://github.com/graffinity/graffinity-frontend/actions/workflows/ci.yml)
 
-In the project directory, you can run:
+<!-- [![frontend continuous integration](https://github.com/graffinity/graffinity-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/graffinity/graffinity-frontend/actions/workflows/ci.yml) -->
+  
+[![Open Pull Requests](https://img.shields.io/github/issues-pr-raw/graffinity/graffinity-frontend.svg)](https://github.com/graffinity/graffinity-frontend/pulls)
+[![GitHub issues](https://img.shields.io/github/issues/graffinity/graffinity-frontend.svg)](https://github.com/graffinity/graffinity-frontend/issues)
+
+## Description
+
+Graffinity is a social network for artists. It allows users to create and share their art with the world. Users can also follow other users and like their art. Users can also create and join groups to share their art with other users.
+
+## Installation
+
+```bash
+npm installs
+# or
+npm ci
+```
+
+---
+
+## Running the app locally
 
 ### `npm start`
 
@@ -14,10 +33,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+## Testing
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+## Building the app
 
 ### `npm run build`
 
@@ -39,8 +62,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Resources
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
