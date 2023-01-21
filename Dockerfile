@@ -45,7 +45,7 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/frontend/package*.json ./
 
 # Copy the production environment variable file
-COPY  --from=build /usr/src/app/fronrend/prod.front.env ./
+COPY  --from=build /usr/src/app/frontend/prod.front.env ./
 
 # Copy the nginx access file
 # COPY nginx/.access /etc/nginx/.access
