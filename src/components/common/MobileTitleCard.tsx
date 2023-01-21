@@ -1,6 +1,6 @@
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
-const MultiActionAreaCardMobile = () => (
+const MobileTitleCard = () => (
 	<Card
 		className="card"
 		style={{
@@ -40,4 +40,4 @@ const MultiActionAreaCardMobile = () => (
 	</Card>
 );
 
-export default MultiActionAreaCardMobile;
+export default MobileTitleCard;

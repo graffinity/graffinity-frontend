@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import MenuIcon from "@mui/icons-material/Menu";
 import {
 	AppBar,
@@ -15,10 +14,9 @@ import LoginDialog from "components/login/LoginDialog";
 import SignUpDialog from "components/login/SignupDialog";
 import routes from "constants/routes";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Common.css";
+
 const Header = () => {
-	const navigate = useNavigate();
 	const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const [signUpDialogOpen, setSignUpDialogOpen] = useState<boolean>(false);
@@ -125,20 +123,8 @@ const Header = () => {
 								</Link>
 							))}
 						</List>
-						{/* <Button
-							variant={"text"}
-							onClick={() => navigate("/pagalba")}
-							// style={{
-							// 	color: AppTheme.palette.primary.main,
-							// }}
-							sx={{ color: "black" }}
-						>
-							help
-						</Button> */}
 					</Menu>
-
 					<div style={{ marginLeft: "20px" }}></div>
-
 					<div>
 						<Button onClick={handleOpenSignUpDialog} sx={{ color: "white" }}>
 							<Typography>Sign Up</Typography>

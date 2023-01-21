@@ -1,10 +1,20 @@
-.WholeContainer {
+.gallery-component-container {
 	display: flex;
-	margin-left: 24px;
-	margin-top: 36px;
-	margin-right: 16px;
-	margin-bottom: 16px;
+	padding: 36px 24px;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: fit-content;
+	min-height: fit-content;
 }
+
+.image-container {
+	display: flex;
+	width: 100%;
+	flex: 2;
+	padding: 16px;
+	box-sizing: border-box;
+}
+
 .CardImage {
 	width: 100%;
 	max-width: 400px;
@@ -12,32 +22,11 @@
 	height: 100%;
 	border-radius: 15px;
 }
-.ContentContainer {
+.content-container {
 	display: flex;
-	justify-content: center;
 	flex-direction: column;
-	margin-left: 1.2em;
-}
-.Title,
-.Location,
-.Date,
-.Description {
-	color: #ffffff;
-	font-family: Arial, Helvetica, sans-serif;
-	margin: 12px;
-}
-.Title {
-	font-weight: 700;
-	letter-spacing: 0.25em;
-	font-size: 25px;
-}
-.Location {
-	font-weight: 500;
-	letter-spacing: 0.25em;
-	font-size: 16px;
-}
-.Description {
-	width: 40%;
-	font-size: 12px;
-	font-weight: 500;
+	margin-top: 24px;
+	padding: 12px;
+	box-sizing: border-box;
+	gap: 8px;
 }

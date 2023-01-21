@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container } from "@mui/system";
 import GraffitiPostAPI from "api/GraffitiPostAPI";
-import MultiActionAreaCard from "components/common/Card";
+import MultiActionAreaCard from "components/common/TitleCard";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import MarkerData from "models/map/MarkerData";
@@ -35,7 +34,6 @@ const HomePage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const [scriptLoaded, setScriptLoaded] = useState(false);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const getGraffitis = async () => {
@@ -79,16 +77,11 @@ const HomePage = () => {
 			}}
 		>
 			<div className="homepage-container">
-				{/* <div className="left"> */}
-				{/* </div> */}
-
 				<Container ref={containerRef} className="right">
 					<div
-						style={
-							{
-								// marginTop: "36px",/
-							}
-						}
+						style={{
+							marginTop: "36px",
+						}}
 					>
 						<MapComponent width={width} height={height} markers={markers} />
 					</div>
@@ -108,6 +101,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-function setHeight(innerHeight: number) {
-	throw new Error("Function not implemented.");
-}

@@ -1,13 +1,13 @@
 import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 
 interface GraffitiResponse {
-	loc: any;
 	id: number;
 	name: string;
 	photos: GraffitiPhotoResponse[];
 	description: string;
 	latitude: number;
 	longitude: number;
+	address: string;
 	authorId: number;
 	creationDate: Date;
 }

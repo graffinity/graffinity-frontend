@@ -6,18 +6,14 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import MultiActionAreaCardMobile from "../common/MobileCard";
 
-import "./Common.css";
 import MobileFooter from "components/common/MobileFooter";
+import MobileTitleCard from "components/common/MobileTitleCard";
+import "./Common.css";
 
 const drawerBleeding = 56;
 
 interface Props {
-	/**
-	 * Injected by the documentation to work in an iframe.
-	 * You won't need it on your project.
-	 */
 	window?: () => Window;
 }
 const Puller = styled(Box)(({ theme }) => ({
@@ -79,7 +75,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
 						overflow: "auto",
 					}}
 				>
-					<MultiActionAreaCardMobile />
+					<MobileTitleCard />
 					<MobileFooter />
 				</StyledBox>
 			</SwipeableDrawer>
