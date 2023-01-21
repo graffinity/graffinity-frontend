@@ -1,14 +1,15 @@
-import * as React from "react";
 import { Global } from "@emotion/react";
-import { styled } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
-import Box from "@mui/material/Box";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import MenuIcon from "@mui/icons-material/Menu";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import MultiActionAreaCardMobile from "./CardMobile";
-import { FooterContainerMobile } from "./FooterMobile";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import { grey } from "@mui/material/colors";
+import { styled } from "@mui/material/styles";
+import * as React from "react";
+import MultiActionAreaCardMobile from "../common/MobileCard";
+
 import "./Common.css";
+import MobileFooter from "components/common/MobileFooter";
 
 const drawerBleeding = 56;
 
@@ -79,7 +80,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
 					}}
 				>
 					<MultiActionAreaCardMobile />
-					<FooterContainerMobile />
+					<MobileFooter />
 				</StyledBox>
 			</SwipeableDrawer>
 		</Root>

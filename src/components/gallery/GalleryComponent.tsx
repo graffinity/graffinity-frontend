@@ -1,29 +1,26 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React from "react";
-import "./Common.css";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import "./Gallery.css";
 
 interface GalleryComponentProps {
-	img: string;
-	location: string;
-	title: string;
-	startDate: string;
-	description: string;
+	graffiti: GraffitiResponse;
 }
 
 export default function GalleryComponent(props: GalleryComponentProps) {
+	const { graffiti } = props;
 	return (
 		<>
 			<div className="WholeContainer">
-				{/* Image part */}
 				<div className="ImageContainer">
-					<img className="CardImage" src={props.img} />
+					{graffiti.photos.map((photo) => (
+						<img className="CardImage" src={photo.url} alt="GraffitiImage" />
+					))}
 				</div>
-				{/* Content part */}
+
 				<div className="ContentContainer">
-					<h3 className="Title">{props.title}</h3> <br />
+					{/* <h3 className="Title">{graffiti.name}</h3> <br />
 					<h4 className="Location">{props.location}</h4> <br />
 					<h6 className="Date">{props.startDate}</h6> <br />
-					<p className="Description"> {props.description}</p>
+					<p className="Description"> {props.description}</p> */}
 				</div>
 			</div>
 		</>

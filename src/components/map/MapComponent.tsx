@@ -126,8 +126,6 @@ const MapComponent = (props: MapComponentProps) => {
 			}}
 		>
 			{/* <Search panTo={panTo} /> */}
-			<Locate panTo={panTo} />
-
 			{isLoaded && (
 				<GoogleMap
 					key={apiKey}
@@ -209,6 +207,7 @@ const MapComponent = (props: MapComponentProps) => {
 					))}
 				</GoogleMap>
 			)}
+			<Locate panTo={panTo} />
 		</div>
 	);
 };

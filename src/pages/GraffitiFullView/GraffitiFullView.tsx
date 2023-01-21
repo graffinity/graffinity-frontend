@@ -1,5 +1,5 @@
-import SwipeableTextMobileStepper from "components/common/ImageSlider";
-import LikeButton from "components/common/LikeButton";
+import SwipeableTextMobileStepper from "components/images/ImageSlider";
+import LikeButton from "components/buttons/LikeButton";
 import React from "react";
 import "./GraffitiFulView.css";
 

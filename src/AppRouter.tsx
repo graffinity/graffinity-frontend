@@ -1,4 +1,4 @@
-import HeaderNew from "components/common/HeaderNew";
+import HeaderNew from "components/common/Header";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./AppRouter.css";
