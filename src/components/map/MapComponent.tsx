@@ -1,29 +1,14 @@
-/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, IconButton, Typography } from "@mui/material";
-import {
-	GoogleMap,
-	InfoWindow,
-	Marker,
-	useJsApiLoader,
-} from "@react-google-maps/api";
-import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
-import { MarkerData } from "pages/home/HomePage";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import MarkerData from "models/map/MarkerData";
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "./Map.css";
+import MapLocate from "./MapLocate";
+import MarkerComponent from "./MarkerComponent";
 import mapStyles from "./mapStyles";
 
-const center = {
-	lat: 54.69,
-	lng: 25.28,
-};
-const options = {
-	styles: mapStyles,
-	disableDefaultUI: true,
-	zoomControl: true,
-};
 interface MapComponentProps {
 	width: number;
 	height: number;
@@ -32,7 +17,18 @@ interface MapComponentProps {
 
 const maxWidthForDesktopView = 900;
 
-export default function MapComponent(props: MapComponentProps) {
+const center = {
+	lat: 54.69,
+	lng: 25.28,
+};
+
+const options = {
+	styles: mapStyles,
+	disableDefaultUI: true,
+	zoomControl: true,
+};
+
+export const MapComponent = (props: MapComponentProps) => {
 	const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 	const [libraries] = useState<
 		("geometry" | "places" | "drawing" | "localContext" | "visualization")[]
@@ -72,6 +68,14 @@ export default function MapComponent(props: MapComponentProps) {
 			mapRef.current.panTo(marker.position);
 			mapRef.current.setZoom(16);
 		}
+	};
+
+	const handleActiveMarkerNull = () => {
+		setActiveMarker(null);
+	};
+
+	const handleSetInfoWindowElement = (element: HTMLElement) => {
+		setInfoWindowElement(element);
 	};
 
 	const {
@@ -124,8 +128,8 @@ export default function MapComponent(props: MapComponentProps) {
 				flexDirection: "column",
 			}}
 		>
-			{/* <Search panTo={panTo} /> */}
-			<Locate panTo={panTo} />
+			{/* <MapSearch panTo={panTo} /> */}
+			<MapLocate panTo={panTo} />
 
 			{isLoaded && (
 				<GoogleMap
@@ -150,156 +154,22 @@ export default function MapComponent(props: MapComponentProps) {
 					onClick={() => setActiveMarker(null)}
 				>
 					{markers.map((marker) => (
-						<Marker
+						<MarkerComponent
 							key={marker.id}
-							position={marker.position}
-							onClick={() => handleActiveMarker(marker)}
-						>
-							{activeMarker?.id === marker.id && (
-								// TODO: Dynamic InfoWindow height with mapRef and "maxHeight" useState hook
-								<InfoWindow
-									options={{}}
-									ref={infoRef}
-									onLoad={(infoWindow) => {
-										let infoWindowElement =
-											infoWindow.getContent() as HTMLElement;
-										setInfoWindowElement(infoWindowElement);
-
-										clientRef.current = infoWindowElement;
-
-										infoWindow.focus();
-										infoWindow.setContent(infoWindowElement);
-									}}
-									onCloseClick={() => setActiveMarker(null)}
-								>
-									<div
-										ref={imgContainerRef}
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											alignItems: "center",
-											gap: "8px",
-											width: "100%",
-											padding: "16px",
-											boxSizing: "border-box",
-										}}
-									>
-										<Typography variant="body2">{marker.name}</Typography>
-
-										<Box
-											component="img"
-											src={marker.photos[0].url}
-											style={{
-												// maxWidth: "80%",
-												maxWidth: "100%",
-												maxHeight: "100%",
-											}}
-											sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
-											onClick={() => {
-												navigate(`/graffiti/view/${marker.id}`);
-											}}
-										/>
-									</div>
-								</InfoWindow>
-								// </div>
-							)}
-						</Marker>
+							marker={marker}
+							activeMarker={activeMarker}
+							infoRef={infoRef}
+							clientRef={clientRef}
+							imgContainerRef={imgContainerRef}
+							handleActiveMarker={handleActiveMarker}
+							handleActiveMarkerNull={handleActiveMarkerNull}
+							handleSetInfoWindowElement={handleSetInfoWindowElement}
+						/>
 					))}
 				</GoogleMap>
 			)}
 		</div>
 	);
-}
+};
 
-interface LocateAndSearchProps {
-	panTo: (coords: google.maps.LatLngLiteral) => void;
-}
-function Locate(props: LocateAndSearchProps) {
-	const { panTo } = props;
-	return (
-		<IconButton
-			className="locate"
-			onClick={() => {
-				navigator.geolocation.getCurrentPosition(
-					(position) => {
-						let coords: google.maps.LatLngLiteral = {
-							lat: position.coords.latitude,
-							lng: position.coords.longitude,
-						};
-						panTo(coords);
-					},
-					() => null
-				);
-			}}
-		>
-			<CompassIcon
-				style={{
-					width: "48px",
-					height: "48px",
-				}}
-			/>
-		</IconButton>
-	);
-}
-
-function Search(props: LocateAndSearchProps) {
-	const { panTo } = props;
-
-	// const { init } = usePlacesAutocomplete({
-	// 	initOnMount: false, // Disable initializing when the component mounts, default is true
-	//   });
-
-	// const {
-	// 	ready,
-	// 	value,
-	// 	suggestions: { status, data },
-	// 	setValue,
-	// 	clearSuggestions,
-	// } = usePlacesAutocomplete({
-	// 	requestOptions: {
-	// 		// location: { lat: () => 43.6532, lng: () => -79.3832 },
-	// 		radius: 100 * 1000,
-	// 	},
-	// });
-
-	// https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
-
-	// const handleInput = (e: { target: { value: string } }) => {
-	// 	setValue(e.target.value);
-	// };
-
-	// const handleSelect = async (address: string) => {
-	// 	setValue(address, false);
-	// 	clearSuggestions();
-
-	// 	try {
-	// 		let results = await getGeocode({ address });
-	// 		let coords = getLatLng(results[0]);
-	// 		panTo(coords);
-	// 	} catch (error) {
-	// 		console.log("😱 Error: ", error);
-	// 	}
-	// };
-	return <div></div>;
-
-	// return (
-	// 	<div className='search'>
-	// 		<Combobox onSelect={handleSelect}>
-	// 			<ComboboxInput
-	// 				value={value}
-	// 				onChange={handleInput}
-	// 				disabled={!ready}
-	// 				placeholder='Search your location'
-	// 			/>
-	// 			<ComboboxPopover>
-	// 				<ComboboxList>
-	// 					{status === "OK" &&
-	// 						data.map(({ id, description }) => (
-	// 							<ComboboxOption key={id} value={description} />
-	// 						))}
-	// 				</ComboboxList>
-	// 			</ComboboxPopover>
-	// 		</Combobox>
-	// 	</div>
-	// );
-}
+export default MapComponent;
