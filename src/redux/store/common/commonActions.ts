@@ -16,6 +16,7 @@ const getStatus =
 			AuthAPI.getStatus()
 				.then((response) => {
 					dispatch(commonActions.setStatus({ ...response }));
+					console.log(response);
 				})
 				.catch((e) => {
 					console.log(e.data);

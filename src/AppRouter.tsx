@@ -7,10 +7,11 @@ import { FooterContainer } from "./components/common/Footer";
 import routes from "./constants/routes";
 import RouteItem from "./models/routes/RouteItem";
 import AuthAPI from "api/AuthAPI";
+import common from "redux/common";
 
 const AppRouter = () => {
 	useEffect(() => {
-		// common.getStatus();
+		common.getStatus();
 		getProfile();
 	}, []);
 
