@@ -80,9 +80,9 @@ const Header = (props: HeaderProps) => {
 						edge="start"
 						color="inherit"
 						onClick={handleDrawerOpen}
-					style={{
-						marginLeft: "8px",
-					}}
+						style={{
+							marginLeft: "8px",
+						}}
 					>
 						<MenuIcon />
 					</IconButton>
