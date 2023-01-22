@@ -80,7 +80,9 @@ const Header = (props: HeaderProps) => {
 						edge="start"
 						color="inherit"
 						onClick={handleDrawerOpen}
-						sx={{ mr: 2 }}
+					style={{
+						marginLeft: "8px",
+					}}
 					>
 						<MenuIcon />
 					</IconButton>
@@ -88,15 +90,29 @@ const Header = (props: HeaderProps) => {
 					<div style={{ marginLeft: "20px" }}></div>
 					<div>
 						{!isLoggedIn ? (
-							<div>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+									alignItems: "center",
+									padding: "0px 32px",
+									gap: "24px",
+								}}
+							>
 								<Button
 									onClick={handleOpenLoginDialog}
-									style={{ color: "white", paddingRight: "36px" }}
+									variant="outlined"
+									style={{
+										borderColor: "white",
+										padding: "8px 24px",
+									}}
 								>
 									{/* <Avatar alt="Remy Sharp" src="https://i.imgur.com/0y0y0y0.png" /> */}
 									<Typography
+										variant="h5"
 										style={{
 											textTransform: "none",
+											color: "white",
 										}}
 									>
 										Login
@@ -104,10 +120,16 @@ const Header = (props: HeaderProps) => {
 								</Button>
 								<Button
 									onClick={handleOpenSignUpDialog}
-									sx={{ color: "white" }}
+									variant="outlined"
+									style={{
+										padding: "8px 24px",
+										borderColor: "white",
+									}}
 								>
 									<Typography
+										variant="h5"
 										style={{
+											color: "white",
 											textTransform: "none",
 										}}
 									>
@@ -116,9 +138,18 @@ const Header = (props: HeaderProps) => {
 								</Button>
 							</div>
 						) : (
-							<Button onClick={handleLogout} sx={{ color: "white" }}>
+							<Button
+								onClick={handleLogout}
+								variant="outlined"
+								style={{
+									padding: "8px 24px",
+									borderColor: "white",
+								}}
+							>
 								<Typography
+									variant="h5"
 									style={{
+										color: "white",
 										textTransform: "none",
 									}}
 								>
