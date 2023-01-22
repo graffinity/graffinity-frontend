@@ -5,7 +5,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import { AppBar, Link, Typography } from "@mui/material";
 import "./Common.css";
 
-export function FooterContainerMobile() {
+export const MobileFooter = () => {
 	return (
 		<AppBar
 			position="static"
@@ -144,4 +144,6 @@ export function FooterContainerMobile() {
 			</div>
 		</AppBar>
 	);
-}
+};
+
+export default MobileFooter;

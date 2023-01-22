@@ -6,6 +6,7 @@ interface GraffitiRequest {
 	description: string;
 	latitude: string;
 	longitude: string;
+	address: string;
 	status: GraffitiStatus;
 	createdAt: Date;
 	authorId: number;

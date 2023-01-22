@@ -1,20 +1,25 @@
-import LibraryComponent from "components/common/Gallery";
-import data from "components/common/imagesTesting";
+import GraffitiPostAPI from "api/GraffitiPostAPI";
+import LibraryComponent from "components/gallery/GalleryComponent";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import { useEffect, useState } from "react";
 import "./GrafittiLibrary.css";
-const GraffitiLibrary = () => {
+export default function GraffitiLibrary() {
+	const [graffitis, setGraffitis] = useState<GraffitiResponse[]>([]);
+
+	useEffect(() => {
+		getGraffitis();
+	}, []);
+
+	const getGraffitis = async () => {
+		let response = await GraffitiPostAPI.findAll();
+		setGraffitis(response);
+	};
+
 	return (
 		<div className="GridContainer">
-			{data.map((item) => (
-				<LibraryComponent
-					img={item.imageUrl}
-					location={item.location}
-					title={item.title}
-					startDate={item.startDate}
-					description={item.description}
-				/>
+			{graffitis.map((graffiti) => (
+				<LibraryComponent key={graffiti.id} graffiti={graffiti} />
 			))}
 		</div>
 	);
-};
-
-export default GraffitiLibrary;
+}

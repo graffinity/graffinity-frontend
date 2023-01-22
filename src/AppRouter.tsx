@@ -1,6 +1,6 @@
 import AuthAPI from "api/AuthAPI";
-import HeaderNew from "components/common/HeaderNew";
-import { useEffect } from "react";
+import Header from "components/common/Header";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import common from "redux/common";
 import { useAppSelector } from "redux/store/hooks";
@@ -11,6 +11,13 @@ import RouteItem from "./models/routes/RouteItem";
 
 const AppRouter = () => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [activePage, setActivePage] = useState<RouteItem>(routes[0].items[0]);
+
+	const setActivePageHandler = (currentPage: RouteItem) => {
+		setActivePage(currentPage);
+	};
 
 	useEffect(() => {
 		common.getStatus();
@@ -42,7 +49,7 @@ const AppRouter = () => {
 				flexDirection: "column",
 			}}
 		>
-			<HeaderNew />
+			<Header setActivePage={setActivePageHandler} />
 			<div
 				style={{
 					width: "100%",

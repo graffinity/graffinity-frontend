@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import googleDefaultConfig, { apiKey } from "constants/GoogleConfig";
 import MarkerData from "models/map/MarkerData";
 import { useCallback, useRef, useState } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
@@ -19,21 +20,8 @@ const maxWidthForDesktopView = 900;
 export const MapComponent = (props: MapComponentProps) => {
 	const { markers } = props;
 
-	const [libraries] = useState<Libraries>(["places"]);
-
-	let environment = process.env.NODE_ENV;
-	let localApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-	let apiKey =
-		environment === "production"
-			? "AIzaSyBMfzuPsW0IHNW1qFoFVPdbtirBf5cZ15o"
-			: localApiKey;
-	const googleMapsConfig = {
-		key: apiKey,
-		googleMapsApiKey: apiKey,
-		libraries: libraries,
-	};
 	const { isLoaded } = useJsApiLoader({
-		...googleMapsConfig,
+		...googleDefaultConfig,
 	});
 
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
@@ -103,9 +91,7 @@ export const MapComponent = (props: MapComponentProps) => {
 				flexDirection: "column",
 			}}
 		>
-			{/* <MapSearch panTo={panTo} /> */}
-			<MapLocate panTo={panTo} />
-
+			{/* <Search panTo={panTo} /> */}
 			{isLoaded && (
 				<GoogleMap
 					key={apiKey}
@@ -137,18 +123,12 @@ export const MapComponent = (props: MapComponentProps) => {
 					))}
 				</GoogleMap>
 			)}
+			<MapLocate panTo={panTo} />
 		</div>
 	);
 };
 
 export default MapComponent;
-type Libraries = (
-	| "geometry"
-	| "places"
-	| "drawing"
-	| "localContext"
-	| "visualization"
-)[];
 
 const center = {
 	lat: 54.69,

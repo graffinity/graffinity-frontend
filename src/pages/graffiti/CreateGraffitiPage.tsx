@@ -13,6 +13,7 @@ import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import { useEffect, useState } from "react";
+import { getAddress } from "utils/LocationUtil";
 import * as yup from "yup";
 
 const CreateGrafiitiPage = () => {
@@ -39,6 +40,7 @@ const CreateGrafiitiPage = () => {
 
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
+		let address = await getAddress(values.latitude, values.longitude);
 		if (file) {
 			let url = URL.createObjectURL(file);
 			let formData = new FormData();
@@ -64,6 +66,7 @@ const CreateGrafiitiPage = () => {
 				description: values.description,
 				latitude: values.latitude,
 				longitude: values.longitude,
+				address: address,
 				createdAt: new Date(),
 				authorId: values.authorId,
 				artistIds: values.authorId,
