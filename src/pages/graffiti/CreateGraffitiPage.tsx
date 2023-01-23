@@ -114,12 +114,18 @@ const CreateGrafiitiPage = () => {
 							titleprops={{
 								style: { color: "#FFFFFF" },
 							}}
+							inputStyle={{
+								color: "#FFFFFF",
+							}}
 						/>
 						<FormTextField
 							name="description"
 							title="Description"
 							titleprops={{
 								style: { color: "#FFFFFF" },
+							}}
+							inputStyle={{
+								color: "#FFFFFF",
 							}}
 						/>
 						<FormTextField
@@ -128,6 +134,9 @@ const CreateGrafiitiPage = () => {
 							titleprops={{
 								style: { color: "#FFFFFF" },
 							}}
+							inputStyle={{
+								color: "#FFFFFF",
+							}}
 						/>
 						<FormAutocomplete
 							name="authorId"
@@ -135,6 +144,9 @@ const CreateGrafiitiPage = () => {
 							title="Artist"
 							titleprops={{
 								style: { color: "#FFFFFF" },
+							}}
+							inputStyle={{
+								color: "#FFFFFF",
 							}}
 						/>
 						<div
