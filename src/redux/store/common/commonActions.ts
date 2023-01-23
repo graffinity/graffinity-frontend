@@ -3,26 +3,18 @@ import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
 import { RootState } from "../rootReducer";
 import { commonSlice } from "./commonSlice";
-import LoginResponse from "models/auth/LoginResponse";
 
 const commonActions = commonSlice.actions;
 
 const getStatus =
-	(
-		loginResponse?: LoginResponse
-	): ThunkAction<void, RootState, unknown, AnyAction> =>
-	async (dispatch) => {
-		if (!loginResponse) {
-			AuthAPI.getStatus()
-				.then((response) => {
-					dispatch(commonActions.setStatus({ ...response }));
-					console.log(response);
-				})
-				.catch((e) => {
-					console.log(e.data);
-				});
+	(): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+		let status = await AuthAPI.getStatus();
+		if (status.isLoggedIn) {
+			let response = await AuthAPI.getProfile();
+			dispatch(commonActions.setStatus(status));
+			dispatch(commonActions.setUserInfo({ userInfo: response }));
 		} else {
-			dispatch(commonActions.setStatus({ isLoggedIn: loginResponse.success }));
+			dispatch(commonActions.setStatus(status));
 		}
 	};
 
