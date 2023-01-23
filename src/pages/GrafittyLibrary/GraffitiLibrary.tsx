@@ -1,4 +1,4 @@
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import LibraryComponent from "components/gallery/GalleryComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ export default function GraffitiLibrary() {
 	}, []);
 
 	const getGraffitis = async () => {
-		let response = await GraffitiPostAPI.findAll();
+		let response = await GraffitiAPI.findAll();
 		setGraffitis(response);
 	};
 

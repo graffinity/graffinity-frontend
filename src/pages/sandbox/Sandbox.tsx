@@ -9,7 +9,7 @@ import {
 	Typography,
 } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import IFile from "models/file/IFile";
 import Paper from "@mui/material/Paper";
@@ -59,7 +59,7 @@ const Sandbox = () => {
 
 	const getGraffitiPosts = async () => {
 		// let response = await GraffitiPostAPI.findAll();
-		let response = await GraffitiPostAPI.findById(1);
+		let response = await GraffitiAPI.findById(1);
 		// setGraffitiPosts(response);
 	};
 

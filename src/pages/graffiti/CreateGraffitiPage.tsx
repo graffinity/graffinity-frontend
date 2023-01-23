@@ -2,7 +2,7 @@
 import { Button } from "@mui/material";
 import ArtistAPI from "api/ArtistAPI";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import FormAutocomplete from "components/form/FormAutocomplete";
 import FormTextField from "components/form/FormTextField";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
@@ -26,7 +26,7 @@ const CreateGrafiitiPage = () => {
 	}, []);
 
 	const getGraffitiPosts = async () => {
-		let response = await GraffitiPostAPI.findAll();
+		let response = await GraffitiAPI.findAll();
 		setGraffitiPosts(response);
 	};
 
@@ -75,7 +75,7 @@ const CreateGrafiitiPage = () => {
 			};
 			formData.append("body", JSON.stringify(request));
 
-			await GraffitiPostAPI.create(graffitiReq);
+			await GraffitiAPI.create(graffitiReq);
 			await GraffitiPhotoAPI.create(formData);
 		}
 	};
