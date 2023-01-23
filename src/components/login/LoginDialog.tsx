@@ -21,8 +21,8 @@ const LoginDialog = (props: LoginDialogProps) => {
 	const handleSubmit = async (values: LoginRequest) => {
 		await AuthAPI.login(values);
 		handleClose();
+		window.location.reload();
 	};
-
 	const ref = useRef<HTMLInputElement>(null);
 	return (
 		<Dialog
@@ -66,9 +66,10 @@ const LoginDialog = (props: LoginDialogProps) => {
 								</Divider>
 
 								<FormTextField
-									title={"Username"}
-									name={"username"}
-									className={"login-input"}
+									title="Username"
+									label="Username"
+									name="username"
+									className="login-input"
 									onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
 										if (event.key === "Enter") {
 											if (formik.isValid) {
@@ -124,7 +125,6 @@ const LoginDialog = (props: LoginDialogProps) => {
 									type="submit"
 									color={"primary"}
 									variant={"contained"}
-									disabled={!formik.isValid}
 									style={{
 										textTransform: "none",
 										padding: "16px 40px",

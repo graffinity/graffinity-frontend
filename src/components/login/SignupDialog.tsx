@@ -6,7 +6,6 @@ import FormTextField from "components/form/FormTextField";
 import ReadableHiddenPasswordField from "components/form/ReadableHiddenPasswordField";
 import { Form, Formik, FormikProps } from "formik";
 import UserCreateRequest from "models/user/UserCreateRequest";
-import { useNavigate } from "react-router";
 import * as yup from "yup";
 import "./Login.css";
 
@@ -17,8 +16,6 @@ interface SignupProps {
 }
 
 const SignupDialog = (props: SignupProps) => {
-	const navigate = useNavigate();
-
 	const checkIfUserExistsByEmail = async (email: string) => {
 		if (email === "") {
 			return false;
@@ -48,7 +45,7 @@ const SignupDialog = (props: SignupProps) => {
 		let response = await AuthAPI.signup(request);
 		console.log("response", response);
 		props.handleClose();
-		navigate("/home");
+		window.location.reload();
 
 		console.log("AuthAPI response", response);
 	};
@@ -60,8 +57,6 @@ const SignupDialog = (props: SignupProps) => {
 				style: {
 					boxSizing: "border-box",
 					width: "100%",
-					// maxWidth: "500px",
-
 					boxShadow: "none",
 				},
 			}}

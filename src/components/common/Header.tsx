@@ -47,6 +47,7 @@ const Header = (props: HeaderProps) => {
 
 	const handleLogout = async () => {
 		let res = await AuthAPI.logout();
+		window.location.reload();
 		console.log("logout res", res);
 	};
 
@@ -139,7 +140,9 @@ const Header = (props: HeaderProps) => {
 							</div>
 						) : (
 							<Button
-								onClick={handleLogout}
+								onClick={() => {
+									handleLogout();
+								}}
 								variant="outlined"
 								style={{
 									padding: "8px 24px",
