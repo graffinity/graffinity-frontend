@@ -8,7 +8,7 @@ import {
 import RouteGroup from "models/routes/RouteGroup";
 import GraffitiFullView from "pages/GraffitiFullView/GraffitiFullView";
 import GrafittiLibrary from "pages/GrafittyLibrary/GraffitiLibrary";
-import CreateGrafiitiPage from "pages/graffiti/CreateGraffitiPage";
+import CreateGrafiitiPage from "pages/creategraffiti/CreateGraffitiPage";
 import HomePage from "pages/home/HomePage";
 import Sandbox from "pages/sandbox/Sandbox";
 const routes: RouteGroup[] = [

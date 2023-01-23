@@ -164,6 +164,7 @@ const Header = (props: HeaderProps) => {
 			<LoginDialog
 				open={loginDialogOpen}
 				handleClose={handleCloseLoginDialog}
+				handleRegisterOpen={handleOpenSignUpDialog}
 			/>
 			<SignUpDialog
 				open={signUpDialogOpen}

@@ -1,5 +1,5 @@
 import { ArrowBackIosNew } from "@mui/icons-material";
-import { Button, Dialog, Typography } from "@mui/material";
+import { Button, Card, Dialog, Divider, Typography } from "@mui/material";
 import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
 import FormTextField from "components/form/FormTextField";
@@ -55,175 +55,204 @@ const SignupDialog = (props: SignupProps) => {
 	return (
 		<Dialog
 			open={props.open}
+			onClose={props.handleClose}
 			PaperProps={{
 				style: {
 					boxSizing: "border-box",
 					width: "100%",
-					maxWidth: "500px",
+					// maxWidth: "500px",
 
 					boxShadow: "none",
 				},
 			}}
 		>
-			<div
+			<Card
 				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					width: "100%",
+					overflow: "auto",
+					height: "100%",
 				}}
 			>
 				<div
 					style={{
 						display: "flex",
-						justifyContent: "space-between",
+						flexDirection: "column",
 						alignItems: "center",
 						width: "100%",
-						boxSizing: "border-box",
 					}}
 				>
 					<div
-						className={"login-header-buttons"}
 						style={{
 							display: "flex",
+							justifyContent: "space-between",
 							alignItems: "center",
-							gap: "24px",
-
-							backgroundColor: "#F5F5F5",
 							width: "100%",
+							boxSizing: "border-box",
 						}}
 					>
-						<Button
-							className="button"
-							onClick={() => {
-								props.handleLoginOpen();
-								props.handleClose();
-							}}
-						>
-							<ArrowBackIosNew
-								style={{
-									height: "16px",
-									width: "16px",
-									marginRight: "4px",
-								}}
-							/>
-							<Typography variant="h5" className="login-header-return-button">
-								Back
-							</Typography>
-						</Button>
-						<Typography
-							variant="body"
-							className="login-header-return-button"
+						<div
+							className={"login-header-buttons"}
 							style={{
-								fontStyle: "italic",
-								marginRight: "24px",
-							}}
-						>
-							Signing up
-						</Typography>
-					</div>
-				</div>
-
-				<Formik
-					initialValues={initialValues}
-					validationSchema={validationSchema}
-					onSubmit={handleSubmit}
-				>
-					{(formik: FormikProps<RegistrationValues>) => (
-						<Form
-							className="register-dialog-container"
-							style={{
+								display: "flex",
+								alignItems: "center",
+								backgroundColor: "#F5F5F5",
+								padding: "8px",
+								boxSizing: "border-box",
 								width: "100%",
+								height: "100%",
 							}}
 						>
-							<div
-								className="input-container"
+							<Button
+								className="button"
+								onClick={() => {
+									props.handleLoginOpen();
+									props.handleClose();
+								}}
+								style={{
+									display: "flex",
+									alignItems: "center",
+									gap: "6px",
+								}}
+							>
+								<ArrowBackIosNew
+									style={{
+										height: "16px",
+										width: "16px",
+										marginRight: "6px",
+										color: "#000000",
+										opacity: "0.7",
+									}}
+								/>
+								<Typography
+									variant="h5"
+									className="login-header-return-button"
+									style={{
+										textTransform: "none",
+										opacity: "0.8",
+									}}
+								>
+									Login
+								</Typography>
+							</Button>
+						</div>
+					</div>
+
+					<Formik
+						initialValues={initialValues}
+						validationSchema={validationSchema}
+						onSubmit={handleSubmit}
+					>
+						{(formik: FormikProps<RegistrationValues>) => (
+							<Form
+								className="register-dialog-container"
 								style={{
 									display: "flex",
 									flexDirection: "column",
-									alignItems: "center",
-									gap: "12px",
-									padding: "16px",
-									boxSizing: "border-box",
+									gap: "16px",
+									padding: "24px 32px",
 									width: "100%",
+									boxSizing: "border-box",
 								}}
 							>
-								<FormTextField
-									title="Name"
-									name="name"
-									label="Name"
-									value={formik.values.name}
-								/>
-								<FormTextField
-									title="Lastname"
-									name="lastname"
-									label="Lastname"
-									value={formik.values.lastname}
-								/>
-
-								<FormTextField
-									title="Username"
-									name="username"
-									label="Username"
-									value={formik.values.username}
-									onChange={(e: any) => {
-										formik.handleChange(e);
-
-										checkIfUserExistsByUsername(formik.values.username).then(
-											(response) => {
-												if (response) {
-													formik.setFieldError(
-														"username",
-														"Username already exists"
-													);
-												}
-											}
-										);
-									}}
-								/>
-								<FormTextField
-									title="Email"
-									name="email"
-									label="Email"
-									value={formik.values.email}
-									onChange={() => {
-										checkIfUserExistsByEmail(formik.values.email).then(
-											(response) => {
-												if (response) {
-													formik.setFieldError("email", "Email already exists");
-												}
-											}
-										);
-									}}
-								/>
-
-								<ReadableHiddenPasswordField name="password" title="Password" />
-
-								<ReadableHiddenPasswordField
-									name="repeatPassword"
-									title="Repeat password"
-								/>
-								<Button
-									fullWidth
-									type="submit"
-									color="primary"
-									variant="contained"
-									disabled={!formik.isValid || formik.isSubmitting}
+								<Divider>
+									<Typography variant="body">Sign up</Typography>
+								</Divider>
+								<div
+									className="input-container"
 									style={{
-										textTransform: "none",
-										padding: "16px 32px",
+										display: "flex",
+										flexDirection: "column",
+										alignItems: "center",
+										gap: "12px",
+										padding: "12px",
 										boxSizing: "border-box",
+										width: "100%",
 									}}
 								>
-									<Typography variant="h5" color="#FFFFFF">
-										Register
-									</Typography>
-								</Button>
-							</div>
-						</Form>
-					)}
-				</Formik>
-			</div>
+									<FormTextField
+										title="Name"
+										name="name"
+										label="Name"
+										value={formik.values.name}
+									/>
+									<FormTextField
+										title="Lastname"
+										name="lastname"
+										label="Lastname"
+										value={formik.values.lastname}
+									/>
+
+									<FormTextField
+										title="Username"
+										name="username"
+										label="Username"
+										value={formik.values.username}
+										onChange={(e: any) => {
+											formik.handleChange(e);
+
+											checkIfUserExistsByUsername(formik.values.username).then(
+												(response) => {
+													if (response) {
+														formik.setFieldError(
+															"username",
+															"Username already exists"
+														);
+													}
+												}
+											);
+										}}
+									/>
+									<FormTextField
+										title="Email"
+										name="email"
+										label="Email"
+										value={formik.values.email}
+										onChange={() => {
+											checkIfUserExistsByEmail(formik.values.email).then(
+												(response) => {
+													if (response) {
+														formik.setFieldError(
+															"email",
+															"Email already exists"
+														);
+													}
+												}
+											);
+										}}
+									/>
+
+									<ReadableHiddenPasswordField
+										name="password"
+										title="Password"
+									/>
+
+									<ReadableHiddenPasswordField
+										name="repeatPassword"
+										title="Repeat password"
+									/>
+									<Button
+										fullWidth
+										type="submit"
+										color="primary"
+										variant="contained"
+										disabled={!formik.isValid || formik.isSubmitting}
+										style={{
+											marginTop: "32px",
+											marginBottom: "-8px",
+											textTransform: "none",
+											padding: "16px 32px",
+											boxSizing: "border-box",
+										}}
+									>
+										<Typography variant="h5" color="#FFFFFF">
+											Sign up
+										</Typography>
+									</Button>
+								</div>
+							</Form>
+						)}
+					</Formik>
+				</div>
+			</Card>
 		</Dialog>
 	);
 };

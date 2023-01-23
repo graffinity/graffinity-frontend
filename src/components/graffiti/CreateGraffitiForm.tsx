@@ -47,7 +47,7 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 				>
 					<FormTextField
 						name="name"
-						title="Graffiti Post Name"
+						title="Graffiti Name"
 						titleprops={{
 							style: { color: "#FFFFFF" },
 						}}
@@ -57,7 +57,7 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 					/>
 					<FormTextField
 						name="description"
-						title="Description"
+						title="Graffiti Description"
 						titleprops={{
 							style: { color: "#FFFFFF" },
 						}}

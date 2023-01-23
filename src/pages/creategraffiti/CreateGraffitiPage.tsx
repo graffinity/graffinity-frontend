@@ -1,19 +1,22 @@
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
+import NotLoggedInComponent from "components/login/NotLoggedInComponent";
 import { FormikValues } from "formik";
 import IFile from "models/file/IFile";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
+import { useAppSelector } from "redux/store/hooks";
 import { getAddress } from "utils/LocationUtil";
 
 const CreateGrafiitiPage = () => {
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
 		let address = await getAddress(values.latitude, values.longitude);
 		if (file) {
-			let url = URL.createObjectURL(file);
 			let formData = new FormData();
 			formData.append("file", file);
 			let filename = file.name;
@@ -22,14 +25,6 @@ const CreateGrafiitiPage = () => {
 				originalname: filename,
 				buffer: file,
 				mimetype: file.type,
-			};
-
-			let request: GraffitiPhotoRequest = {
-				file: iFile,
-				graffitiId: 1,
-				url: url,
-				userId: 1,
-				addedAt: new Date(),
 			};
 
 			let graffitiReq: GraffitiRequest = {
@@ -44,9 +39,15 @@ const CreateGrafiitiPage = () => {
 				status: GraffitiStatus.SUBMITTED,
 				categoryIds: [],
 			};
-			formData.append("body", JSON.stringify(request));
 
-			await GraffitiAPI.create(graffitiReq);
+			let graffiti = await GraffitiAPI.create(graffitiReq);
+
+			let request: GraffitiPhotoRequest = {
+				file: iFile,
+				graffitiId: graffiti.id,
+				addedAt: new Date(),
+			};
+			formData.append("body", JSON.stringify(request));
 			await GraffitiPhotoAPI.create(formData);
 		}
 	};
@@ -62,7 +63,8 @@ const CreateGrafiitiPage = () => {
 				gap: "8px",
 			}}
 		>
-			<CreateGrafiitiForm handleSubmit={onSubmit} />
+			{isLoggedIn && <CreateGrafiitiForm handleSubmit={onSubmit} />}
+			{!isLoggedIn && <NotLoggedInComponent />}
 		</div>
 	);
 };

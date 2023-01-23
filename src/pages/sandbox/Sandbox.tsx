@@ -80,8 +80,6 @@ const Sandbox = () => {
 			let request: GraffitiPhotoRequest = {
 				file: iFile,
 				graffitiId: 1,
-				url: url,
-				userId: 1,
 				addedAt: new Date(),
 			};
 			formData.append("body", JSON.stringify(request));

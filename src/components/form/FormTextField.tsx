@@ -94,6 +94,11 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 					fullWidth
 					className="textfield-input"
 					error={meta.touched && Boolean(meta.error)}
+					InputLabelProps={{
+						style: {
+							marginTop: "-3px",
+						},
+					}}
 					InputProps={{
 						...getInputProps(startIcon, endIcon),
 						style: {

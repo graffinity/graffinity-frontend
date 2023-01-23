@@ -12,6 +12,7 @@ interface LoginDialogProps {
 	handleClose: () => void;
 	// handleSubmit: (values: any) => void;
 	loginSuccess?: boolean;
+	handleRegisterOpen: () => void;
 }
 
 const LoginDialog = (props: LoginDialogProps) => {
@@ -56,7 +57,7 @@ const LoginDialog = (props: LoginDialogProps) => {
 									display: "flex",
 									flexDirection: "column",
 									gap: "16px",
-									padding: "24px",
+									padding: "24px 32px",
 									boxSizing: "border-box",
 								}}
 							>
@@ -100,12 +101,37 @@ const LoginDialog = (props: LoginDialogProps) => {
 									variant={"contained"}
 									disabled={!formik.isValid}
 									style={{
+										margin: "16px 0px",
 										textTransform: "none",
 										padding: "16px 40px",
 									}}
 								>
 									<Typography variant="h5" color="#FFFFFF">
 										Login
+									</Typography>
+								</Button>
+
+								<Divider>
+									<Typography variant="body">Or</Typography>
+								</Divider>
+
+								<Button
+									fullWidth
+									onClick={() => {
+										props.handleRegisterOpen();
+										handleClose();
+									}}
+									type="submit"
+									color={"primary"}
+									variant={"contained"}
+									disabled={!formik.isValid}
+									style={{
+										textTransform: "none",
+										padding: "16px 40px",
+									}}
+								>
+									<Typography variant="h5" color="#FFFFFF">
+										Signup
 									</Typography>
 								</Button>
 							</div>
