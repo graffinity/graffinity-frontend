@@ -3,7 +3,7 @@ interface RouteItem {
 	key: string;
 	element: JSX.Element;
 	pageTitle?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	hide?: boolean;
 	isForPublic?: boolean;
 	isForAdmins?: boolean;
