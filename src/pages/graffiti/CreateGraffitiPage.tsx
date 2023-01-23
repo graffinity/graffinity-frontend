@@ -1,43 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button } from "@mui/material";
-import ArtistAPI from "api/ArtistAPI";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiAPI from "api/GraffitiPostAPI";
-import FormAutocomplete from "components/form/FormAutocomplete";
-import FormTextField from "components/form/FormTextField";
-import { Form, Formik, FormikProps, FormikValues } from "formik";
-import ArtistResponse from "models/artist/ArtistResponse";
+import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
+import { FormikValues } from "formik";
 import IFile from "models/file/IFile";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
-import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
-import { useEffect, useState } from "react";
 import { getAddress } from "utils/LocationUtil";
-import * as yup from "yup";
 
 const CreateGrafiitiPage = () => {
-	const [graffitiPosts, setGraffitiPosts] = useState<GraffitiResponse[]>();
-	const [artists, setArtists] = useState<ArtistResponse[]>();
-
-	useEffect(() => {
-		getGraffitiPosts();
-		getArtists();
-	}, []);
-
-	const getGraffitiPosts = async () => {
-		let response = await GraffitiAPI.findAll();
-		setGraffitiPosts(response);
-	};
-
-	const getArtists = async () => {
-		let response = await ArtistAPI.findAll();
-		setArtists(response);
-	};
-
-	const artistIds = artists?.map((artist) => artist.id) || [];
-	const graffitiIds = graffitiPosts?.map((graffiti) => graffiti.id) || [];
-
 	const onSubmit = async (values: FormikValues) => {
 		let file = values.file;
 		let address = await getAddress(values.latitude, values.longitude);
@@ -91,133 +62,9 @@ const CreateGrafiitiPage = () => {
 				gap: "8px",
 			}}
 		>
-			<Formik
-				validationSchema={validationSchema}
-				initialValues={initialValues}
-				onSubmit={onSubmit}
-				enableReinitialize
-			>
-				{(formik: FormikProps<any>) => (
-					<Form
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							padding: "24px",
-							height: "100%",
-							gap: "8px",
-						}}
-					>
-						<FormTextField
-							name="name"
-							title="Graffiti Post Name"
-							titleprops={{
-								style: { color: "#FFFFFF" },
-							}}
-							inputStyle={{
-								color: "#FFFFFF",
-							}}
-						/>
-						<FormTextField
-							name="description"
-							title="Description"
-							titleprops={{
-								style: { color: "#FFFFFF" },
-							}}
-							inputStyle={{
-								color: "#FFFFFF",
-							}}
-						/>
-						<FormTextField
-							name="location"
-							title="Location"
-							titleprops={{
-								style: { color: "#FFFFFF" },
-							}}
-							inputStyle={{
-								color: "#FFFFFF",
-							}}
-						/>
-						<FormAutocomplete
-							name="authorId"
-							options={artistIds}
-							title="Artist"
-							titleprops={{
-								style: { color: "#FFFFFF" },
-							}}
-							inputStyle={{
-								color: "#FFFFFF",
-							}}
-						/>
-						<div
-							style={{
-								display: "flex",
-								marginTop: "24px",
-							}}
-						>
-							<label className="drop-container">
-								<span className="drop-title">Drop files here</span>
-								or
-								<input
-									id="file"
-									name="file"
-									type="file"
-									onChange={(event) => {
-										if (event.currentTarget.files) {
-											formik.setFieldValue(
-												"file",
-												event.currentTarget.files[0]
-											);
-										} else {
-											formik.setFieldValue("file", null);
-										}
-									}}
-								/>
-							</label>
-						</div>
-						<Button
-							type="submit"
-							variant="contained"
-							disabled={formik.isSubmitting || !formik.isValid}
-							style={{
-								marginTop: "24px",
-								width: "100%",
-								textTransform: "none",
-							}}
-						>
-							Submit
-						</Button>
-					</Form>
-				)}
-			</Formik>
+			<CreateGrafiitiForm handleSubmit={onSubmit} />
 		</div>
 	);
 };
-
-interface CreateGrafiitiValues {
-	name: string;
-	description: string;
-	latitude: string;
-	longitude: string;
-	authorId: number;
-	file: any;
-}
-
-const initialValues: CreateGrafiitiValues = {
-	name: "",
-	description: "",
-	latitude: "",
-	longitude: "",
-	authorId: 0,
-	file: null,
-};
-
-const validationSchema = yup.object({
-	name: yup.string().required("A name is required"),
-	description: yup.string().required("A description is required"),
-	location: yup.string().required("A location is required"),
-	authorId: yup.number().required("An author is required"),
-	file: yup.mixed().nullable().required("A file is required"),
-});
 
 export default CreateGrafiitiPage;
