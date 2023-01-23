@@ -1,8 +1,9 @@
+import { useJsApiLoader } from "@react-google-maps/api";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
 import NotLoggedInComponent from "components/login/NotLoggedInComponent";
-import { FormikValues } from "formik";
+import googleDefaultConfig from "constants/GoogleConfig";
 import IFile from "models/file/IFile";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
@@ -12,11 +13,17 @@ import { getAddress } from "utils/LocationUtil";
 
 const CreateGrafiitiPage = () => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
-	const user = useAppSelector((state) => state.common.userInfo);
+	const { isLoaded } = useJsApiLoader({
+		...googleDefaultConfig,
+	});
 
-	const onSubmit = async (values: FormikValues) => {
+	const onSubmit = async (values: any) => {
 		let file = values.file;
-		let address = await getAddress(values.latitude, values.longitude);
+		const google = window.google;
+		const geocoder = new google.maps.Geocoder();
+		let address = await getAddress(geocoder, values.latitude, values.longitude);
+		console.log(values);
+
 		if (file) {
 			let formData = new FormData();
 			formData.append("file", file);
@@ -27,30 +34,33 @@ const CreateGrafiitiPage = () => {
 				buffer: file,
 				mimetype: file.type,
 			};
-			if (user) {
-				let graffitiReq: GraffitiRequest = {
-					name: values.name,
-					description: values.description,
-					latitude: values.latitude,
-					longitude: values.longitude,
-					address: address,
-					createdAt: new Date(),
-					authorId: user.userId,
-					artistIds: values.authorId,
-					status: GraffitiStatus.SUBMITTED,
-					categoryIds: [],
-				};
 
-				let graffiti = await GraffitiAPI.create(graffitiReq);
+			let artistCheckId = values.artistId === "Unkown" ? [] : [values.artistId];
 
-				let request: GraffitiPhotoRequest = {
-					file: iFile,
-					graffitiId: graffiti.id,
-					addedAt: new Date(),
-				};
-				formData.append("body", JSON.stringify(request));
-				await GraffitiPhotoAPI.create(formData);
-			}
+			let graffitiReq: GraffitiRequest = {
+				name: values.name,
+				description: values.description,
+				latitude: values.latitude,
+				longitude: values.longitude,
+				address: address,
+				createdAt: new Date(),
+				// Add authorId only in backend
+				authorId: 1,
+				artistIds: artistCheckId,
+				status: GraffitiStatus.SUBMITTED,
+				categoryIds: [],
+			};
+
+			console.log(graffitiReq);
+			let graffiti = await GraffitiAPI.create(graffitiReq);
+
+			let request: GraffitiPhotoRequest = {
+				file: iFile,
+				graffitiId: graffiti.id,
+				addedAt: new Date(),
+			};
+			formData.append("body", JSON.stringify(request));
+			await GraffitiPhotoAPI.create(formData);
 		}
 	};
 
@@ -65,8 +75,12 @@ const CreateGrafiitiPage = () => {
 				gap: "8px",
 			}}
 		>
-			{isLoggedIn && <CreateGrafiitiForm handleSubmit={onSubmit} />}
-			{!isLoggedIn && <NotLoggedInComponent />}
+			{isLoaded && (
+				<>
+					{isLoggedIn && <CreateGrafiitiForm handleSubmit={onSubmit} />}
+					{!isLoggedIn && <NotLoggedInComponent />}
+				</>
+			)}
 		</div>
 	);
 };

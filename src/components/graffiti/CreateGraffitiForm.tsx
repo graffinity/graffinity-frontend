@@ -1,14 +1,14 @@
-import { Button } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import ArtistAPI from "api/ArtistAPI";
 import FormAutocomplete from "components/form/FormAutocomplete";
 import FormTextField from "components/form/FormTextField";
-import { Form, Formik, FormikProps, FormikValues } from "formik";
+import { Form, Formik, FormikProps } from "formik";
 import ArtistResponse from "models/artist/ArtistResponse";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 
 interface CreateGraffitiFormProps {
-	handleSubmit: (values: FormikValues) => Promise<void>;
+	handleSubmit: (values: any) => Promise<void>;
 }
 
 const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
@@ -25,7 +25,8 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 		setArtists(response);
 	};
 
-	const artistIds = artists?.map((artist) => artist.id) || [];
+	const artistIds = artists?.map((artist) => artist.id.toString()) || [];
+	artistIds.push("Unknown");
 
 	return (
 		<Formik
@@ -35,94 +36,225 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 			enableReinitialize
 		>
 			{(formik: FormikProps<any>) => (
-				<Form
+				<div
 					style={{
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						padding: "24px",
-						height: "100%",
-						gap: "8px",
+						padding: "48px",
+						boxSizing: "border-box",
+						flexWrap: "wrap",
+						gap: "16px",
+						width: "100%",
 					}}
 				>
-					<FormTextField
-						name="name"
-						title="Graffiti Name"
-						titleprops={{
-							style: { color: "#FFFFFF" },
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "flex-start",
+							width: "100%",
+							alignItems: "center",
+							paddingLeft: "24px",
 						}}
-						inputStyle={{
-							color: "#FFFFFF",
+					>
+						<Typography
+							variant="h1"
+							style={{
+								color: "#FFFFFF",
+							}}
+						>
+							Create Graffiti Page
+						</Typography>
+					</div>
+					<Divider
+						style={{
+							marginTop: "16px",
+							width: "100%",
+							borderColor: "#FFFFFF",
+							marginLeft: "-72px",
+							// marginRight: "-24px",
 						}}
 					/>
-					<FormTextField
-						name="description"
-						title="Graffiti Description"
-						titleprops={{
-							style: { color: "#FFFFFF" },
+					<Form
+						style={{
+							display: "flex",
+							alignItems: "center",
+							padding: "24px",
+							width: "100%",
+							gap: "8px",
 						}}
-						inputStyle={{
-							color: "#FFFFFF",
-						}}
-					/>
-					<FormTextField
+					>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								padding: "24px",
+								width: "100%",
+								gap: "8px",
+							}}
+						>
+							<FormTextField
+								name="name"
+								title="Graffiti Name"
+								label="Name"
+								titleprops={{
+									style: { color: "#FFFFFF" },
+								}}
+								inputstyle={{
+									color: "#FFFFFF",
+								}}
+								InputLabelProps={{
+									style: {
+										color: "#FFFFFF",
+										marginTop: "-3px",
+										opacity: 0.5,
+									},
+								}}
+							/>
+							<FormTextField
+								name="description"
+								title="Graffiti Description"
+								label="Description"
+								titleprops={{
+									style: { color: "#FFFFFF" },
+								}}
+								inputstyle={{
+									color: "#FFFFFF",
+								}}
+								InputLabelProps={{
+									style: { color: "#FFFFFF", marginTop: "-3px", opacity: 0.5 },
+								}}
+							/>
+							<FormTextField
+								name="latitude"
+								title="Graffiti Latitude"
+								label="Latitude"
+								titleprops={{
+									style: { color: "#FFFFFF" },
+								}}
+								inputstyle={{
+									color: "#FFFFFF",
+								}}
+								InputLabelProps={{
+									style: { color: "#FFFFFF", marginTop: "-3px", opacity: 0.5 },
+								}}
+							/>
+							<FormTextField
+								name="longitude"
+								title="Graffiti Longitude"
+								label="Longitude"
+								titleprops={{
+									style: { color: "#FFFFFF" },
+								}}
+								inputstyle={{
+									color: "#FFFFFF",
+								}}
+								InputLabelProps={{
+									style: { color: "#FFFFFF", marginTop: "-3px", opacity: 0.5 },
+								}}
+							/>
+							{/* <FormTextField
 						name="location"
 						title="Location"
 						titleprops={{
 							style: { color: "#FFFFFF" },
 						}}
-						inputStyle={{
+						inputstyle={{
 							color: "#FFFFFF",
 						}}
-					/>
-					<FormAutocomplete
-						name="authorId"
-						// TODO: Implement artist names not ids
-						options={artistIds}
-						title="Artist"
-						titleprops={{
-							style: { color: "#FFFFFF" },
-						}}
-						inputStyle={{
-							color: "#FFFFFF",
-						}}
-					/>
+					/> */}
+							<FormAutocomplete
+								name="artistId"
+								label="Artist"
+								// TODO: Implement artist names not ids
+								options={artistIds}
+								title="Graffiti Artist"
+								titleprops={{
+									style: { color: "#FFFFFF" },
+								}}
+								InputLabelProps={{
+									style: { color: "#ffffff", opacity: 0.5, marginTop: "-3px" },
+								}}
+								inputstyle={{
+									color: "#FFFFFF",
+								}}
+							/>
+						</div>
+						<div
+							style={{
+								display: "flex",
+								padding: "24px",
+								boxSizing: "border-box",
+								height: "100%",
+								width: "100%",
+								marginTop: "24px",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<label
+								className="drop-container"
+								style={{
+									height: "100%",
+									padding: "24px",
+									boxSizing: "border-box",
+								}}
+							>
+								<span className="drop-title">Drop files here</span>
+								or
+								<input
+									id="file"
+									name="file"
+									type="file"
+									onChange={(event) => {
+										if (event.currentTarget.files) {
+											formik.setFieldValue(
+												"file",
+												event.currentTarget.files[0]
+											);
+										} else {
+											formik.setFieldValue("file", null);
+										}
+									}}
+								/>
+							</label>
+						</div>
+					</Form>
 					<div
 						style={{
 							display: "flex",
-							marginTop: "24px",
-						}}
-					>
-						<label className="drop-container">
-							<span className="drop-title">Drop files here</span>
-							or
-							<input
-								id="file"
-								name="file"
-								type="file"
-								onChange={(event) => {
-									if (event.currentTarget.files) {
-										formik.setFieldValue("file", event.currentTarget.files[0]);
-									} else {
-										formik.setFieldValue("file", null);
-									}
-								}}
-							/>
-						</label>
-					</div>
-					<Button
-						type="submit"
-						variant="contained"
-						disabled={formik.isSubmitting || !formik.isValid}
-						style={{
-							marginTop: "24px",
+							padding: "0px 24px",
+							boxSizing: "border-box",
 							width: "100%",
-							textTransform: "none",
 						}}
 					>
-						Submit
-					</Button>
-				</Form>
+						<Button
+							type="submit"
+							onClick={() => handleSubmit(formik.values)}
+							variant="contained"
+							disabled={!formik.isValid}
+							style={{
+								marginTop: "12px",
+								width: "49%",
+								textTransform: "none",
+								padding: "12px 0px",
+								color: "#FFFFFF",
+							}}
+						>
+							<Typography
+								variant="h6"
+								fontWeight={500}
+								fontSize={16}
+								style={{
+									color: "#FFFFFF",
+								}}
+							>
+								Submit
+							</Typography>
+						</Button>
+					</div>
+				</div>
 			)}
 		</Formik>
 	);
@@ -133,7 +265,7 @@ interface CreateGrafiitiValues {
 	description: string;
 	latitude: string;
 	longitude: string;
-	authorId: number;
+	artistId: number | null;
 	file: any;
 }
 
@@ -142,16 +274,17 @@ const initialValues: CreateGrafiitiValues = {
 	description: "",
 	latitude: "",
 	longitude: "",
-	authorId: 0,
+	artistId: null,
 	file: null,
 };
 
 const validationSchema = yup.object({
-	name: yup.string().required("A name is required"),
-	description: yup.string().required("A description is required"),
-	location: yup.string().required("A location is required"),
-	authorId: yup.number().required("An author is required"),
-	file: yup.mixed().nullable().required("A file is required"),
+	name: yup.string().nullable().required("A name is required"),
+	description: yup.string().nullable().required("A description is required"),
+	// location: yup.string().required("A location is required"),
+	latitude: yup.string().nullable().required("A latitude is required"),
+	longitude: yup.string().nullable().required("A longitude is required"),
+	artistId: yup.string().nullable().notRequired(),
 });
 
 export default CreateGrafiitiForm;

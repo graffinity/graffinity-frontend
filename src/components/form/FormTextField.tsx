@@ -30,7 +30,7 @@ interface OtherProps extends OutlinedTextFieldProps {
 	endIcon?: JSX.Element;
 	enableEnterSubmit?: boolean;
 	enterSubmitAction?: () => void;
-	inputStyle?: React.CSSProperties;
+	inputstyle?: React.CSSProperties;
 }
 
 function FormTextField(props: OtherProps & FieldHookConfig<string>) {
@@ -102,7 +102,7 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 					InputProps={{
 						...getInputProps(startIcon, endIcon),
 						style: {
-							...props.inputStyle,
+							...props.inputstyle,
 						},
 					}}
 					onKeyDown={(event) => {
