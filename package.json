@@ -73,7 +73,7 @@
 		"@types/moment-timezone": "^0.5.30",
 		"@types/node": "^18.11.18",
 		"@types/react-swipeable-views-utils": "^0.13.4",
-		"@typescript-eslint/eslint-plugin": "^5.48.2",
+		"@typescript-eslint/eslint-plugin": "^5.49.0",
 		"@typescript-eslint/parser": "^5.48.2",
 		"babel-preset-react-app": "^10.0.1",
 		"dotenv": "^16.0.3",
