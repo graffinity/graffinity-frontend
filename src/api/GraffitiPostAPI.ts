@@ -5,7 +5,7 @@ import GraffitiResponse from "models/graffiti/GraffitiResponse";
 
 const baseUrl = apiEndpoints.graffiti;
 
-const GraffitiPostAPI = {
+const GraffitiAPI = {
 	findAll: (): Promise<GraffitiResponse[]> => axios.get(`${baseUrl}`),
 	findById: (id: number): Promise<GraffitiResponse> =>
 		axios.get(`${baseUrl}/${id}`),
@@ -17,4 +17,4 @@ const GraffitiPostAPI = {
 		axios.delete(`${baseUrl}/${id}`),
 };
 
-export default GraffitiPostAPI;
+export default GraffitiAPI;

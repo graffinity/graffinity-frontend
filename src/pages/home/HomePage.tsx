@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import MultiActionAreaCard from "components/common/TitleCard";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
@@ -37,7 +37,7 @@ const HomePage = () => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const getGraffitis = async () => {
-		let response = await GraffitiPostAPI.findAll();
+		let response = await GraffitiAPI.findAll();
 		getMarkers(response);
 
 		setGraffitis(response);

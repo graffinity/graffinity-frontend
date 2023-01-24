@@ -9,7 +9,7 @@ import {
 	Typography,
 } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import IFile from "models/file/IFile";
 import Paper from "@mui/material/Paper";
@@ -59,7 +59,7 @@ const Sandbox = () => {
 
 	const getGraffitiPosts = async () => {
 		// let response = await GraffitiPostAPI.findAll();
-		let response = await GraffitiPostAPI.findById(1);
+		let response = await GraffitiAPI.findById(1);
 		// setGraffitiPosts(response);
 	};
 
@@ -80,8 +80,6 @@ const Sandbox = () => {
 			let request: GraffitiPhotoRequest = {
 				file: iFile,
 				graffitiId: 1,
-				url: url,
-				userId: 1,
 				addedAt: new Date(),
 			};
 			formData.append("body", JSON.stringify(request));

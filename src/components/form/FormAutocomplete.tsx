@@ -33,6 +33,7 @@ interface OtherProps extends OutlinedTextFieldProps {
 	onClearSetToEmptyString?: boolean;
 	textInputPriority?: boolean;
 	initialValue?: string | null;
+	inputstyle?: React.CSSProperties;
 }
 
 function FormAutocomplete(prop: OtherProps & FieldHookConfig<string>) {
@@ -173,8 +174,15 @@ function FormAutocomplete(prop: OtherProps & FieldHookConfig<string>) {
 						{...params}
 						fullWidth
 						error={meta.touched && Boolean(meta.error)}
+						InputLabelProps={{
+							...params.InputLabelProps,
+							...prop.InputLabelProps,
+						}}
 						InputProps={{
 							...params.InputProps,
+							style: {
+								...prop.inputstyle,
+							},
 							startAdornment: other.InputProps?.startAdornment,
 						}}
 					/>

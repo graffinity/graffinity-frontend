@@ -31,6 +31,7 @@ const ReadableHiddenPasswordField = ({
 			title={title}
 			name={name}
 			inputRef={inputRef}
+			label={hidden ? "Password" : "Password (visible)"}
 			type={hidden ? "password" : "text"}
 			autoComplete={autoComplete}
 			enableEnterSubmit={enableEnterSubmit}

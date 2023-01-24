@@ -1,4 +1,3 @@
-import LoginResponse from "models/auth/LoginResponse";
 import {
 	getStatus,
 	handleLogin,
@@ -7,8 +6,7 @@ import {
 import { store } from "./store/rootReducer";
 
 const common = {
-	getStatus: (loginResponse?: LoginResponse) =>
-		store.dispatch(getStatus(loginResponse)),
+	getStatus: () => store.dispatch(getStatus()),
 	setUserInfo: (userId: number) => store.dispatch(setUserInfo(userId)),
 	handleLogin: (isLoggedIn: boolean) => store.dispatch(handleLogin(isLoggedIn)),
 };

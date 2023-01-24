@@ -6,7 +6,7 @@ import MobileStepper from "@mui/material/MobileStepper";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import AppTheme from "AppTheme";
-import GraffitiPostAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
 import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -27,7 +27,7 @@ const TextMobileStepper = () => {
 
 	const getGraffiti = async () => {
 		if (id) {
-			let response = await GraffitiPostAPI.findById(+id);
+			let response = await GraffitiAPI.findById(+id);
 			setPhotos(response.photos);
 		}
 	};

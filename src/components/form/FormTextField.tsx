@@ -30,6 +30,7 @@ interface OtherProps extends OutlinedTextFieldProps {
 	endIcon?: JSX.Element;
 	enableEnterSubmit?: boolean;
 	enterSubmitAction?: () => void;
+	inputstyle?: React.CSSProperties;
 }
 
 function FormTextField(props: OtherProps & FieldHookConfig<string>) {
@@ -93,8 +94,16 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 					fullWidth
 					className="textfield-input"
 					error={meta.touched && Boolean(meta.error)}
+					InputLabelProps={{
+						style: {
+							marginTop: "-3px",
+						},
+					}}
 					InputProps={{
 						...getInputProps(startIcon, endIcon),
+						style: {
+							...props.inputstyle,
+						},
 					}}
 					onKeyDown={(event) => {
 						if (event.key === "Enter") {
@@ -105,25 +114,6 @@ function FormTextField(props: OtherProps & FieldHookConfig<string>) {
 					}}
 					{...field}
 					{...other}
-					sx={
-						{
-							// ":focus": {
-							// 	borderColor: `#fff !important`,
-							// },
-							// "& .MuiOutlinedInput-root": {
-							// 	"& fieldset": {
-							// 		borderColor: `#fff7`,
-							// 	},
-							// },
-							// "& .MuiOutlinedInput-notchedOutline": {
-							// 	// borderColor: `#fff7 !important`,
-							// 	"&:hover": {
-							// 		// borderColor: `#ffffff`,
-							// 		// border: "1px solid #ffffff",
-							// 	},
-							// },
-						}
-					}
 				/>
 			) : (
 				<div className={"textField-showInstead"}>{showInstead}</div>

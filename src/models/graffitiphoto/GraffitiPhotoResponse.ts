@@ -3,7 +3,7 @@ interface GraffitiPhotoResponse {
 	graffitiId: number;
 	url: string;
 	userId: number;
-	pictureScore?: number;
+	pictureScore: number | null;
 }
 
 export default GraffitiPhotoResponse;

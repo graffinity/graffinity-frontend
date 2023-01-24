@@ -2,11 +2,9 @@ import IFile from "models/file/IFile";
 
 interface GraffitiPhotoRequest {
 	id?: number;
-	graffitiId: number;
-	url: string;
-	addedAt: Date;
 	file: IFile;
-	userId: number;
+	graffitiId: number;
+	addedAt: Date;
 }
 
 export default GraffitiPhotoRequest;

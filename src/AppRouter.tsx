@@ -1,4 +1,3 @@
-import AuthAPI from "api/AuthAPI";
 import Header from "components/common/Header";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -21,24 +20,12 @@ const AppRouter = () => {
 
 	useEffect(() => {
 		common.getStatus();
-		if (isLoggedIn) {
-			getProfile();
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		if (isLoggedIn) {
-			getProfile();
-		}
+		common.getStatus();
 	}, [isLoggedIn]);
-
-	const getProfile = async () => {
-		let res = await AuthAPI.getProfile();
-		if (res) {
-			console.log("profile", res);
-		}
-	};
 
 	return (
 		<div

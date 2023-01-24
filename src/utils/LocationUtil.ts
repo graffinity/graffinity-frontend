@@ -1,16 +1,18 @@
-export const initGeocoder = () => {
-	const geocoder = new google.maps.Geocoder();
-	return geocoder;
-};
+// export const initGeocoder = () => {
+// 	const geocoder = new google.maps.Geocoder();
+// 	return geocoder;
+// };
 
-export const getAddress = async (latitude: string, longitude: string) => {
-	const geocoder = initGeocoder();
-
+export const getAddress = async (
+	geocoder: google.maps.Geocoder,
+	latitude: string,
+	longitude: string
+) => {
 	const latlng = {
-		lat: Number(latitude),
-		lng: Number(longitude),
+		lat: Number(+latitude),
+		lng: Number(+longitude),
 	};
-
+	console.log("latlng", latlng);
 	let result = await geocoder.geocode(
 		{ location: latlng },
 		(results, status) => {
@@ -23,13 +25,13 @@ export const getAddress = async (latitude: string, longitude: string) => {
 			return "No results found...";
 		}
 	);
-	console.log("result", result);
 	return result.results[0].formatted_address;
 };
 
-export const getCoordinates = async (address: string) => {
-	const geocoder = initGeocoder();
-
+export const getCoordinates = async (
+	geocoder: google.maps.Geocoder,
+	address: string
+) => {
 	let result = await geocoder.geocode(
 		{ address: address },
 		(results, status) => {
@@ -42,6 +44,5 @@ export const getCoordinates = async (address: string) => {
 			return "No results found...";
 		}
 	);
-	console.log("result", result);
 	return result.results[0].geometry.location;
 };
