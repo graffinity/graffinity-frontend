@@ -41,7 +41,8 @@ const TextMobileStepper = () => {
 	};
 
 	return (
-		<div className="ImageSlider">
+		<div className="ImageSlider"
+			style={{ margin: '0' }}>
 			<Box sx={{ maxHeight: "100vw" }}>
 				<Paper
 					square
@@ -63,11 +64,13 @@ const TextMobileStepper = () => {
 					src={photos && photos.length > 0 ? photos[activeStep].url : ""}
 					sx={{
 						width: "100vh",
+						maxHeight: "600px",
 						display: "flex",
 						p: 2,
 						justifyContent: "center",
 						alignContent: "center",
 						ml: 0,
+						mr: 0,
 						padding: 0,
 						paddingTop: "16px",
 						paddingBottom: "16px",

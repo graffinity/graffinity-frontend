@@ -1,8 +1,7 @@
 .PeperStepper {
 	display: flex;
-	justify-content: center;
-	align-items: stretch;
-	flex-direction: column;
+	margin-bottom: 16px;
+	margin-right: 0;
 }
 div {
 	margin: 0;
@@ -11,4 +10,10 @@ div {
 .Button {
 	display: flex;
 	justify-content: center;
+}
+.PhotoContainer {
+	flex: 2;
+}
+.DescriptionContainer {
+	flex: 1;
 }
