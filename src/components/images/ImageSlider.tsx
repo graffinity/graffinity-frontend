@@ -1,36 +1,21 @@
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import AppTheme from "AppTheme";
-import GraffitiAPI from "api/GraffitiPostAPI";
-import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
+import { useState } from "react";
 import "./ImageComponents.css";
 
-const TextMobileStepper = () => {
-	const { id } = useParams();
+interface ImageSliderProps {
+	graffiti: GraffitiResponse;
+}
 
+const ImageSlider = (props: ImageSliderProps) => {
+	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
-
-	const [photos, setPhotos] = useState<GraffitiPhotoResponse[]>([]);
-
-	useEffect(() => {
-		console.log("graffitiId", id);
-		getGraffiti();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const getGraffiti = async () => {
-		if (id) {
-			let response = await GraffitiAPI.findById(+id);
-			setPhotos(response.photos);
-		}
-	};
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,76 +26,138 @@ const TextMobileStepper = () => {
 	};
 
 	return (
-		<div className="ImageSlider" style={{ margin: "0" }}>
-			<Box sx={{ maxHeight: "100vw" }}>
-				<Paper
-					square
-					elevation={0}
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						height: 50,
-						pl: 2,
-						bgcolor: "transparent",
-					}}
-				>
-					<Typography sx={{ color: "white" }}>
-						{photos && photos.length > 0 && photos[activeStep].url}
-					</Typography>
-				</Paper>
+		<div className="ImageSlider" style={{ margin: "0", width: "100%	" }}>
+			<Box
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					border: "1px solid #FFFFFF",
+					borderRadius: "16px",
+					alignItems: "center",
+					marginTop: "48px",
+					boxSizing: "border-box",
+					width: "100%",
+				}}
+			>
 				<Box
 					component={"img"}
-					src={photos && photos.length > 0 ? photos[activeStep].url : ""}
-					sx={{
-						width: "100vh",
-						maxHeight: "600px",
+					alt="Graffiti"
+					src={
+						graffiti && graffiti.photos.length > 0
+							? graffiti.photos[activeStep].url
+							: ""
+					}
+					style={{
 						display: "flex",
-						p: 2,
+						width: "100%",
+						borderRadius: "16px",
 						justifyContent: "center",
 						alignContent: "center",
-						ml: 0,
-						mr: 0,
-						padding: 0,
-						paddingTop: "16px",
-						paddingBottom: "16px",
 					}}
-				></Box>
+				/>
 				<MobileStepper
-					sx={{
+					style={{
+						display: "flex",
+						width: "100%",
+						justifyContent: "space-between",
 						backgroundColor: "transparent",
+						position: "relative",
+						padding: "16px",
+						boxSizing: "border-box",
+						marginTop: "-72px",
 					}}
-					variant="dots"
-					steps={photos.length}
+					// variant="dots"
+					variant="progress"
+					steps={graffiti ? graffiti.photos.length : 0}
 					position="static"
+					color="white"
 					activeStep={activeStep}
+					LinearProgressProps={{
+						style: {
+							backgroundColor: "white",
+						},
+					}}
+					sx={{
+						color: "white !important",
+					}}
 					nextButton={
 						<Button
-							size="small"
+							sx={{
+								":disabled": {
+									opacity: 0.5,
+								},
+							}}
 							onClick={handleNext}
-							disabled={activeStep === photos.length - 1}
-							sx={{ color: "white" }}
+							disabled={!graffiti || activeStep === graffiti.photos.length - 1}
+							style={{
+								display: "flex",
+								backgroundColor: "white",
+								padding: "8px 4px 8px 12px",
+								borderRadius: "4px",
+							}}
 						>
-							Next
+							<Typography
+								variant="h5"
+								color={AppTheme.palette.text.primary}
+								textTransform="none"
+							>
+								Next
+							</Typography>
 							{AppTheme.direction === "rtl" ? (
-								<KeyboardArrowLeft />
+								<KeyboardArrowLeft
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							) : (
-								<KeyboardArrowRight />
+								<KeyboardArrowRight
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							)}
 						</Button>
 					}
 					backButton={
 						<Button
-							size="small"
+							sx={{
+								":disabled": {
+									opacity: 0.5,
+								},
+							}}
 							onClick={handleBack}
 							disabled={activeStep === 0}
-							sx={{ color: "white" }}
+							style={{
+								display: "flex",
+								backgroundColor: "white",
+								padding: "8px 12px 8px 4px",
+								borderRadius: "4px",
+							}}
 						>
 							{AppTheme.direction === "rtl" ? (
-								<KeyboardArrowRight />
+								<KeyboardArrowRight
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							) : (
-								<KeyboardArrowLeft />
+								<KeyboardArrowLeft
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							)}
-							Back
+							<Typography
+								variant="h5"
+								color={AppTheme.palette.text.primary}
+								textTransform="none"
+							>
+								Back
+							</Typography>
 						</Button>
 					}
 				/>
@@ -119,4 +166,4 @@ const TextMobileStepper = () => {
 	);
 };
 
-export default TextMobileStepper;
+export default ImageSlider;

@@ -1,11 +1,8 @@
 .PeperStepper {
 	display: flex;
 	margin-bottom: 16px;
-	margin-right: 0;
-}
-div {
-	margin: 0;
-	padding: 0;
+	box-sizing: border-box;
+	padding: 48px;
 }
 .Button {
 	display: flex;
@@ -13,7 +10,9 @@ div {
 }
 .PhotoContainer {
 	flex: 2;
+	width: 100%;
 }
 .DescriptionContainer {
 	flex: 1;
+	width: 100%;
 }
