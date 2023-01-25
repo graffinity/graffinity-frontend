@@ -6,7 +6,7 @@ interface DescriptionProps {
 	graffiti?: GraffitiResponse;
 }
 
-export default function Description(props: DescriptionProps) {
+const FullViewDescription = (props: DescriptionProps) => {
 	const { graffiti } = props;
 	return (
 		<div
@@ -18,7 +18,6 @@ export default function Description(props: DescriptionProps) {
 				marginTop: "48px",
 				marginRight: "16px",
 				justifyContent: "space-between",
-
 				borderRadius: "16px",
 				height: "calc(100% - 16px)",
 			}}
@@ -31,8 +30,7 @@ export default function Description(props: DescriptionProps) {
 					padding: "16px",
 					boxSizing: "border-box",
 					height: "100%",
-					marginBottom: "64px",
-
+					marginBottom: "32px",
 					width: "100%",
 					flexDirection: "column",
 					justifyContent: "space-between",
@@ -62,7 +60,6 @@ export default function Description(props: DescriptionProps) {
 						style={{
 							color: "white",
 							marginBottom: "24x",
-							bottom: "0px",
 						}}
 					>
 						{graffiti?.description}
@@ -74,9 +71,11 @@ export default function Description(props: DescriptionProps) {
 						color: "white",
 					}}
 				>
-					Created At: {moment(graffiti?.creationDate).format("YYYY/MM/DD")}
+					Created at: {moment(graffiti?.creationDate).format("YYYY/MM/DD")}
 				</Typography>
 			</div>
 		</div>
 	);
-}
+};
+
+export default FullViewDescription;

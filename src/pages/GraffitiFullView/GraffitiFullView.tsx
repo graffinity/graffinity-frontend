@@ -1,6 +1,5 @@
 import GraffitiAPI from "api/GraffitiPostAPI";
-import LikeButton from "components/buttons/LikeButton";
-import Description from "components/common/FullViewDesc";
+import FullViewDescription from "components/graffiti/FullViewDescription";
 import ImageSlider from "components/images/ImageSlider";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
@@ -38,9 +37,6 @@ export default function GraffitiFullView() {
 				}}
 			>
 				{graffiti && <ImageSlider graffiti={graffiti} />}
-				<div className="Button">
-					<LikeButton />
-				</div>
 			</div>
 			<div
 				className="DescriptionContainer"
@@ -49,7 +45,7 @@ export default function GraffitiFullView() {
 					flex: 1,
 				}}
 			>
-				<Description graffiti={graffiti} />
+				<FullViewDescription graffiti={graffiti} />
 			</div>
 		</div>
 	);

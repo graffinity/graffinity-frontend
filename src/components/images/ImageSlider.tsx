@@ -5,8 +5,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import AppTheme from "AppTheme";
+import FavouriteButton from "components/buttons/FavouriteButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ImageComponents.css";
 
 interface ImageSliderProps {
@@ -16,6 +17,27 @@ interface ImageSliderProps {
 const ImageSlider = (props: ImageSliderProps) => {
 	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
+	const [likeCount, setLikeCount] = useState<number>(0);
+	const [isLiked, setIsLiked] = useState<boolean>(false);
+
+	const getLikeCount = () => {
+		let photoId = graffiti.photos[activeStep].id;
+		console.log("photoId", photoId);
+		let photoLikes = 1;
+		setLikeCount(photoLikes);
+	};
+
+	useEffect(() => {
+		getLikeCount();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const handleClick = () => {
+		isLiked ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
+		setIsLiked(!isLiked);
+	};
+
+	const maxSteps = graffiti.photos.length;
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -39,14 +61,29 @@ const ImageSlider = (props: ImageSliderProps) => {
 					width: "100%",
 				}}
 			>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "flex-end",
+
+						zIndex: 99,
+						padding: "8px",
+						paddingTop: "16px",
+						marginBottom: "-58px",
+						boxSizing: "border-box",
+						width: "100%",
+					}}
+				>
+					<FavouriteButton
+						likeCount={likeCount}
+						handleClick={handleClick}
+						isLiked={isLiked}
+					/>
+				</div>
 				<Box
 					component={"img"}
 					alt="Graffiti"
-					src={
-						graffiti && graffiti.photos.length > 0
-							? graffiti.photos[activeStep].url
-							: ""
-					}
+					src={graffiti && maxSteps > 0 ? graffiti.photos[activeStep].url : ""}
 					style={{
 						display: "flex",
 						width: "100%",
@@ -68,7 +105,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 					}}
 					// variant="dots"
 					variant="progress"
-					steps={graffiti ? graffiti.photos.length : 0}
+					steps={graffiti ? maxSteps : 0}
 					position="static"
 					color="white"
 					activeStep={activeStep}
@@ -88,7 +125,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 								},
 							}}
 							onClick={handleNext}
-							disabled={!graffiti || activeStep === graffiti.photos.length - 1}
+							disabled={!graffiti || activeStep === maxSteps - 1}
 							style={{
 								display: "flex",
 								backgroundColor: "white",
