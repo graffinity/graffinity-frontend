@@ -7,7 +7,6 @@ import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import { useParams } from "react-router-dom";
 
-
 export default function GraffitiFullView() {
 	const { id } = useParams();
 	const [graffiti, setGraffiti] = useState<GraffitiResponse>({
@@ -32,7 +31,6 @@ export default function GraffitiFullView() {
 			setGraffiti(response);
 		}
 	};
-
 
 	return (
 		<div className="PeperStepper">
