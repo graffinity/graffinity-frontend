@@ -18,10 +18,10 @@ const CreateGrafiitiPage = () => {
 
 	const onSubmit = async (values: any) => {
 		let file = values.file;
+
 		const google = window.google;
 		const geocoder = new google.maps.Geocoder();
 		let address = await getAddress(geocoder, values.latitude, values.longitude);
-		console.log(values);
 
 		if (file) {
 			let formData = new FormData();
@@ -36,7 +36,6 @@ const CreateGrafiitiPage = () => {
 				longitude: values.longitude,
 				address: address,
 				createdAt: new Date(),
-				// Add authorId only in backend
 				authorId: 1,
 				artistIds: artistCheckId,
 				status: GraffitiStatus.SUBMITTED,
