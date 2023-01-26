@@ -1,29 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-	Button,
-	createTheme,
-	styled,
-	TextField,
-	ThemeProvider,
-	Typography,
-} from "@mui/material";
-import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiAPI from "api/GraffitiPostAPI";
-import { Form, Formik, FormikProps, FormikValues } from "formik";
-import IFile from "models/file/IFile";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import SearchIcon from "@mui/icons-material/Search";
+import { Button, createTheme, TextField, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
-import "./Sandbox.css";
+import InputBase from "@mui/material/InputBase";
+import Paper from "@mui/material/Paper";
+import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import GraffitiAPI from "api/GraffitiPostAPI";
+import { Formik, FormikProps, FormikValues } from "formik";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import { ChangeEvent, useEffect, useState } from "react";
 import * as yup from "yup";
+import "./Sandbox.css";
 
 const maxNumber = 6900000;
 
@@ -69,16 +60,8 @@ const Sandbox = () => {
 			let url = URL.createObjectURL(file);
 			let formData = new FormData();
 			formData.append("file", file);
-			let filename = file.name;
-
-			let iFile: IFile = {
-				originalname: filename,
-				buffer: file,
-				mimetype: file.type,
-			};
 
 			let request: GraffitiPhotoRequest = {
-				file: iFile,
 				graffitiId: 1,
 				addedAt: new Date(),
 			};

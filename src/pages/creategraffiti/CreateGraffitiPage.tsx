@@ -4,7 +4,6 @@ import GraffitiAPI from "api/GraffitiPostAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
 import NotLoggedInComponent from "components/login/NotLoggedInComponent";
 import googleDefaultConfig from "constants/GoogleConfig";
-import IFile from "models/file/IFile";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
@@ -27,13 +26,6 @@ const CreateGrafiitiPage = () => {
 		if (file) {
 			let formData = new FormData();
 			formData.append("file", file);
-			let filename = file.name;
-
-			let iFile: IFile = {
-				originalname: filename,
-				buffer: file,
-				mimetype: file.type,
-			};
 
 			let artistCheckId = values.artistId === "Unkown" ? [] : [values.artistId];
 
@@ -55,7 +47,6 @@ const CreateGrafiitiPage = () => {
 			let graffiti = await GraffitiAPI.create(graffitiReq);
 
 			let request: GraffitiPhotoRequest = {
-				file: iFile,
 				graffitiId: graffiti.id,
 				addedAt: new Date(),
 			};
