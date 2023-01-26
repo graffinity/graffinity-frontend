@@ -74,7 +74,7 @@
 }
 
 .heart {
-	background: url("./img.png") no-repeat;
+	background: url("./animation.png") no-repeat;
 	background-position: left;
 	background-size: 2900%;
 	height: 72px;

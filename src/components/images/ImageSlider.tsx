@@ -16,8 +16,6 @@ interface ImageSliderProps {
 	graffiti: GraffitiResponse;
 }
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-
 const ImageSlider = (props: ImageSliderProps) => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
 	const { graffiti } = props;
