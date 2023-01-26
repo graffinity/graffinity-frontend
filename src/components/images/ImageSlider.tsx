@@ -98,7 +98,6 @@ const ImageSlider = (props: ImageSliderProps) => {
 						width: "100%",
 					}}
 					placement="bottom-end"
-					
 				>
 					<div
 						style={{
