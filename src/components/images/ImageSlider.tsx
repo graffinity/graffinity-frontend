@@ -54,9 +54,9 @@ const TextMobileStepper = () => {
 						bgcolor: "transparent",
 					}}
 				>
-					<Typography sx={{ color: "white" }}>
+					{/* <Typography sx={{ color: "white" }}>
 						{photos && photos.length > 0 && photos[activeStep].url}
-					</Typography>
+					</Typography> */}
 				</Paper>
 				<Box
 					component={"img"}
