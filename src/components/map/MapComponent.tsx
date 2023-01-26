@@ -35,7 +35,11 @@ export const MapComponent = (props: MapComponentProps) => {
 		setActiveMarker(marker);
 		if (mapRef.current) {
 			mapRef.current.panTo(marker.position);
-			mapRef.current.setZoom(14);
+			mapRef.current.setCenter(marker.position);
+			let currentZoom = mapRef.current.getZoom();
+			if (currentZoom && currentZoom < 14) {
+				mapRef.current.setZoom(14);
+			}
 		}
 	};
 

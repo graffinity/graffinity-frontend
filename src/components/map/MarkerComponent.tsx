@@ -55,19 +55,20 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 						}}
 					>
 						<Typography variant="body2">{marker.name}</Typography>
-
-						<Box
-							component="img"
-							src={marker.photos[0].url}
-							style={{
-								maxWidth: "100%",
-								maxHeight: "350px",
-							}}
-							sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
-							onClick={() => {
-								navigate(`/graffiti/view/${marker.id}`);
-							}}
-						/>
+						{marker.photos.length !== 0 && (
+							<Box
+								component="img"
+								src={marker.photos[0].url}
+								style={{
+									maxWidth: "100%",
+									maxHeight: "350px",
+								}}
+								sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
+								onClick={() => {
+									navigate(`/graffiti/view/${marker.id}`);
+								}}
+							/>
+						)}
 					</div>
 				</InfoWindow>
 			)}
