@@ -41,8 +41,7 @@ const TextMobileStepper = () => {
 	};
 
 	return (
-		<div className="ImageSlider"
-			style={{ margin: '0' }}>
+		<div className="ImageSlider" style={{ margin: "0" }}>
 			<Box sx={{ maxHeight: "100vw" }}>
 				<Paper
 					square

@@ -13,7 +13,7 @@ export default function Description(props: DescriptionProps) {
     const geoCoder = new google.maps.Geocoder();
     const [address, setAddress] = useState<string>();
 
-    async function getGraffitiAdress() {
+    async function getGraffitiAddress() {
         const lat = graffiti.latitude.toString();
         const lng = graffiti.longitude.toString();
 
@@ -22,7 +22,7 @@ export default function Description(props: DescriptionProps) {
     }
 
     useEffect(() => {
-        getGraffitiAdress();
+        getGraffitiAddress();
     }, [])
 
     return (
