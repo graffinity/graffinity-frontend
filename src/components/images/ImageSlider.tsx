@@ -1,35 +1,74 @@
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { Tooltip, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
 import AppTheme from "AppTheme";
-import GraffitiAPI from "api/GraffitiPostAPI";
-import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
+import FavouriteButton from "components/buttons/FavouriteButton";
+import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import "./ImageComponents.css";
+import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import { useAppSelector } from "redux/store/hooks";
 
-const TextMobileStepper = () => {
-	const { id } = useParams();
+interface ImageSliderProps {
+	graffiti: GraffitiResponse;
+}
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
+
+const ImageSlider = (props: ImageSliderProps) => {
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
-
-	const [photos, setPhotos] = useState<GraffitiPhotoResponse[]>([]);
+	const [likeCount, setLikeCount] = useState<number>(0);
+	const [isLiked, setIsLiked] = useState<boolean>(false);
 
 	useEffect(() => {
-		console.log("graffitiId", id);
-		getGraffiti();
+		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const getGraffiti = async () => {
-		if (id) {
-			let response = await GraffitiAPI.findById(+id);
-			setPhotos(response.photos);
+	useEffect(() => {
+		getLikeCount();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeStep]);
+
+	const getLikeCount = async () => {
+		let photoId = graffiti.photos[activeStep].id;
+		let likeCount = await GraffitiPhotoAPI.getLikeCount(photoId);
+		if (isLoggedIn) {
+			let isLiked = await GraffitiPhotoAPI.isLikedByUser(photoId);
+			setIsLiked(isLiked);
+		}
+
+		setLikeCount(likeCount);
+	};
+
+	const handlePhotoLike = async () => {
+		if (isLiked) {
+			let response = await GraffitiPhotoAPI.unlikePhoto(
+				graffiti.photos[activeStep].id
+			);
+			let likeCount = response.likes.length;
+			setLikeCount(likeCount);
+			setIsLiked(false);
+		} else {
+			let response = await GraffitiPhotoAPI.likePhoto(
+				graffiti.photos[activeStep].id
+			);
+			let likeCount = response.likes.length;
+			setLikeCount(likeCount);
+			setIsLiked(true);
 		}
 	};
+
+	const handleClick = () => {
+		handlePhotoLike();
+	};
+
+	const maxSteps = graffiti.photos.length;
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -40,76 +79,162 @@ const TextMobileStepper = () => {
 	};
 
 	return (
-		<div className="ImageSlider" style={{ margin: "0" }}>
-			<Box sx={{ maxHeight: "100vw" }}>
-				<Paper
-					square
-					elevation={0}
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						height: 50,
-						pl: 2,
-						bgcolor: "transparent",
+		<div className="ImageSlider" style={{ margin: "0", width: "100%	" }}>
+			<Box
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					border: "1px solid #FFFFFF",
+					borderRadius: "16px",
+					alignItems: "center",
+					marginTop: "48px",
+					boxSizing: "border-box",
+					width: "100%",
+				}}
+			>
+				<Tooltip
+					title={isLoggedIn ? "" : "Please log in to like this photo"}
+					style={{
+						width: "100%",
 					}}
+					placement="bottom-end"
 				>
-					{/* <Typography sx={{ color: "white" }}>
-						{photos && photos.length > 0 && photos[activeStep].url}
-					</Typography> */}
-				</Paper>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "flex-end",
+							zIndex: 99,
+							padding: "8px",
+							paddingTop: "16px",
+							marginBottom: "-58px",
+							boxSizing: "border-box",
+							width: "100%",
+						}}
+					>
+						<FavouriteButton
+							likeCount={likeCount}
+							handleClick={handleClick}
+							isLiked={isLiked}
+							disabled={!isLoggedIn}
+						/>
+					</div>
+				</Tooltip>
+
 				<Box
 					component={"img"}
-					src={photos && photos.length > 0 ? photos[activeStep].url : ""}
-					sx={{
-						width: "100vh",
-						maxHeight: "600px",
+					alt="Graffiti"
+					src={graffiti && maxSteps > 0 ? graffiti.photos[activeStep].url : ""}
+					style={{
 						display: "flex",
-						p: 2,
+						width: "100%",
+						borderRadius: "16px",
 						justifyContent: "center",
 						alignContent: "center",
-						ml: 0,
-						mr: 0,
-						padding: 0,
-						paddingTop: "16px",
-						paddingBottom: "16px",
 					}}
-				></Box>
+				/>
 				<MobileStepper
-					sx={{
+					style={{
+						display: "flex",
+						width: "100%",
+						justifyContent: "space-between",
 						backgroundColor: "transparent",
+						position: "relative",
+						padding: "16px",
+						boxSizing: "border-box",
+						marginTop: "-72px",
 					}}
-					variant="dots"
-					steps={photos.length}
+					// variant="dots"
+					variant="progress"
+					steps={graffiti ? maxSteps : 0}
 					position="static"
+					color="white"
 					activeStep={activeStep}
+					LinearProgressProps={{
+						style: {
+							backgroundColor: "white",
+						},
+					}}
+					sx={{
+						color: "white !important",
+					}}
 					nextButton={
 						<Button
-							size="small"
+							sx={{
+								":disabled": {
+									opacity: 0.5,
+								},
+							}}
 							onClick={handleNext}
-							disabled={activeStep === photos.length - 1}
-							sx={{ color: "white" }}
+							disabled={!graffiti || activeStep === maxSteps - 1}
+							style={{
+								display: "flex",
+								backgroundColor: "white",
+								padding: "8px 4px 8px 12px",
+								borderRadius: "4px",
+							}}
 						>
-							Next
+							<Typography
+								variant="h5"
+								color={AppTheme.palette.text.primary}
+								textTransform="none"
+							>
+								Next
+							</Typography>
 							{AppTheme.direction === "rtl" ? (
-								<KeyboardArrowLeft />
+								<KeyboardArrowLeft
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							) : (
-								<KeyboardArrowRight />
+								<KeyboardArrowRight
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							)}
 						</Button>
 					}
 					backButton={
 						<Button
-							size="small"
+							sx={{
+								":disabled": {
+									opacity: 0.5,
+								},
+							}}
 							onClick={handleBack}
 							disabled={activeStep === 0}
-							sx={{ color: "white" }}
+							style={{
+								display: "flex",
+								backgroundColor: "white",
+								padding: "8px 12px 8px 4px",
+								borderRadius: "4px",
+							}}
 						>
 							{AppTheme.direction === "rtl" ? (
-								<KeyboardArrowRight />
+								<KeyboardArrowRight
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							) : (
-								<KeyboardArrowLeft />
+								<KeyboardArrowLeft
+									style={{
+										color: AppTheme.palette.text.primary,
+										width: "24px",
+									}}
+								/>
 							)}
-							Back
+							<Typography
+								variant="h5"
+								color={AppTheme.palette.text.primary}
+								textTransform="none"
+							>
+								Back
+							</Typography>
 						</Button>
 					}
 				/>
@@ -118,4 +243,4 @@ const TextMobileStepper = () => {
 	);
 };
 
-export default TextMobileStepper;
+export default ImageSlider;

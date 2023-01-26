@@ -8,6 +8,7 @@ import {
 	ListItemButton,
 	Typography,
 } from "@mui/material";
+import AppTheme from "AppTheme";
 import RouteGroup from "models/routes/RouteGroup";
 import RouteItem from "models/routes/RouteItem";
 
@@ -55,6 +56,7 @@ export function DrawerList(props: DrawerListProps) {
 							>
 								<Typography
 									variant="h3"
+									color={AppTheme.palette.text.primary}
 									sx={{
 										fontWeight: "600",
 										padding: "0px 16px",
@@ -127,7 +129,12 @@ export function DrawerList(props: DrawerListProps) {
 													marginLeft: "10px",
 												}}
 											>
-												<Typography variant="h5">{item.pageTitle}</Typography>
+												<Typography
+													variant="h5"
+													color={AppTheme.palette.text.primary}
+												>
+													{item.pageTitle}
+												</Typography>
 											</div>
 										</ListItemButton>
 									</ListItem>
