@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import AppTheme from "AppTheme";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
@@ -41,7 +40,7 @@ const TextMobileStepper = () => {
 	};
 
 	return (
-		<div className="ImageSlider">
+		<div className="ImageSlider" style={{ margin: "0" }}>
 			<Box sx={{ maxHeight: "100vw" }}>
 				<Paper
 					square
@@ -54,20 +53,22 @@ const TextMobileStepper = () => {
 						bgcolor: "transparent",
 					}}
 				>
-					<Typography sx={{ color: "white" }}>
+					{/* <Typography sx={{ color: "white" }}>
 						{photos && photos.length > 0 && photos[activeStep].url}
-					</Typography>
+					</Typography> */}
 				</Paper>
 				<Box
 					component={"img"}
 					src={photos && photos.length > 0 ? photos[activeStep].url : ""}
 					sx={{
 						width: "100vh",
+						maxHeight: "600px",
 						display: "flex",
 						p: 2,
 						justifyContent: "center",
 						alignContent: "center",
 						ml: 0,
+						mr: 0,
 						padding: 0,
 						paddingTop: "16px",
 						paddingBottom: "16px",
