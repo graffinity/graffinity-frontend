@@ -61,7 +61,7 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 							src={marker.photos[0].url}
 							style={{
 								maxWidth: "100%",
-								maxHeight: "100%",
+								maxHeight: "350px",
 							}}
 							sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
 							onClick={() => {
