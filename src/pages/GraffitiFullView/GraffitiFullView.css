@@ -1,0 +1,18 @@
+.PeperStepper {
+	display: flex;
+	margin-bottom: 16px;
+	box-sizing: border-box;
+	padding: 48px;
+}
+.Button {
+	display: flex;
+	justify-content: center;
+}
+.PhotoContainer {
+	flex: 2;
+	width: 100%;
+}
+.DescriptionContainer {
+	flex: 1;
+	width: 100%;
+}

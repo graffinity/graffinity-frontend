@@ -31,3 +31,79 @@
 .like-button-neutral {
 	background-color: #214b81;
 }
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600&display=swap");
+.heart-btn {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: max-content;
+	margin-bottom: -16px;
+}
+.content {
+	animation: reverse-color-change 0.2s 1;
+	display: flex;
+	border: 1px solid #eae2e1;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.content.heart-active {
+	animation: color-change 0.15s 1;
+	border-color: #e57373;
+	background: #ef9a9a;
+}
+@keyframes color-change {
+	0% {
+		background: transparent;
+		border-color: #eae2e1;
+	}
+	100% {
+		background: #ef9a9a;
+		border-color: #e57373;
+	}
+}
+@keyframes reverse-color-change {
+	0% {
+		background: #ef9a9a;
+		border-color: #e57373;
+	}
+	100% {
+		background: transparent;
+		border-color: #eae2e1;
+	}
+}
+
+.heart {
+	background: url("./img.png") no-repeat;
+	background-position: left;
+	background-size: 2900%;
+	height: 72px;
+	width: 72px;
+	margin: -16px;
+}
+.text {
+	color: #9c9496;
+	font-family: "Inter";
+}
+.numb:before {
+	color: #9c9496;
+	font-family: "Inter";
+}
+.numb.heart-active:before {
+	color: #000;
+}
+.text.heart-active {
+	color: #000;
+}
+.heart.heart-active {
+	animation: animate 0.8s steps(28) 1;
+	background-position: right;
+}
+@keyframes animate {
+	0% {
+		background-position: left;
+	}
+	100% {
+		background-position: right;
+	}
+}
