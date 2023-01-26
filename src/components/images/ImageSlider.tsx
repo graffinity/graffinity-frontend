@@ -1,6 +1,6 @@
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
@@ -9,32 +9,63 @@ import FavouriteButton from "components/buttons/FavouriteButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
 import "./ImageComponents.css";
+import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import { useAppSelector } from "redux/store/hooks";
 
 interface ImageSliderProps {
 	graffiti: GraffitiResponse;
 }
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
+
 const ImageSlider = (props: ImageSliderProps) => {
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
 	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
-
-	const getLikeCount = () => {
-		let photoId = graffiti.photos[activeStep].id;
-		console.log("photoId", photoId);
-		let photoLikes = 1;
-		setLikeCount(photoLikes);
-	};
 
 	useEffect(() => {
 		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		getLikeCount();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeStep]);
+
+	const getLikeCount = async () => {
+		let photoId = graffiti.photos[activeStep].id;
+		let likeCount = await GraffitiPhotoAPI.getLikeCount(photoId);
+		if (isLoggedIn) {
+			let isLiked = await GraffitiPhotoAPI.isLikedByUser(photoId);
+			setIsLiked(isLiked);
+		}
+
+		setLikeCount(likeCount);
+	};
+
+	const handlePhotoLike = async () => {
+		if (isLiked) {
+			let response = await GraffitiPhotoAPI.unlikePhoto(
+				graffiti.photos[activeStep].id
+			);
+			let likeCount = response.likes.length;
+			setLikeCount(likeCount);
+			setIsLiked(false);
+		} else {
+			let response = await GraffitiPhotoAPI.likePhoto(
+				graffiti.photos[activeStep].id
+			);
+			let likeCount = response.likes.length;
+			setLikeCount(likeCount);
+			setIsLiked(true);
+		}
+	};
+
 	const handleClick = () => {
-		isLiked ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
-		setIsLiked(!isLiked);
+		handlePhotoLike();
 	};
 
 	const maxSteps = graffiti.photos.length;
@@ -61,25 +92,35 @@ const ImageSlider = (props: ImageSliderProps) => {
 					width: "100%",
 				}}
 			>
-				<div
+				<Tooltip
+					title={isLoggedIn ? "" : "Please log in to like this photo"}
 					style={{
-						display: "flex",
-						justifyContent: "flex-end",
-
-						zIndex: 99,
-						padding: "8px",
-						paddingTop: "16px",
-						marginBottom: "-58px",
-						boxSizing: "border-box",
 						width: "100%",
 					}}
+					placement="bottom-end"
+					
 				>
-					<FavouriteButton
-						likeCount={likeCount}
-						handleClick={handleClick}
-						isLiked={isLiked}
-					/>
-				</div>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "flex-end",
+							zIndex: 99,
+							padding: "8px",
+							paddingTop: "16px",
+							marginBottom: "-58px",
+							boxSizing: "border-box",
+							width: "100%",
+						}}
+					>
+						<FavouriteButton
+							likeCount={likeCount}
+							handleClick={handleClick}
+							isLiked={isLiked}
+							disabled={!isLoggedIn}
+						/>
+					</div>
+				</Tooltip>
+
 				<Box
 					component={"img"}
 					alt="Graffiti"

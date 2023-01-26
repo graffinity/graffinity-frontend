@@ -23,6 +23,14 @@ const GraffitiPhotoAPI = {
 		}),
 	delete: (id: number): Promise<GraffitiPhotoResponse> =>
 		axios.delete(`${baseUrl}/${id}`),
+	likePhoto: (id: number): Promise<GraffitiPhotoResponse> =>
+		axios.put(`${baseUrl}/${id}/likes/add`),
+	unlikePhoto: (id: number): Promise<GraffitiPhotoResponse> =>
+		axios.put(`${baseUrl}/${id}/likes/remove`),
+	getLikeCount: (id: number): Promise<number> =>
+		axios.get(`${baseUrl}/${id}/likes/count`),
+	isLikedByUser: (id: number): Promise<boolean> =>
+		axios.get(`${baseUrl}/${id}/likes/is-liked`),
 };
 
 export default GraffitiPhotoAPI;

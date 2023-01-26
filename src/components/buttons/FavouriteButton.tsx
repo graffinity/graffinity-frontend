@@ -5,10 +5,11 @@ interface LikeButtonProps {
 	isLiked: boolean;
 	likeCount: number;
 	handleClick: () => void;
+	disabled?: boolean;
 }
 
 const FavouriteButton = (props: LikeButtonProps) => {
-	const { isLiked, likeCount, handleClick } = props;
+	const { isLiked, likeCount, disabled, handleClick } = props;
 
 	return (
 		<div
@@ -19,11 +20,14 @@ const FavouriteButton = (props: LikeButtonProps) => {
 				marginRight: "20px",
 				width: "100%",
 				flexShrink: 0,
+				opacity: disabled ? 0.5 : 1,
+				pointerEvents: disabled ? "none" : "auto",
+				cursor: disabled ? "default" : "pointer",
 			}}
 		>
 			<div
 				className={"content" + (isLiked ? " heart-active" : "")}
-				onClick={handleClick}
+				onClick={!disabled ? handleClick : () => {}} // if disabled, do nothing
 				style={{
 					display: "flex",
 					margin: "4px 8px 4px 4px",
