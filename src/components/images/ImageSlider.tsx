@@ -34,6 +34,10 @@ const ImageSlider = (props: ImageSliderProps) => {
 		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeStep]);
+	useEffect(() => {
+		getLikeCount();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoggedIn]);
 
 	const getLikeCount = async () => {
 		let photoId = graffiti.photos[activeStep].id;
