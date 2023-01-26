@@ -1,28 +1,30 @@
 import { Typography } from "@mui/material";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import moment from "moment";
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { getAddress } from "utils/LocationUtil";
 interface DescriptionProps {
     graffiti: GraffitiResponse;
 }
 
 export default function Description(props: DescriptionProps) {
     const { graffiti } = props;
-    // function GetAddress() {
-    //     var lat = (graffiti.latitude);
-    //     var lng = graffiti.longitude;
-    //     var latlng = new google.maps.LatLng(lat, lng);
-    //     let geocoder = new google.maps.Geocoder();
-    //     geocoder.geocode({ "latLng": latlng},
-    //         function (results: any, status) {
-    //             if (status == google.maps.GeocoderStatus.OK) {
-    //                 if (results[1]) {
-    //                     alert("Location: " + results[1].formatted_address);
-    //                 }
-    //             }
-    //         });
-    // }
+    const geoCoder = new google.maps.Geocoder();
+    const [address, setAddress] = useState<string>();
+
+    async function getGraffitiAdress() {
+        const lat = graffiti.latitude.toString();
+        const lng = graffiti.longitude.toString();
+
+        let address = await getAddress(geoCoder, lat, lng)
+        setAddress(address)
+    }
+
+    useEffect(() => {
+        getGraffitiAdress();
+    }, [])
+
     return (
         <div
             style={{
@@ -53,7 +55,7 @@ export default function Description(props: DescriptionProps) {
                     marginBottom: "16px",
                     marginTop: "16px"
                 }}
-            >{graffiti.address}</Typography>
+            >{address}</Typography>
 
             <Typography
                 variant="h4"
