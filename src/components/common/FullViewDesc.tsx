@@ -3,7 +3,7 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import googleDefaultConfig from "constants/GoogleConfig";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAddress } from "utils/LocationUtil";
 interface DescriptionProps {
 	graffiti: GraffitiResponse;
@@ -14,6 +14,7 @@ export default function Description(props: DescriptionProps) {
 	const google = window.google;
 
 	let { isLoaded } = useJsApiLoader({ ...googleDefaultConfig });
+	console.log("isLoaded", isLoaded);
 	const [address, setAddress] = useState<string>();
 
 	async function getGraffitiAddress() {
@@ -26,6 +27,7 @@ export default function Description(props: DescriptionProps) {
 
 	useEffect(() => {
 		getGraffitiAddress();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [google]);
 
 	return (

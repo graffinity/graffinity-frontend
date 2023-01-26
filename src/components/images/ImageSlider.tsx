@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import AppTheme from "AppTheme";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import GraffitiPhotoResponse from "models/graffitiphoto/GraffitiPhotoResponse";
