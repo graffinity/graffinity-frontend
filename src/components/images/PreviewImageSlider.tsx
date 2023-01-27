@@ -1,5 +1,5 @@
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import './ImageComponents.css'
+import "./ImageComponents.css";
 
 interface PreviewImageSliderProps {
 	graffiti: GraffitiResponse;
