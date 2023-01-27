@@ -8,6 +8,7 @@ import { Form, Formik, FormikProps } from "formik";
 import UserCreateRequest from "models/user/UserCreateRequest";
 import * as yup from "yup";
 import "./Login.css";
+import _ from "lodash";
 
 interface SignupProps {
 	open: boolean;
@@ -16,23 +17,6 @@ interface SignupProps {
 }
 
 const SignupDialog = (props: SignupProps) => {
-	const checkIfUserExistsByEmail = async (email: string) => {
-		if (email === "") {
-			return false;
-		}
-		let response = await UserAPI.existsByEmail(email);
-		console.log("exists: ", response);
-		return response;
-	};
-	const checkIfUserExistsByUsername = async (username: string) => {
-		if (username === "") {
-			return false;
-		}
-		let response = await UserAPI.existsByUsername(username);
-		console.log("exists: ", response);
-		return response;
-	};
-
 	const handleSubmit = async (values: RegistrationValues) => {
 		console.log("values", values);
 		let request: UserCreateRequest = {
@@ -166,53 +150,27 @@ const SignupDialog = (props: SignupProps) => {
 									<FormTextField
 										title="Name"
 										name="name"
-										label="Name"
+										placeholder="Name"
 										value={formik.values.name}
 									/>
 									<FormTextField
 										title="Lastname"
 										name="lastname"
-										label="Lastname"
+										placeholder="Lastname"
 										value={formik.values.lastname}
 									/>
 
 									<FormTextField
 										title="Username"
 										name="username"
-										label="Username"
+										placeholder="Username"
 										value={formik.values.username}
-										onChange={(e: any) => {
-											formik.handleChange(e);
-
-											checkIfUserExistsByUsername(formik.values.username).then(
-												(response) => {
-													if (response) {
-														formik.setFieldError(
-															"username",
-															"Username already exists"
-														);
-													}
-												}
-											);
-										}}
 									/>
 									<FormTextField
 										title="Email"
 										name="email"
-										label="Email"
+										placeholder="Email"
 										value={formik.values.email}
-										onChange={() => {
-											checkIfUserExistsByEmail(formik.values.email).then(
-												(response) => {
-													if (response) {
-														formik.setFieldError(
-															"email",
-															"Email already exists"
-														);
-													}
-												}
-											);
-										}}
 									/>
 
 									<ReadableHiddenPasswordField
@@ -273,13 +231,49 @@ const initialValues: RegistrationValues = {
 const validationSchema = yup.object({
 	name: yup.string().nullable().required("Name is required"),
 	lastname: yup.string().nullable().required("Lastname is required"),
-	username: yup.string().nullable().required("Username is required"),
+	username: yup
+		.string()
+		.nullable()
+		.required("Username is required")
+		.test(
+			"validator",
+			"An account with this username already exists",
+			async (value) => {
+				if (!_.isEmpty(value) && !_.isNil(value)) {
+					let isDuplicate = await UserAPI.existsByUsername(value);
+					console.log("isDuplicate: ", isDuplicate);
+					return !isDuplicate;
+				}
+				return true;
+			}
+		),
 	email: yup
 		.string()
 		.nullable()
 		.email("Invalid email")
-		.required("Email is required"),
-	password: yup.string().nullable().required("Password is required"),
+		.required("Email is required")
+		.test(
+			"validator",
+			"An account with this email already exists",
+			async (value) => {
+				if (!_.isEmpty(value) && !_.isNil(value)) {
+					let isDuplicate = await UserAPI.existsByEmail(value);
+					console.log("isDuplicate: ", isDuplicate);
+					return !isDuplicate;
+				}
+				return true;
+			}
+		),
+	password: yup
+		.string()
+		.nullable()
+		.required("Password is required")
+		.test("validator", "Password must match", function (value) {
+			if (!_.isEmpty(value) && !_.isNil(value)) {
+				return value === this.parent.repeatPassword;
+			}
+			return true;
+		}),
 	repeatPassword: yup
 		.string()
 		.nullable()
@@ -288,3 +282,49 @@ const validationSchema = yup.object({
 });
 
 export default SignupDialog;
+
+// const checkIfUserExistsByEmail = async (email: string) => {
+// 	if (email === "") {
+// 		return false;
+// 	}
+// 	let response = await UserAPI.existsByEmail(email);
+// 	console.log("exists: ", response);
+// 	return response;
+// };
+// const checkIfUserExistsByUsername = async (username: string) => {
+// 	if (username === "") {
+// 		return false;
+// 	}
+// 	let response = await UserAPI.existsByUsername(username);
+// 	console.log("exists: ", response);
+// 	return response;
+// };
+
+// country: yup.string().nullable().required()
+//     .test('validator', 'country is incorrect', value => {
+//       if (!_.isEmpty(value)) {
+//         const isDuplicateExists = await checkDuplicate(value);
+//         console.log("isDuplicateExists = ", isDuplicateExists);
+//         return !isDuplicateExists;
+//       }
+//       // WHEN THE VALUE IS EMPTY RETURN `true` by default
+//       return true;
+//     })
+// });
+
+// function checkDuplicate(valueToCheck) {
+//   return new Promise(async (resolve, reject) => {
+//     let isDuplicateExists;
+
+//     // EXECUTE THE API CALL TO CHECK FOR DUPLICATE VALUE
+//     api.post('url', valueToCheck)
+//     .then((valueFromAPIResponse) => {
+//       isDuplicateExists = valueFromAPIResponse; // boolean: true or false
+//       resolve(isDuplicateExists);
+//     })
+//     .catch(() => {
+//       isDuplicateExists = false;
+//       resolve(isDuplicateExists);
+//     })
+//   });
+// }

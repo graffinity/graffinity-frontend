@@ -16,7 +16,7 @@ export default function GraffitiLibrary() {
 	};
 
 	return (
-		<div className="GridContainer">
+		<div className="gallery-container">
 			{graffitis.map((graffiti) => (
 				<LibraryComponent key={graffiti.id} graffiti={graffiti} />
 			))}
