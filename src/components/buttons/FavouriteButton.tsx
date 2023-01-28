@@ -24,7 +24,7 @@ const FavouriteButton = (props: LikeButtonProps) => {
 			}}
 		>
 			<Box
-				className={"content" + (isLiked ? " heart-active" : "")}
+				className={"content" + (isLiked && !disabled ? " heart-active" : "")}
 				onClick={!disabled ? handleClick : () => {}} // if disabled, do nothing
 				style={{
 					display: "flex",
@@ -37,7 +37,7 @@ const FavouriteButton = (props: LikeButtonProps) => {
 				sx={{
 					"&:hover": {
 						cursor: disabled ? "not-allowed" : "normal",
-						opacity: disabled ? 1 : 0.8,
+						opacity: disabled ? 1 : 0.9,
 					},
 				}}
 			>
@@ -53,7 +53,7 @@ const FavouriteButton = (props: LikeButtonProps) => {
 						color="inherit"
 						className={"text" + (isLiked ? " heart-active" : "")}
 						style={{
-							fontWeight: "500",
+							fontWeight: "600",
 							color: isLiked ? "#ffffff" : grey[200],
 
 							boxSizing: "border-box",
