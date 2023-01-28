@@ -1,5 +1,6 @@
 import {
 	AddCircleOutlineOutlined,
+	AddPhotoAlternateRounded,
 	CodeRounded,
 	CollectionsRounded,
 	FullscreenRounded,
@@ -9,6 +10,7 @@ import RouteGroup from "models/routes/RouteGroup";
 import GraffitiFullView from "pages/GraffitiFullView/GraffitiFullView";
 import GrafittiLibrary from "pages/GrafittyLibrary/GraffitiLibrary";
 import CreateGrafiitiPage from "pages/creategraffiti/CreateGraffitiPage";
+import AddPhotoToGraffitiPage from "pages/graffitiphoto/AddPhotoToGraffitiPage";
 import HomePage from "pages/home/HomePage";
 import Sandbox from "pages/sandbox/Sandbox";
 const routes: RouteGroup[] = [
@@ -23,11 +25,11 @@ const routes: RouteGroup[] = [
 				icon: <HomeRounded />,
 			},
 			{
-				path: "/sandbox",
-				key: "sandbox",
-				pageTitle: "Sandbox",
-				element: <Sandbox />,
-				icon: <CodeRounded />,
+				path: "/graffiti/:id/photo/add",
+				key: "graffiti-add-photo",
+				pageTitle: "Add Photo To Graffiti",
+				element: <AddPhotoToGraffitiPage />,
+				icon: <AddPhotoAlternateRounded />,
 			},
 			{
 				path: "/graffiti/create",
@@ -53,8 +55,16 @@ const routes: RouteGroup[] = [
 		],
 	},
 	{
-		group: "Admin",
-		items: [],
+		group: "Admin/Dev",
+		items: [
+			{
+				path: "/sandbox",
+				key: "sandbox",
+				pageTitle: "Sandbox",
+				element: <Sandbox />,
+				icon: <CodeRounded />,
+			},
+		],
 	},
 ];
 
