@@ -5,11 +5,11 @@ import {
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
+import AppTheme from "AppTheme";
 import MarkerData from "models/map/MarkerData";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Map.css";
-import AppTheme from "AppTheme";
 
 interface MarkerComponentProps {
 	marker: MarkerData;
@@ -74,43 +74,12 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 							aspectRatio: 1 / 1,
 							margin: 0,
 							objectFit: "contain",
-
-							// width: "100%",
-							// overflow: "hidden",
 						}}
 					>
-						{/* <IconButton
-							onClick={handleBack}
-							disabled={activeStep === 0}
-							disableTouchRipple
-							className="hover-icon-effect"
-							style={{
-								padding: "8px",
-								marginRight: "-64px",
-								zIndex: 99,
-							}}
-							sx={{
-								"&:hover": {
-									backgroundColor: "transparent",
-								},
-							}}
-						>
-							<KeyboardArrowLeft
-								className="base-icon"
-								style={{
-									color: activeStep > 0 ? "#FFFFFF" : "transparent",
-									height: "32px",
-									width: "32px",
-								}}
-							/>
-						</IconButton> */}
 						<div
 							style={{
 								display: "flex",
 								flexDirection: "column",
-
-								// gap: "8px",
-
 								width: "100%",
 								padding: "16px",
 								height: undefined,
