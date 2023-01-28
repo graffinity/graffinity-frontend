@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import googleDefaultConfig, { apiKey } from "constants/GoogleConfig";
+import googleDefaultConfig, { apiKey } from "constants/googleDefaultConfig";
 import MarkerData from "models/map/MarkerData";
 import { useCallback, useRef, useState } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
+import mapStyles from "../../constants/mapStylesConstant";
 import "./Map.css";
 import MapLocate from "./MapLocate";
 import MarkerComponent from "./MarkerComponent";
-import mapStyles from "./mapStyles";
 
 interface MapComponentProps {
 	width: number;
@@ -118,9 +118,6 @@ export const MapComponent = (props: MapComponentProps) => {
 							key={marker.id}
 							marker={marker}
 							activeMarker={activeMarker}
-							infoRef={infoRef}
-							clientRef={clientRef}
-							imgContainerRef={imgContainerRef}
 							handleActiveMarker={handleActiveMarker}
 							handleActiveMarkerNull={handleActiveMarkerNull}
 						/>

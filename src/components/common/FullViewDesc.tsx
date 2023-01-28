@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useJsApiLoader } from "@react-google-maps/api";
-import googleDefaultConfig from "constants/GoogleConfig";
+import googleDefaultConfig from "constants/googleDefaultConfig";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import moment from "moment";
 import { useEffect, useState } from "react";

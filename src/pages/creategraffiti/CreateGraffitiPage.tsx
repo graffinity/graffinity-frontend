@@ -3,7 +3,7 @@ import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiAPI from "api/GraffitiPostAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
 import NotLoggedInComponent from "components/login/NotLoggedInComponent";
-import googleDefaultConfig from "constants/GoogleConfig";
+import { googleDefaultConfig } from "constants/googleDefaultConfig";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
