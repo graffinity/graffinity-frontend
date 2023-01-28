@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import "./ButtonComponents.css";
 interface LikeButtonProps {
@@ -21,11 +21,9 @@ const FavouriteButton = (props: LikeButtonProps) => {
 				width: "100%",
 				flexShrink: 0,
 				opacity: disabled ? 0.5 : 1,
-				pointerEvents: disabled ? "none" : "auto",
-				cursor: disabled ? "default" : "pointer",
 			}}
 		>
-			<div
+			<Box
 				className={"content" + (isLiked ? " heart-active" : "")}
 				onClick={!disabled ? handleClick : () => {}} // if disabled, do nothing
 				style={{
@@ -35,6 +33,12 @@ const FavouriteButton = (props: LikeButtonProps) => {
 					boxSizing: "border-box",
 					minWidth: "fit-content",
 					flexShrink: 0,
+				}}
+				sx={{
+					"&:hover": {
+						cursor: disabled ? "not-allowed" : "normal",
+						opacity: disabled ? 1 : 0.8,
+					},
 				}}
 			>
 				<div className={"heart" + (isLiked ? " heart-active" : "")}></div>
@@ -73,7 +77,7 @@ const FavouriteButton = (props: LikeButtonProps) => {
 					</Typography>
 				</div>
 				<div className={"numb" + (isLiked ? " heart-active" : "")}></div>
-			</div>
+			</Box>
 		</div>
 	);
 };

@@ -20,6 +20,7 @@ const FullViewDescription = (props: DescriptionProps) => {
 				justifyContent: "space-between",
 				borderRadius: "16px",
 				height: "calc(100% - 16px)",
+				minWidth: "360px",
 			}}
 		>
 			<div

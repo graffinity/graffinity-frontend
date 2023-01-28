@@ -8,6 +8,7 @@ import mapStyles from "../../constants/mapStylesConstant";
 import "./Map.css";
 import MapLocate from "./MapLocate";
 import MarkerComponent from "./MarkerComponent";
+import { boxSizing } from "@mui/system";
 
 interface MapComponentProps {
 	width: number;
@@ -27,9 +28,6 @@ export const MapComponent = (props: MapComponentProps) => {
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
 
 	const mapRef = useRef<google.maps.Map | null>(null);
-	let infoRef = useRef<any>();
-	const clientRef = useRef<HTMLElement | null>(null);
-	const imgContainerRef = useRef<HTMLDivElement | null>(null);
 
 	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
@@ -95,6 +93,18 @@ export const MapComponent = (props: MapComponentProps) => {
 				flexDirection: "column",
 			}}
 		>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "flex-end",
+					width: "100%",
+					padding: "24px",
+					boxSizing: "border-box",
+					marginBottom: "-96px",
+				}}
+			>
+				<MapLocate panTo={panTo} />
+			</div>
 			{/* <Search panTo={panTo} /> */}
 			{isLoaded && (
 				<GoogleMap
@@ -103,9 +113,10 @@ export const MapComponent = (props: MapComponentProps) => {
 					mapContainerStyle={{
 						width:
 							props.width > maxWidthForDesktopView
-								? `calc(${props.width}px /1.3)`
+								? `calc(${props.width}px /1.15)`
 								: "100%",
 						height: props.height * 1.7,
+						borderRadius: "10px",
 					}}
 					center={center}
 					options={options}
@@ -117,6 +128,7 @@ export const MapComponent = (props: MapComponentProps) => {
 						<MarkerComponent
 							key={marker.id}
 							marker={marker}
+							mapRef={mapRef}
 							activeMarker={activeMarker}
 							handleActiveMarker={handleActiveMarker}
 							handleActiveMarkerNull={handleActiveMarkerNull}
@@ -124,7 +136,6 @@ export const MapComponent = (props: MapComponentProps) => {
 					))}
 				</GoogleMap>
 			)}
-			<MapLocate panTo={panTo} />
 		</div>
 	);
 };

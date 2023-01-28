@@ -1,6 +1,6 @@
+import { ExploreOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { ReactComponent as CompassIcon } from "assets/svg/compass.svg";
-
+import "./Map.css";
 interface MapLocateProps {
 	panTo: (coords: google.maps.LatLngLiteral) => void;
 }
@@ -9,7 +9,7 @@ const MapLocate = (props: MapLocateProps) => {
 	const { panTo } = props;
 	return (
 		<IconButton
-			className="locate"
+			className="locate hover-icon-effect"
 			onClick={() => {
 				navigator.geolocation.getCurrentPosition(
 					(position) => {
@@ -23,10 +23,18 @@ const MapLocate = (props: MapLocateProps) => {
 				);
 			}}
 		>
-			<CompassIcon
+			<ExploreOutlined
+				className="base-icon"
+				sx={{
+					":hover": {
+						boxShadow: "0 0 0 10px rgba(0, 0, 0, 0.4) !important",
+					},
+				}}
 				style={{
 					width: "48px",
 					height: "48px",
+					color: "#000000",
+					opacity: "0.7",
 				}}
 			/>
 		</IconButton>

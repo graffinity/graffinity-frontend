@@ -1,13 +1,11 @@
 import GraffitiAPI from "api/GraffitiPostAPI";
 import FullViewDescription from "components/graffiti/FullViewDescription";
+import ImageCropDialog from "components/images/ImageCropDialog";
 import ImageSlider from "components/images/ImageSlider";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./GraffitiFullView.css";
-import ImageCropDialog from "components/images/ImageCropDialog";
-import { IconButton } from "@mui/material";
-import { LocalHospitalOutlined } from "@mui/icons-material";
 
 export default function GraffitiFullView() {
 	const { id } = useParams();
@@ -37,6 +35,8 @@ export default function GraffitiFullView() {
 			className="PeperStepper"
 			style={{
 				display: "flex",
+				flexWrap: "wrap",
+				overflow: "auto",
 				gap: "32px",
 			}}
 		>
@@ -47,7 +47,7 @@ export default function GraffitiFullView() {
 					flex: 2,
 				}}
 			>
-				<IconButton
+				{/* <IconButton
 					onClick={handleOpen}
 					style={{
 						padding: "8px",
@@ -55,7 +55,7 @@ export default function GraffitiFullView() {
 					}}
 				>
 					<LocalHospitalOutlined />
-				</IconButton>
+				</IconButton> */}
 				{graffiti && <ImageSlider graffiti={graffiti} />}
 			</div>
 			<div

@@ -14,6 +14,7 @@ import "./Map.css";
 interface MarkerComponentProps {
 	marker: MarkerData;
 	activeMarker: MarkerData | null;
+	mapRef: React.MutableRefObject<google.maps.Map | null>;
 	handleActiveMarker: (marker: MarkerData) => void;
 	handleActiveMarkerNull: () => void;
 }
@@ -30,6 +31,9 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 	const images = marker.photos.map((photo) => photo.url);
 	const maxSteps = images.length;
 	const [currentImage, setCurrentImage] = useState<string>(images[0]);
+	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
+		null
+	);
 	const [activeStep, setActiveStep] = useState<number>(0);
 
 	const imageRef = useRef<HTMLImageElement | null>(null);
@@ -58,6 +62,9 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 		>
 			{activeMarker?.id === marker.id && (
 				<InfoWindow
+					onLoad={(infoWindow) => {
+						setInfoWindow(infoWindow);
+					}}
 					onCloseClick={() => {
 						handleActiveMarkerNull();
 					}}
@@ -66,45 +73,46 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 						handleReset();
 					}}
 				>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							width: "100%",
-							aspectRatio: 1 / 1,
-							margin: 0,
-							objectFit: "contain",
-						}}
-					>
+					<>
 						<div
 							style={{
 								display: "flex",
-								flexDirection: "column",
+								justifyContent: "center",
 								width: "100%",
-								padding: "16px",
-								height: undefined,
-								aspectRatio: 1 / 1,
-								boxSizing: "border-box",
+								aspectRatio: 1.2 / 1,
+								margin: 0,
+								objectFit: "contain",
+								overflow: "hidden",
 							}}
 						>
-							<Typography
-								sx={{
-									alignSelf: "center",
-								}}
-								variant="h2"
-								color={AppTheme.palette.text.primary}
-							>
-								{marker.name}
-							</Typography>
-							<Divider
+							<div
 								style={{
+									display: "flex",
+									flexDirection: "column",
 									width: "100%",
-									marginBottom: "16px",
+									padding: "16px",
+									height: undefined,
+									aspectRatio: 1 / 1,
+									boxSizing: "border-box",
 								}}
-								variant="fullWidth"
-							/>
-							{marker.photos.length !== 0 && (
-								<>
+							>
+								<Typography
+									sx={{
+										alignSelf: "center",
+									}}
+									variant="h2"
+									color={AppTheme.palette.text.primary}
+								>
+									{marker.name}
+								</Typography>
+								<Divider
+									style={{
+										width: "100%",
+										marginBottom: "16px",
+									}}
+									variant="fullWidth"
+								/>
+								{infoWindow && marker.photos.length !== 0 && (
 									<div
 										style={{
 											display: "flex",
@@ -114,6 +122,7 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 											height: undefined,
 											aspectRatio: 1 / 1,
 											overflow: "hidden",
+											objectFit: "cover",
 										}}
 									>
 										<div
@@ -172,7 +181,6 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 											</IconButton>
 											<Box
 												component={"img"}
-												width="100%"
 												height={undefined}
 												alt="GraffitiImage"
 												ref={imageRef}
@@ -181,14 +189,13 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 													width: "100%",
 													objectFit: "cover",
 													overflowBlock: "hidden",
-													maxHeight: "1280px",
-													maxWidth: "1280px",
-													aspectRatio: 1 / 1,
+													maxHeight: "720",
+													maxWidth: "720",
+													aspectRatio: 1.2 / 1,
 												}}
 												sx={{
 													":hover": {
 														zIndex: 1,
-														opacity: 0.97,
 														cursor: "pointer",
 														justifySelf: "center",
 														alignSelf: "center",
@@ -228,10 +235,10 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 											</IconButton>
 										</div>
 									</div>
-								</>
-							)}
+								)}
+							</div>
 						</div>
-					</div>
+					</>
 				</InfoWindow>
 			)}
 		</Marker>
