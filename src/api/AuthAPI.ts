@@ -10,6 +10,7 @@ const AuthAPI = {
 	login: async (request: LoginRequest) => {
 		let res: {
 			access_token: string;
+			refresh_token: string;
 		} = await axios.post(`${baseUrl}/login`, request);
 
 		console.log("res", res);
@@ -24,10 +25,19 @@ const AuthAPI = {
 	},
 
 	signup: async (request: UserCreateRequest) => {
-		let res = axios.post(`${baseUrl}/signup`, request);
-		let temp = await res;
+		let res: {
+			access_token: string;
+			refresh_token: string;
+		} = await axios.post(`${baseUrl}/signup`, request);
 
-		localStorage.setItem("token", temp.data.access_token);
+		console.log("res", res);
+		let access_token = res.access_token;
+		if (access_token) {
+			localStorage.setItem("token", access_token);
+
+			axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+		}
+
 		return res;
 	},
 

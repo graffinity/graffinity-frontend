@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import googleDefaultConfig, { apiKey } from "constants/GoogleConfig";
+import googleDefaultConfig, { apiKey } from "constants/googleDefaultConfig";
 import MarkerData from "models/map/MarkerData";
 import { useCallback, useRef, useState } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
+import mapStyles from "../../constants/mapStylesConstant";
 import "./Map.css";
 import MapLocate from "./MapLocate";
 import MarkerComponent from "./MarkerComponent";
-import mapStyles from "./mapStyles";
+import { boxSizing } from "@mui/system";
 
 interface MapComponentProps {
 	width: number;
@@ -27,15 +28,16 @@ export const MapComponent = (props: MapComponentProps) => {
 	const [activeMarker, setActiveMarker] = useState<MarkerData | null>(null);
 
 	const mapRef = useRef<google.maps.Map | null>(null);
-	let infoRef = useRef<any>();
-	const clientRef = useRef<HTMLElement | null>(null);
-	const imgContainerRef = useRef<HTMLDivElement | null>(null);
 
 	const handleActiveMarker = (marker: MarkerData) => {
 		setActiveMarker(marker);
 		if (mapRef.current) {
 			mapRef.current.panTo(marker.position);
-			mapRef.current.setZoom(14);
+			mapRef.current.setCenter(marker.position);
+			let currentZoom = mapRef.current.getZoom();
+			if (currentZoom && currentZoom < 14) {
+				mapRef.current.setZoom(14);
+			}
 		}
 	};
 
@@ -91,6 +93,18 @@ export const MapComponent = (props: MapComponentProps) => {
 				flexDirection: "column",
 			}}
 		>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "flex-end",
+					width: "100%",
+					padding: "24px",
+					boxSizing: "border-box",
+					marginBottom: "-96px",
+				}}
+			>
+				<MapLocate panTo={panTo} />
+			</div>
 			{/* <Search panTo={panTo} /> */}
 			{isLoaded && (
 				<GoogleMap
@@ -99,9 +113,10 @@ export const MapComponent = (props: MapComponentProps) => {
 					mapContainerStyle={{
 						width:
 							props.width > maxWidthForDesktopView
-								? `calc(${props.width}px /1.3)`
+								? `calc(${props.width}px /1.15)`
 								: "100%",
-						height: props.height * 1.7,
+						height: props.height * 0.9,
+						borderRadius: "10px",
 					}}
 					center={center}
 					options={options}
@@ -113,17 +128,14 @@ export const MapComponent = (props: MapComponentProps) => {
 						<MarkerComponent
 							key={marker.id}
 							marker={marker}
+							mapRef={mapRef}
 							activeMarker={activeMarker}
-							infoRef={infoRef}
-							clientRef={clientRef}
-							imgContainerRef={imgContainerRef}
 							handleActiveMarker={handleActiveMarker}
 							handleActiveMarkerNull={handleActiveMarkerNull}
 						/>
 					))}
 				</GoogleMap>
 			)}
-			<MapLocate panTo={panTo} />
 		</div>
 	);
 };

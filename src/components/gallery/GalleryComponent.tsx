@@ -12,7 +12,7 @@ const GalleryComponent = (props: GalleryComponentProps) => {
 	const { graffiti } = props;
 	const navigate = useNavigate();
 	return (
-		<div className="gallery-component-container">
+		<div className="gallery-component-container" style={{}}>
 			<Box
 				className="image-container"
 				sx={{
@@ -20,6 +20,7 @@ const GalleryComponent = (props: GalleryComponentProps) => {
 						opacity: 0.8,
 						cursor: "pointer",
 					},
+					minWidth: "220px",
 				}}
 				onClick={() => {
 					navigate(`/graffiti/view/${graffiti.id}`);
@@ -28,11 +29,17 @@ const GalleryComponent = (props: GalleryComponentProps) => {
 				{/* {graffiti.photos.map((photo) => (
 					<img className="CardImage" src={photo.url} alt="GraffitiImage" />
 				))} */}
-				<img
+				<Box
+					component={"img"}
 					style={{
 						width: "100%",
+						objectFit: "cover",
+						overflowBlock: "hidden",
+						maxHeight: "1280px",
+						maxWidth: "1280px",
+						aspectRatio: 1 / 1,
+						minWidth: "120px",
 					}}
-					width={1000}
 					className="CardImage"
 					src={graffiti.photos[0].url}
 					alt="GraffitiImage"

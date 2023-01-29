@@ -31,6 +31,15 @@ const GraffitiPhotoAPI = {
 		axios.get(`${baseUrl}/${id}/likes/count`),
 	isLikedByUser: (id: number): Promise<boolean> =>
 		axios.get(`${baseUrl}/${id}/likes/is-liked`),
+	addPhotoToGraffiti: (
+		grafftiId: number,
+		request: FormData
+	): Promise<GraffitiPhotoResponse> =>
+		axios.post(`${baseUrl}/graffiti/${grafftiId}/add-photo`, request, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		}),
 };
 
 export default GraffitiPhotoAPI;

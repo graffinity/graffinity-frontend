@@ -31,6 +31,7 @@ const NotLoggedInComponent = () => {
 				alignItems: "center",
 				width: "60%",
 				marginTop: "64px",
+				marginBottom: "96px",
 				padding: "36px",
 				gap: "24px",
 				border: "1px solid #FFFFFF",
@@ -38,10 +39,10 @@ const NotLoggedInComponent = () => {
 				borderRadius: "16px",
 			}}
 		>
-			<Typography variant="h3" color="white">
+			<Typography variant="h3" color="white" align="center">
 				This action is only available to logged in users
 			</Typography>
-			<Typography variant="h5" color="white">
+			<Typography variant="h5" color="white" align="center">
 				Please log in or sign up to continue...
 			</Typography>
 			<div

@@ -10,6 +10,7 @@ interface GraffitiResponse {
 	address: string;
 	authorId: number;
 	creationDate: Date;
+	distance?: number;
 }
 
 export default GraffitiResponse;

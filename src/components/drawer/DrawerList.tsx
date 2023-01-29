@@ -41,7 +41,7 @@ export function DrawerList(props: DrawerListProps) {
 				<div
 					key={group.group}
 					style={{
-						marginTop: "18px",
+						marginTop: group.group.includes("Menu") ? "18px" : "36px",
 					}}
 				>
 					{group.items.length > 0 && (
@@ -65,22 +65,25 @@ export function DrawerList(props: DrawerListProps) {
 								>
 									{group.group}
 								</Typography>
-								<IconButton
-									onClick={handleClose}
-									style={{
-										marginTop: "-24px",
-										marginRight: "6px",
-									}}
-								>
-									<KeyboardArrowLeft
+								{group.group === "Menu" && (
+									<IconButton
+										onClick={handleClose}
 										style={{
-											height: "24px",
-											width: "24px",
-											opacity: "0.6",
-											color: "#000000",
+											marginTop: "-8px",
+											marginBottom: "-6px",
+											marginRight: "6px",
 										}}
-									/>
-								</IconButton>
+									>
+										<KeyboardArrowLeft
+											style={{
+												height: "28px",
+												width: "28px",
+												opacity: "0.7",
+												color: "#000000",
+											}}
+										/>
+									</IconButton>
+								)}
 							</div>
 
 							<Divider

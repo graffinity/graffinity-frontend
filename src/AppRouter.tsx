@@ -10,6 +10,7 @@ import RouteItem from "./models/routes/RouteItem";
 
 const AppRouter = () => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+	const userLocation = useAppSelector((state) => state.common.userLocation);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activePage, setActivePage] = useState<RouteItem>(routes[0].items[0]);
@@ -20,12 +21,21 @@ const AppRouter = () => {
 
 	useEffect(() => {
 		common.getStatus();
+		common.getUserLocation();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		common.getStatus();
 	}, [isLoggedIn]);
+
+	useEffect(() => {
+		common.getUserLocation();
+	}, [activePage]);
+
+	useEffect(() => {
+		console.log("userLocation", userLocation);
+	}, [userLocation]);
 
 	return (
 		<div
