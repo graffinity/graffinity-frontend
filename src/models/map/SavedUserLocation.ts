@@ -1,7 +1,7 @@
 interface SavedUserLocation {
 	latitude: number;
 	longitude: number;
-    savedAt: Date;
+	savedAt: Date;
 }
 
 export default SavedUserLocation;
