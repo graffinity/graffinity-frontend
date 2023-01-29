@@ -36,13 +36,10 @@ const getUserLocation =
 						longitude: position.coords.longitude,
 						savedAt: new Date(),
 					};
-					dispatch(
-						commonActions.setUserLocation({ userLocation: userLocation })
-					);
+					dispatch(commonActions.setUserLocation({ userLocation }));
 				},
 				(error) => {
 					console.log(error);
-					return;
 				},
 				{
 					enableHighAccuracy: true, // true = use GPS, false = use IP address

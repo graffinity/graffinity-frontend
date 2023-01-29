@@ -1,4 +1,3 @@
-import { Divider, Typography } from "@mui/material";
 import GraffitiAPI from "api/GraffitiAPI";
 import NearbyGraffitiList from "components/graffiti/NearbyGraffitiList";
 import MapComponent from "components/map/MapComponent";
@@ -9,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import common from "redux/common";
 import { useAppSelector } from "redux/store/hooks";
 import "./HomePage.css";
+import { Divider, Typography } from "@mui/material";
 
 const HomePage = () => {
 	const userCoords = useAppSelector((state) => state.common.userLocation);
