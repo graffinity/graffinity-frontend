@@ -5,6 +5,7 @@ export const initialState: CommonState = {
 	isLoggedIn: undefined,
 	userInfo: undefined,
 	userLocation: undefined,
+	gaveUserLocationPermission: undefined,
 };
 
 export const commonSlice = createSlice({
@@ -19,6 +20,10 @@ export const commonSlice = createSlice({
 		},
 		setUserLocation(state, action) {
 			state.userLocation = action.payload.userLocation;
+		},
+		setGaveUserLocationPermission(state, action) {
+			state.gaveUserLocationPermission =
+				action.payload.gaveUserLocationPermission;
 		},
 		handleLogin(state, action) {
 			state.isLoggedIn = action.payload.isLoggedIn;
