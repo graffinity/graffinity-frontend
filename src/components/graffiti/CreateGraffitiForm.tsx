@@ -61,7 +61,6 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 		});
 	};
 
-
 	return (
 		<Formik
 			validationSchema={validationSchema}
@@ -280,14 +279,21 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 												style={{
 													display: "flex",
 													alignItems: "center",
-													justifyContent: 'center',
+													justifyContent: "center",
 													width: "100%",
 												}}
 											>
 												<Button
-													style={{ background: 'transparent' }}
-													onClick={() => { handleClick() }}
-												> <span className="drop-title">Drop files here</span> </Button>
+													style={{ background: "transparent" }}
+													onClick={() => {
+														handleClick();
+													}}
+												>
+													{" "}
+													<span className="drop-title">
+														Drop files here
+													</span>{" "}
+												</Button>
 												<input
 													name="file"
 													multiple
@@ -295,7 +301,7 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 													accept="image/*"
 													type="file"
 													onChange={(event) => {
-														handleFileChange(event)
+														handleFileChange(event);
 														if (event.currentTarget.files) {
 															formik.setFieldValue(
 																"file",
@@ -351,7 +357,9 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 																		padding: "8px",
 																	}}
 																	onClick={() => {
-																		setImages(images.filter((i) => i !== image));
+																		setImages(
+																			images.filter((i) => i !== image)
+																		);
 																	}}
 																>
 																	<CloseOutlined
@@ -365,8 +373,6 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 													))}
 												</div>
 											)}
-
-
 										</>
 									)}
 									{!isLoggedIn && <NotLoggedInComponent />}

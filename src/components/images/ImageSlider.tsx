@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import "./ImageComponents.css";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import { useAppSelector } from "redux/store/hooks";
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import PopUPComponent from "pages/GraffitiFullView/GraffittiUploadPopUp";
 
 interface ImageSliderProps {
@@ -106,7 +106,11 @@ const ImageSlider = (props: ImageSliderProps) => {
 				}}
 			>
 				<Tooltip
-					title={isLoggedIn ? "" : "Please log in to like this graffiti and / or upload more pictures of it "}
+					title={
+						isLoggedIn
+							? ""
+							: "Please log in to like this graffiti and / or upload more pictures of it "
+					}
 					style={{
 						width: "100%",
 					}}
@@ -122,8 +126,8 @@ const ImageSlider = (props: ImageSliderProps) => {
 							marginBottom: "-58px",
 							boxSizing: "border-box",
 							width: "100%",
-							alignContent: 'center',
-							alignItems: 'center'
+							alignContent: "center",
+							alignItems: "center",
 						}}
 					>
 						<FavouriteButton
@@ -136,7 +140,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 							onClick={isLoggedIn ? handleDialogOpen : undefined}
 							style={{
 								zIndex: 99,
-								margin: '0'
+								margin: "0",
 							}}
 						/>
 						<PopUPComponent onClose={handleDialogClose} open={popUp} />
