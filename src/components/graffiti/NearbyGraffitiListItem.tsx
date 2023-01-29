@@ -10,6 +10,13 @@ interface NearbyGraffitiListItemProps {
 const NearbyGraffitiListItem = (props: NearbyGraffitiListItemProps) => {
 	const { graffiti, distance } = props;
 	const navigate = useNavigate();
+
+	const getDistanceFromUser = (distance: number) => {
+		if (distance < 1000) {
+			return `${distance.toFixed(0)}m away`;
+		}
+		return `${(distance / 1000).toFixed(1)}km away`;
+	};
 	return (
 		<Box
 			style={{
@@ -82,7 +89,6 @@ const NearbyGraffitiListItem = (props: NearbyGraffitiListItemProps) => {
 						fontWeight: "500",
 						color: "#FFFFFF",
 						fontSize: "18px",
-
 						overflow: "hidden",
 						textOverflow: "ellipsis",
 						whiteSpace: "nowrap",
@@ -91,10 +97,10 @@ const NearbyGraffitiListItem = (props: NearbyGraffitiListItemProps) => {
 					}}
 				>
 					{distance
-						? `${distance}m away`
-						: graffiti.distanceFromUser
-						? `${graffiti.distanceFromUser}m away`
-						: "150m tarkim"}
+						? getDistanceFromUser(distance)
+						: graffiti.distance
+						? getDistanceFromUser(graffiti.distance)
+						: "Unknown distance"}
 				</Typography>
 			</Box>
 

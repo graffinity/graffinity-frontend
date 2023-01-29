@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import usePreventBodyScroll from "components/common/usePreventBodyScroll";
+import usePreventBodyScroll from "components/util/usePreventBodyScroll";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { animate } from "popmotion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import Styler from "stylefire";
 import NearbyGraffitiListItem from "./NearbyGraffitiListItem";
-import useDrag from "./useDrag";
+import useDrag from "../util/useDrag";
 import "../map/Map.css";
 
 interface NearbyGraffitiListProps {

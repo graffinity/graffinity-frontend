@@ -7,9 +7,13 @@ import UploadIconButton from "components/buttons/UploadIconButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "redux/store/hooks";
+import NotLoggedInComponent from "components/login/NotLoggedInComponent";
 
 const AddPhotoToGraffitiPage = () => {
 	const { id } = useParams();
+
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
 
 	const [graffiti, setGraffiti] = useState<GraffitiResponse | undefined>();
 	const [images, setImages] = useState<File[]>([]);
@@ -78,92 +82,98 @@ const AddPhotoToGraffitiPage = () => {
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "center",
+				alignItems: "center",
 				marginTop: "48px",
 				padding: "42px",
 				boxSizing: "border-box",
 				width: "100%",
 			}}
 		>
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					width: "100%",
-				}}
-			>
-				<UploadIconButton handleUpload={handleImageUpload} />
-			</div>
-			{images.length > 0 && (
-				<div
-					style={{
-						display: "flex",
-						flexWrap: "wrap",
-						alignItems: "center",
-					}}
-				>
-					{images.map((image) => (
+			{isLoggedIn && (
+				<>
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+							width: "100%",
+						}}
+					>
+						<UploadIconButton handleUpload={handleImageUpload} />
+					</div>
+					{images.length > 0 && (
 						<div
-							key={image.lastModified * Math.random()}
 							style={{
 								display: "flex",
-								flexDirection: "column",
+								flexWrap: "wrap",
 								alignItems: "center",
-								gap: "12px",
 							}}
 						>
-							<Typography variant="h6" color="#FFFFFF">
-								{image.name}
-							</Typography>
-							<div
-								style={{
-									display: "flex",
-									alignItems: "flex-start",
-									marginLeft: "12px",
-								}}
-							>
-								<img
-									src={URL.createObjectURL(image)}
-									alt="uploaded"
+							{images.map((image) => (
+								<div
+									key={image.lastModified * Math.random()}
 									style={{
-										width: "100px",
-										height: "100px",
-									}}
-								/>
-								<IconButton
-									style={{
-										marginLeft: "-36px",
-										padding: "8px",
-									}}
-									onClick={() => {
-										setImages(images.filter((i) => i !== image));
+										display: "flex",
+										flexDirection: "column",
+										alignItems: "center",
+										gap: "12px",
 									}}
 								>
-									<CloseOutlined
+									<Typography variant="h6" color="#FFFFFF">
+										{image.name}
+									</Typography>
+									<div
 										style={{
-											color: "#FFFFFF",
+											display: "flex",
+											alignItems: "flex-start",
+											marginLeft: "12px",
 										}}
-									/>
-								</IconButton>
-							</div>
+									>
+										<img
+											src={URL.createObjectURL(image)}
+											alt="uploaded"
+											style={{
+												width: "100px",
+												height: "100px",
+											}}
+										/>
+										<IconButton
+											style={{
+												marginLeft: "-36px",
+												padding: "8px",
+											}}
+											onClick={() => {
+												setImages(images.filter((i) => i !== image));
+											}}
+										>
+											<CloseOutlined
+												style={{
+													color: "#FFFFFF",
+												}}
+											/>
+										</IconButton>
+									</div>
+								</div>
+							))}
 						</div>
-					))}
-				</div>
+					)}
+					<Button
+						variant="contained"
+						onClick={handleSubmit}
+						style={{
+							color: "#000000",
+							marginTop: "24px",
+							width: "100%",
+							textTransform: "none",
+						}}
+					>
+						<Typography variant="h6" color="#FFFFFF">
+							Submit Photos
+						</Typography>
+					</Button>
+					{graffiti && <GalleryComponent graffiti={graffiti} />}
+				</>
 			)}
-			<Button
-				variant="contained"
-				onClick={handleSubmit}
-				style={{
-					color: "#000000",
-					marginTop: "24px",
-					width: "100%",
-					textTransform: "none",
-				}}
-			>
-				<Typography variant="h6" color="#FFFFFF">
-					Submit Photos
-				</Typography>
-			</Button>
-			{graffiti && <GalleryComponent graffiti={graffiti} />}
+			{!isLoggedIn && <NotLoggedInComponent />}
 		</div>
 	);
 };

@@ -3,15 +3,25 @@ import NearbyGraffitiList from "components/graffiti/NearbyGraffitiList";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import MarkerData from "models/map/MarkerData";
+import SavedUserLocation from "models/map/SavedUserLocation";
 import { useEffect, useRef, useState } from "react";
+import common from "redux/common";
+import { useAppSelector } from "redux/store/hooks";
 import "./HomePage.css";
 import { Divider, Typography } from "@mui/material";
 
 const HomePage = () => {
+	const userCoords = useAppSelector((state) => state.common.userLocation);
+
 	const [width, setWidth] = useState<number>(window.innerWidth);
-	const [graffitis, setGraffitis] = useState<GraffitiResponse[]>([]);
 	const [height, setHeight] = useState<number>(window.innerHeight);
 	const [markers, setMarkers] = useState<MarkerData[]>([]);
+	const [graffitis, setGraffitis] = useState<GraffitiResponse[]>([]);
+	const [nearbyGraffitis, setNearbyGraffitis] = useState<GraffitiResponse[]>(
+		[]
+	);
+
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	window.addEventListener("resize", () => {
 		setWidth(window.innerWidth);
@@ -26,6 +36,7 @@ const HomePage = () => {
 	useEffect(() => {
 		getGraffitis();
 		getMarkers(graffitis);
+		getNearbyGraffitis();
 
 		if (containerRef.current) {
 			setHeight(containerRef.current.clientHeight);
@@ -34,13 +45,69 @@ const HomePage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const containerRef = useRef<HTMLDivElement | null>(null);
+	useEffect(() => {
+		getNearbyGraffitis();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userCoords]);
 
 	const getGraffitis = async () => {
 		let response = await GraffitiAPI.findAll();
 		getMarkers(response);
 
 		setGraffitis(response);
+	};
+
+	const getNearbyGraffitis = async () => {
+		if (!userCoords) {
+			common.getUserLocation();
+			let userLocation: GeolocationPosition = {
+				coords: {
+					latitude: 0,
+					longitude: 0,
+					accuracy: 0,
+					altitude: null,
+					altitudeAccuracy: null,
+					heading: null,
+					speed: null,
+				},
+				timestamp: 0,
+			};
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					userLocation = position;
+				},
+				(error) => {
+					console.error("Error getting location information: ", error);
+				}
+			);
+			if (userCoords) {
+				let request: SavedUserLocation = userCoords;
+				let response = await GraffitiAPI.findNearbyGraffiti(request);
+				setNearbyGraffitis(response);
+				console.log(response);
+				return response;
+			}
+
+			if (userLocation.coords.latitude && userLocation.coords.longitude) {
+				let request: SavedUserLocation = {
+					latitude: userLocation.coords.latitude,
+					longitude: userLocation.coords.longitude,
+					savedAt: new Date(),
+				};
+				let response = await GraffitiAPI.findNearbyGraffiti(request);
+				console.log(response);
+				setNearbyGraffitis(response);
+				return response;
+			}
+			console.log("nebesigaudau");
+		}
+		if (userCoords) {
+			let request: SavedUserLocation = userCoords;
+			let response = await GraffitiAPI.findNearbyGraffiti(request);
+			setNearbyGraffitis(response);
+			console.log(response);
+			return response;
+		}
 	};
 
 	const getMarkers = async (graffitis: GraffitiResponse[]) => {
@@ -121,7 +188,7 @@ const HomePage = () => {
 						marginRight: "-48px",
 					}}
 				>
-					<NearbyGraffitiList nearbyGraffitis={graffitis} />
+					<NearbyGraffitiList nearbyGraffitis={nearbyGraffitis} />
 				</div>
 
 				{/* <div
