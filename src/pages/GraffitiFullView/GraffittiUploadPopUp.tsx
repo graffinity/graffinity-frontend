@@ -2,11 +2,11 @@ import { Button, Dialog, DialogProps, Divider, IconButton, InputBase, Paper, Tex
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { ChangeEvent, useEffect, useState } from "react";
 import React from "react"
-import GraffitiAPI from "api/GraffitiPostAPI";
+// import GraffitiAPI from "api/GraffitiPostAPI";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import { FormikProps, FormikValues } from "formik/dist/types";
-import IFile from "models/file/IFile";
+// import IFile from "models/file/IFile";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Directions, Search } from "@mui/icons-material";
@@ -53,34 +53,34 @@ export default function PopUPComponent(props: popUpComponentProps) {
 
     const getGraffitiPosts = async () => {
         // let response = await GraffitiPostAPI.findAll();
-        let response = await GraffitiAPI.findById(1);
+        // let response = await GraffitiAPI.findById(1);
         // setGraffitiPosts(response);
     };
 
     const onSubmit = async (values: FormikValues) => {
-        let file = values.file;
-        if (file) {
-            let url = URL.createObjectURL(file);
-            let formData = new FormData();
-            formData.append("file", file);
-            let filename = file.name;
+        // let file = values.file;
+        // if (file) {
+        //     let url = URL.createObjectURL(file);
+        //     let formData = new FormData();
+        //     formData.append("file", file);
+        //     let filename = file.name;
 
-            let iFile: IFile = {
-                originalname: filename,
-                buffer: file,
-                mimetype: file.type,
-            };
+        //     // let iFile: IFile = {
+        //     //     originalname: filename,
+        //     //     buffer: file,
+        //     //     mimetype: file.type,
+        //     // };
 
-            let request: GraffitiPhotoRequest = {
-                file: iFile,
-                graffitiId: 1,
-                addedAt: new Date(),
-            };
-            formData.append("body", JSON.stringify(request));
+        //     // let request: GraffitiPhotoRequest = {
+        //     //     file: iFile,
+        //     //     graffitiId: 1,
+        //     //     addedAt: new Date(),
+        //     // };
+        //     // formData.append("body", JSON.stringify(request));
 
-            let response = await GraffitiPhotoAPI.create(formData);
-            console.log("response: ", response);
-        }
+        //     let response = await GraffitiPhotoAPI.create(formData);
+        //     console.log("response: ", response);
+        // }
     };
 
     return (
