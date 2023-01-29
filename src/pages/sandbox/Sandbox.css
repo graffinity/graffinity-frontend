@@ -37,13 +37,13 @@
 	padding: 20px;
 	border-radius: 10px;
 	border: 2px dashed #555;
-	color: #fff;
+	color: #c5c5c5;
 	cursor: pointer;
-	/* transition: background 0.2s ease-in-out, border 0.2s ease-in-out; */
+	transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
 .drop-container:hover {
-	background: #ffffff;
+	background: #c5c5c5;
 	border-color: #111111;
 }
 
@@ -56,7 +56,7 @@
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
-	/* transition: color 0.2s ease-in-out; */
+	transition: color 0.2s ease-in-out;
 	/* font-family: "Times New Roman", Times, serif; */
 }
 
@@ -65,7 +65,7 @@ input[type="file"] {
 	max-width: 100%;
 	color: #444444;
 	padding: 5px;
-	background: #ffffff;
+	background: #c5c5c5;
 	border-radius: 10px;
 	border: 1px solid #555555;
 	/* font-family: "Times New Roman", Times, serif; */
@@ -77,9 +77,9 @@ input[type="file"]::file-selector-button {
 	background: #202024;
 	padding: 10px 20px;
 	border-radius: 10px;
-	color: #ffffff;
+	color: #c5c5c5;
 	cursor: pointer;
-	/* transition: background 0.2s ease-in-out; */
+	transition: background 0.2s ease-in-out;
 	/* font-family: "Times New Roman", Times, serif; */
 }
 
