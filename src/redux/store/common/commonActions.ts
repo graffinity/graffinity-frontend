@@ -1,6 +1,7 @@
 import { AnyAction, ThunkAction } from "@reduxjs/toolkit";
 import AuthAPI from "api/AuthAPI";
 import UserAPI from "api/UserAPI";
+import SavedUserLocation from "models/map/SavedUserLocation";
 import { RootState } from "../rootReducer";
 import { commonSlice } from "./commonSlice";
 
@@ -24,10 +25,36 @@ const setUserInfo =
 		let response = await UserAPI.getUserInfo(userId);
 		dispatch(commonActions.setStatus({ ...response }));
 	};
+
+const getUserLocation =
+	(): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					let userLocation: SavedUserLocation = {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						savedAt: new Date(),
+					};
+					dispatch(commonActions.setUserLocation({ userLocation }));
+				},
+				(error) => {
+					console.log(error);
+				},
+				{
+					enableHighAccuracy: true, // true = use GPS, false = use IP address
+					timeout: 120, // 2 * 60 = 120 seconds = 2 minutes
+					maximumAge: 60 * 60 * 2, // 2 * 60 * 60 = 7200 seconds = 2 hours
+				}
+			);
+		} else {
+			console.log("Geolocation is not supported by this browser.");
+		}
+	};
 const handleLogin =
 	(isLoggedIn: boolean): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch) => {
 		dispatch(commonActions.handleLogin(isLoggedIn));
 	};
 
-export { getStatus, setUserInfo, handleLogin };
+export { getStatus, setUserInfo, getUserLocation, handleLogin };

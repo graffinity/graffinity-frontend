@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState: CommonState = {
 	isLoggedIn: undefined,
 	userInfo: undefined,
+	userLocation: undefined,
 };
 
 export const commonSlice = createSlice({
@@ -15,6 +16,9 @@ export const commonSlice = createSlice({
 		},
 		setUserInfo(state, action) {
 			state.userInfo = action.payload.userInfo;
+		},
+		setUserLocation(state, action) {
+			state.userLocation = action.payload.userLocation;
 		},
 		handleLogin(state, action) {
 			state.isLoggedIn = action.payload.isLoggedIn;
