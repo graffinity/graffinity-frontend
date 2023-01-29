@@ -115,7 +115,7 @@ export const MapComponent = (props: MapComponentProps) => {
 							props.width > maxWidthForDesktopView
 								? `calc(${props.width}px /1.15)`
 								: "100%",
-						height: props.height * 1.7,
+						height: props.height * 0.9,
 						borderRadius: "10px",
 					}}
 					center={center}

@@ -3,7 +3,7 @@ import { Button, IconButton, Typography } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import GraffitiAPI from "api/GraffitiAPI";
 import GalleryComponent from "components/gallery/GalleryComponent";
-import UploadIconButton from "components/images/UploadIconButton";
+import UploadIconButton from "components/buttons/UploadIconButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

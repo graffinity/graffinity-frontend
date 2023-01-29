@@ -1,3 +1,13 @@
+.crop-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	box-sizing: border-box;
+	width: 100%;
+}
+
 .like-button-container {
 	display: flex;
 	flex-direction: column;
@@ -106,4 +116,65 @@
 	100% {
 		background-position: right;
 	}
+}
+
+/*** Add icon effect ***/
+
+/* Base CSS */
+.base-icon {
+	font-size: 0px;
+	cursor: pointer;
+	border-radius: 50%;
+	text-align: center;
+	position: relative;
+	color: #fff;
+}
+
+.base-icon:after {
+	pointer-events: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	content: "";
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.base-icon:before {
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	display: block;
+	-webkit-font-smoothing: antialiased;
+}
+.hover-icon-effect .base-icon {
+	-webkit-transition: box-shadow 0.2s;
+	-moz-transition: box-shadow 0.2s;
+	transition: box-shadow 0.2s;
+}
+
+/* Hover effect CSS */
+.hover-icon-effect .base-icon:after {
+	top: 0;
+	left: 0;
+	padding: 0;
+	box-shadow: 0 0 0 3px #fff;
+	-webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+	-moz-transition: -moz-transform 0.2s, opacity 0.2s;
+	transition: transform 0.2s, opacity 0.2s;
+}
+
+.hover-icon-effect .base-icon:hover:after {
+	-webkit-transform: scale(0.85);
+	-moz-transform: scale(0.85);
+	-ms-transform: scale(0.85);
+	transform: scale(0.85);
+}
+
+.hover-icon-effect .base-icon:hover {
+	box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.4);
+	color: #fff;
 }

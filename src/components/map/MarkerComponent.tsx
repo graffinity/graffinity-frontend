@@ -2,7 +2,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import AppTheme from "AppTheme";
-import UploadIconButton from "components/images/UploadIconButton";
+import UploadIconButton from "components/buttons/UploadIconButton";
 import MarkerData from "models/map/MarkerData";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
