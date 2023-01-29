@@ -4,3 +4,16 @@
 
 	align-self: center;
 }
+
+.gallery-container {
+	margin-top: 80px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+	padding: 32px;
+	box-sizing: border-box;
+	overflow: auto;
+	margin-bottom: 128px;
+}

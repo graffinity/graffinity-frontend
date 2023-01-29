@@ -41,9 +41,6 @@ const DrawerComponent = (props: DrawerProps) => {
 					/>
 				</Box>
 			</Drawer>
-			{/* <Box component="main" sx={{ flexGrow: 1, p: padding }}>
-				{children}
-			</Box> */}
 		</Box>
 	);
 };

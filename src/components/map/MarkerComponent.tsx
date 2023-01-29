@@ -1,14 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
+import AppTheme from "AppTheme";
+import UploadIconButton from "components/buttons/UploadIconButton";
 import MarkerData from "models/map/MarkerData";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Map.css";
 
 interface MarkerComponentProps {
 	marker: MarkerData;
 	activeMarker: MarkerData | null;
-	infoRef: React.MutableRefObject<any>;
-	clientRef: React.MutableRefObject<HTMLElement | null>;
-	imgContainerRef: React.MutableRefObject<HTMLDivElement | null>;
+	mapRef: React.MutableRefObject<google.maps.Map | null>;
 	handleActiveMarker: (marker: MarkerData) => void;
 	handleActiveMarkerNull: () => void;
 }
@@ -17,12 +20,35 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 	const {
 		marker,
 		activeMarker,
-		infoRef,
-		clientRef,
-		imgContainerRef,
+
 		handleActiveMarker,
 		handleActiveMarkerNull,
 	} = props;
+
+	const images = marker.photos.map((photo) => photo.url);
+	const maxSteps = images.length;
+	const [currentImage, setCurrentImage] = useState<string>(images[0]);
+	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
+		null
+	);
+	const [activeStep, setActiveStep] = useState<number>(0);
+
+	const imageRef = useRef<HTMLImageElement | null>(null);
+
+	const handleNext = () => {
+		setCurrentImage(images[activeStep + 1]);
+		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	};
+
+	const handleBack = () => {
+		setCurrentImage(images[activeStep - 1]);
+		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	};
+
+	const handleReset = () => {
+		setCurrentImage(images[0]);
+		setActiveStep(0);
+	};
 
 	const navigate = useNavigate();
 	return (
@@ -33,42 +59,176 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 		>
 			{activeMarker?.id === marker.id && (
 				<InfoWindow
-					options={{}}
-					ref={infoRef}
 					onLoad={(infoWindow) => {
-						let infoWindowElement = infoWindow.getContent() as HTMLElement;
-						clientRef.current = infoWindowElement;
-						infoWindow.setContent(infoWindowElement);
+						setInfoWindow(infoWindow);
 					}}
-					onCloseClick={() => handleActiveMarkerNull()}
+					onCloseClick={() => {
+						handleActiveMarkerNull();
+					}}
+					onUnmount={() => {
+						handleActiveMarkerNull();
+						handleReset();
+					}}
 				>
-					<div
-						ref={imgContainerRef}
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							gap: "8px",
-							width: "100%",
-							padding: "16px",
-							boxSizing: "border-box",
-						}}
-					>
-						<Typography variant="body2">{marker.name}</Typography>
-
-						<Box
-							component="img"
-							src={marker.photos[0].url}
+					<>
+						<div
 							style={{
-								maxWidth: "100%",
-								maxHeight: "350px",
+								display: "flex",
+								justifyContent: "center",
+								width: "100%",
+								aspectRatio: 1.2 / 1,
+								margin: 0,
+								objectFit: "contain",
+								overflow: "hidden",
 							}}
-							sx={{ ":hover": { cursor: "pointer", opacity: "0.8" } }}
-							onClick={() => {
-								navigate(`/graffiti/view/${marker.id}`);
-							}}
-						/>
-					</div>
+						>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									width: "100%",
+									padding: "16px",
+									height: undefined,
+									aspectRatio: 1 / 1,
+									boxSizing: "border-box",
+								}}
+							>
+								<Typography
+									sx={{
+										alignSelf: "center",
+									}}
+									variant="h2"
+									color={AppTheme.palette.text.primary}
+								>
+									{marker.name}
+								</Typography>
+								<Divider
+									style={{
+										width: "100%",
+										marginBottom: "16px",
+									}}
+									variant="fullWidth"
+								/>
+								{infoWindow && marker.photos.length !== 0 && (
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											alignItems: "center",
+											width: "100%",
+											height: undefined,
+											aspectRatio: 1 / 1,
+											overflow: "hidden",
+											objectFit: "cover",
+										}}
+									>
+										<div
+											style={{
+												display: "flex",
+												justifyContent: "flex-end",
+												marginBottom: "-64px",
+												padding: "8px",
+												width: "calc(100% - 16px)",
+												zIndex: 999,
+											}}
+										>
+											<UploadIconButton
+												handleUpload={(file: File) => console.log(file)}
+											/>
+										</div>
+
+										<div
+											style={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+											}}
+										>
+											<IconButton
+												onClick={handleBack}
+												disabled={activeStep === 0}
+												disableTouchRipple
+												className="hover-icon-effect"
+												style={{
+													marginRight: "-52px",
+													marginBottom: "48px",
+													zIndex: 99,
+												}}
+												sx={{
+													"&:hover": {
+														backgroundColor: "transparent",
+													},
+												}}
+											>
+												<KeyboardArrowLeft
+													className="base-icon"
+													style={{
+														color: activeStep > 0 ? "#FFFFFF" : "transparent",
+														height: "32px",
+														width: "32px",
+													}}
+												/>
+											</IconButton>
+											<Box
+												component={"img"}
+												height={undefined}
+												alt="GraffitiImage"
+												ref={imageRef}
+												src={currentImage}
+												style={{
+													width: "100%",
+													objectFit: "cover",
+													overflowBlock: "hidden",
+													maxHeight: "720",
+													maxWidth: "720",
+													aspectRatio: 1.2 / 1,
+												}}
+												sx={{
+													":hover": {
+														zIndex: 1,
+														cursor: "pointer",
+														justifySelf: "center",
+														alignSelf: "center",
+													},
+												}}
+												onClick={() => {
+													navigate(`/graffiti/view/${marker.id}`);
+												}}
+											/>
+											<IconButton
+												onClick={handleNext}
+												className="hover-icon-effect"
+												disableTouchRipple
+												disabled={activeStep === maxSteps - 1}
+												sx={{
+													":hover": {
+														backgroundColor: "transparent",
+													},
+												}}
+												style={{
+													marginLeft: "-52px",
+													marginBottom: "48px",
+													zIndex: 99,
+												}}
+											>
+												<KeyboardArrowRight
+													className="base-icon"
+													style={{
+														color:
+															activeStep < maxSteps - 1
+																? "#FFFFFF"
+																: "transparent",
+														height: "32px",
+														width: "32px",
+													}}
+												/>
+											</IconButton>
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+					</>
 				</InfoWindow>
 			)}
 		</Marker>

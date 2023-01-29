@@ -15,7 +15,7 @@ export type Libraries = (
 	| "visualization"
 )[];
 
-interface GoogleConfig {
+export interface GoogleConfig {
 	key: string;
 	googleMapsApiKey: string;
 	libraries: Libraries;
@@ -32,7 +32,7 @@ interface GoogleConfig {
 
 // This is the default config for the Google Maps API
 
-const googleDefaultConfig: GoogleConfig = {
+export const googleDefaultConfig: GoogleConfig = {
 	key: apiKey,
 	googleMapsApiKey: apiKey,
 	libraries: ["places"],

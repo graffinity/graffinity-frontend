@@ -16,8 +16,6 @@ interface ImageSliderProps {
 	graffiti: GraffitiResponse;
 }
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-
 const ImageSlider = (props: ImageSliderProps) => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
 	const { graffiti } = props;
@@ -34,6 +32,10 @@ const ImageSlider = (props: ImageSliderProps) => {
 		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeStep]);
+	useEffect(() => {
+		getLikeCount();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoggedIn]);
 
 	const getLikeCount = async () => {
 		let photoId = graffiti.photos[activeStep].id;
@@ -79,7 +81,10 @@ const ImageSlider = (props: ImageSliderProps) => {
 	};
 
 	return (
-		<div className="ImageSlider" style={{ margin: "0", width: "100%	" }}>
+		<div
+			className="ImageSlider"
+			style={{ margin: "0", width: "100%", minWidth: "360px" }}
+		>
 			<Box
 				style={{
 					display: "flex",
@@ -130,11 +135,17 @@ const ImageSlider = (props: ImageSliderProps) => {
 						borderRadius: "16px",
 						justifyContent: "center",
 						alignContent: "center",
+						objectFit: "cover",
+						overflowBlock: "hidden",
+						maxHeight: "1280px",
+						maxWidth: "1280px",
+						aspectRatio: 1 / 1,
 					}}
 				/>
 				<MobileStepper
 					style={{
 						display: "flex",
+
 						width: "100%",
 						justifyContent: "space-between",
 						backgroundColor: "transparent",
@@ -143,7 +154,6 @@ const ImageSlider = (props: ImageSliderProps) => {
 						boxSizing: "border-box",
 						marginTop: "-72px",
 					}}
-					// variant="dots"
 					variant="progress"
 					steps={graffiti ? maxSteps : 0}
 					position="static"
@@ -151,6 +161,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 					activeStep={activeStep}
 					LinearProgressProps={{
 						style: {
+							visibility: maxSteps > 1 ? "visible" : "hidden",
 							backgroundColor: "white",
 						},
 					}}
@@ -171,6 +182,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 								backgroundColor: "white",
 								padding: "8px 4px 8px 12px",
 								borderRadius: "4px",
+								visibility: maxSteps > 1 ? "visible" : "hidden",
 							}}
 						>
 							<Typography
@@ -211,6 +223,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 								backgroundColor: "white",
 								padding: "8px 12px 8px 4px",
 								borderRadius: "4px",
+								visibility: maxSteps > 1 ? "visible" : "hidden",
 							}}
 						>
 							{AppTheme.direction === "rtl" ? (

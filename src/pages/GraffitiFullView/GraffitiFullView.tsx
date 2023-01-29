@@ -1,5 +1,6 @@
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import FullViewDescription from "components/graffiti/FullViewDescription";
+import ImageCropDialog from "components/images/ImageCropDialog";
 import ImageSlider from "components/images/ImageSlider";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";
@@ -9,6 +10,14 @@ import "./GraffitiFullView.css";
 export default function GraffitiFullView() {
 	const { id } = useParams();
 	const [graffiti, setGraffiti] = useState<GraffitiResponse>();
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	useEffect(() => {
 		console.log("graffitiId", id);
 		getGraffiti();
@@ -26,6 +35,8 @@ export default function GraffitiFullView() {
 			className="PeperStepper"
 			style={{
 				display: "flex",
+				flexWrap: "wrap",
+				overflow: "auto",
 				gap: "32px",
 			}}
 		>
@@ -36,6 +47,15 @@ export default function GraffitiFullView() {
 					flex: 2,
 				}}
 			>
+				{/* <IconButton
+					onClick={handleOpen}
+					style={{
+						padding: "8px",
+						color: "white",
+					}}
+				>
+					<LocalHospitalOutlined />
+				</IconButton> */}
 				{graffiti && <ImageSlider graffiti={graffiti} />}
 			</div>
 			<div
@@ -47,6 +67,14 @@ export default function GraffitiFullView() {
 			>
 				<FullViewDescription graffiti={graffiti} />
 			</div>
+			{graffiti && (
+				<ImageCropDialog
+					open={open}
+					handleClose={handleClose}
+					handleOpen={handleOpen}
+					imgSrc={graffiti.photos[0].url}
+				/>
+			)}
 		</div>
 	);
 }

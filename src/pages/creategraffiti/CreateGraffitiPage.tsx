@@ -1,10 +1,9 @@
 import { useJsApiLoader } from "@react-google-maps/api";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
 import NotLoggedInComponent from "components/login/NotLoggedInComponent";
-import googleDefaultConfig from "constants/GoogleConfig";
-import IFile from "models/file/IFile";
+import { googleDefaultConfig } from "constants/googleDefaultConfig";
 import GraffitiRequest from "models/graffiti/GraffitiRequest";
 import GraffitiStatus from "models/graffiti/GraffitiStatus";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";
@@ -19,21 +18,14 @@ const CreateGrafiitiPage = () => {
 
 	const onSubmit = async (values: any) => {
 		let file = values.file;
+
 		const google = window.google;
 		const geocoder = new google.maps.Geocoder();
 		let address = await getAddress(geocoder, values.latitude, values.longitude);
-		console.log(values);
 
 		if (file) {
 			let formData = new FormData();
 			formData.append("file", file);
-			let filename = file.name;
-
-			let iFile: IFile = {
-				originalname: filename,
-				buffer: file,
-				mimetype: file.type,
-			};
 
 			let artistCheckId = values.artistId === "Unkown" ? [] : [values.artistId];
 
@@ -44,7 +36,6 @@ const CreateGrafiitiPage = () => {
 				longitude: values.longitude,
 				address: address,
 				createdAt: new Date(),
-				// Add authorId only in backend
 				authorId: 1,
 				artistIds: artistCheckId,
 				status: GraffitiStatus.SUBMITTED,
@@ -55,7 +46,6 @@ const CreateGrafiitiPage = () => {
 			let graffiti = await GraffitiAPI.create(graffitiReq);
 
 			let request: GraffitiPhotoRequest = {
-				file: iFile,
 				graffitiId: graffiti.id,
 				addedAt: new Date(),
 			};
