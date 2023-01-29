@@ -1,11 +1,8 @@
-import {
-	AddCircleOutlined,
-	KeyboardArrowLeft,
-	KeyboardArrowRight,
-} from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import AppTheme from "AppTheme";
+import UploadIconButton from "components/images/UploadIconButton";
 import MarkerData from "models/map/MarkerData";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -135,16 +132,9 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 												zIndex: 999,
 											}}
 										>
-											<IconButton className="hover-icon-effect">
-												<AddCircleOutlined
-													className="base-icon"
-													style={{
-														color: "#FFFFFF",
-														height: "32px",
-														width: "32px",
-													}}
-												/>
-											</IconButton>
+											<UploadIconButton
+												handleUpload={(file: File) => console.log(file)}
+											/>
 										</div>
 
 										<div
