@@ -16,7 +16,7 @@ const GraffitiAPI = {
 		axios.patch(`${baseUrl}/${id}`, request),
 	delete: (id: number): Promise<GraffitiResponse> =>
 		axios.delete(`${baseUrl}/${id}`),
-	findGraffitiNearby: (
+	findNearbyGraffiti: (
 		userLocation?: SavedUserLocation
 	): Promise<GraffitiResponse[]> => {
 		return axios.get(`${baseUrl}/nearby`, {

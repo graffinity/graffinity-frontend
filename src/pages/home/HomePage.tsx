@@ -1,11 +1,11 @@
-import { Container } from "@mui/system";
 import GraffitiAPI from "api/GraffitiAPI";
-import MultiActionAreaCard from "components/common/TitleCard";
+import NearbyGraffitiList from "components/graffiti/NearbyGraffitiList";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import MarkerData from "models/map/MarkerData";
 import { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
+import { Divider, Typography } from "@mui/material";
 
 const HomePage = () => {
 	const [width, setWidth] = useState<number>(window.innerWidth);
@@ -77,15 +77,54 @@ const HomePage = () => {
 			}}
 		>
 			<div className="homepage-container">
-				<Container ref={containerRef} className="right">
-					<div
+				<div
+					style={{
+						marginTop: "36px",
+					}}
+				>
+					<MapComponent width={width} height={height} markers={markers} />
+				</div>
+				<div
+					style={{
+						width: "100%",
+						padding: "16px 32px",
+						boxSizing: "border-box",
+					}}
+				>
+					<Divider
 						style={{
-							marginTop: "36px",
+							backgroundColor: "#FFFFFF",
+							marginTop: "48px",
+							marginBottom: "24px",
+						}}
+					/>
+
+					<Typography
+						variant="h1"
+						style={{
+							marginBottom: "-72px",
+							marginLeft: "16px",
+							color: "#FFFFFF",
 						}}
 					>
-						<MapComponent width={width} height={height} markers={markers} />
-					</div>
-					<div
+						Graffitis "Nearby"
+					</Typography>
+				</div>
+				<div
+					style={{
+						width: "calc(100% + 48px)",
+						height: "100%",
+						marginTop: "72px",
+
+						marginBottom: "108px",
+						marginLeft: "-48px",
+						marginRight: "-48px",
+					}}
+				>
+					<NearbyGraffitiList nearbyGraffitis={graffitis} />
+				</div>
+
+				{/* <div
 						style={{
 							width: "100%",
 							height: "100%",
@@ -93,8 +132,7 @@ const HomePage = () => {
 						}}
 					>
 						<MultiActionAreaCard />
-					</div>
-				</Container>
+					</div> */}
 			</div>
 		</div>
 	);
