@@ -1,10 +1,13 @@
-import { Button, Divider, Typography } from "@mui/material";
+import { CloseOutlined } from "@mui/icons-material";
+import { Button, Divider, IconButton, Typography } from "@mui/material";
 import ArtistAPI from "api/ArtistAPI";
 import FormAutocomplete from "components/form/FormAutocomplete";
 import FormTextField from "components/form/FormTextField";
+import NotLoggedInComponent from "components/login/NotLoggedInComponent";
 import { Form, Formik, FormikProps } from "formik";
 import ArtistResponse from "models/artist/ArtistResponse";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useAppSelector } from "redux/store/hooks";
 import * as yup from "yup";
 
 interface CreateGraffitiFormProps {
@@ -14,7 +17,23 @@ interface CreateGraffitiFormProps {
 const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 	const { handleSubmit } = props;
 
+	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+	const [images, setImages] = useState<File[]>([]);
 	const [artists, setArtists] = useState<ArtistResponse[]>();
+
+	const hiddenInputRef = useRef<HTMLInputElement | null>(null);
+
+	const handleClick = () => {
+		hiddenInputRef.current?.click();
+	};
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			let image = e.target.files[0];
+
+			handleImageUpload(image);
+		}
+	};
 
 	useEffect(() => {
 		getArtists();
@@ -27,6 +46,21 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 
 	const artistIds = artists?.map((artist) => artist.id.toString()) || [];
 	artistIds.push("Unknown");
+
+	const handleImageUpload = (file: File) => {
+		console.log("uploaded: ", file);
+
+		file.arrayBuffer().then((buffer) => {
+			let blob = new Blob([new Uint8Array(buffer)], { type: file.type });
+			let urlCreator = window.URL || window.webkitURL;
+			let imageUrl = urlCreator.createObjectURL(blob);
+			console.log("imageUrl", imageUrl);
+
+			console.log("blob", blob);
+			setImages([...images, file]);
+		});
+	};
+
 
 	return (
 		<Formik
@@ -193,7 +227,7 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 								alignItems: "center",
 							}}
 						>
-							<label
+							{/* <label
 								className="drop-container"
 								style={{
 									height: "100%",
@@ -218,7 +252,126 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 										}
 									}}
 								/>
-							</label>
+							</label> */}
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									justifyContent: "center",
+									alignItems: "center",
+									marginTop: "48px",
+									padding: "42px",
+									boxSizing: "border-box",
+									width: "100%",
+								}}
+							>
+								<label
+									className="drop-container"
+									style={{
+										height: "200%",
+										padding: "24px",
+										width: "100%",
+										boxSizing: "border-box",
+									}}
+								>
+									{isLoggedIn && (
+										<>
+											<div
+												style={{
+													display: "flex",
+													alignItems: "center",
+													justifyContent: 'center',
+													width: "100%",
+												}}
+											>
+												<Button
+													style={{ background: 'transparent' }}
+													onClick={() => { handleClick() }}
+												> <span className="drop-title">Drop files here</span> </Button>
+												<input
+													name="file"
+													multiple
+													alt="Upload Image"
+													accept="image/*"
+													type="file"
+													onChange={(event) => {
+														handleFileChange(event)
+														if (event.currentTarget.files) {
+															formik.setFieldValue(
+																"file",
+																event.currentTarget.files[0]
+															);
+														} else {
+															formik.setFieldValue("file", null);
+														}
+													}}
+													ref={hiddenInputRef}
+													style={{ display: "none" }}
+												/>
+											</div>
+											{images.length > 0 && (
+												<div
+													style={{
+														display: "flex",
+														flexWrap: "wrap",
+														alignItems: "center",
+													}}
+												>
+													{images.map((image) => (
+														<div
+															key={image.lastModified * Math.random()}
+															style={{
+																display: "flex",
+																flexDirection: "column",
+																alignItems: "center",
+																gap: "12px",
+															}}
+														>
+															<Typography variant="h6" color="#FFFFFF">
+																{image.name}
+															</Typography>
+															<div
+																style={{
+																	display: "flex",
+																	alignItems: "flex-start",
+																	marginLeft: "12px",
+																}}
+															>
+																<img
+																	src={URL.createObjectURL(image)}
+																	alt="uploaded"
+																	style={{
+																		width: "100px",
+																		height: "100px",
+																	}}
+																/>
+																<IconButton
+																	style={{
+																		marginLeft: "-36px",
+																		padding: "8px",
+																	}}
+																	onClick={() => {
+																		setImages(images.filter((i) => i !== image));
+																	}}
+																>
+																	<CloseOutlined
+																		style={{
+																			color: "#FFFFFF",
+																		}}
+																	/>
+																</IconButton>
+															</div>
+														</div>
+													))}
+												</div>
+											)}
+
+
+										</>
+									)}
+									{!isLoggedIn && <NotLoggedInComponent />}
+								</label>
+							</div>
 						</div>
 					</Form>
 					<div
@@ -275,7 +428,7 @@ const initialValues: CreateGrafiitiValues = {
 	latitude: "",
 	longitude: "",
 	artistId: null,
-	file: null,
+	file: [],
 };
 
 const validationSchema = yup.object({

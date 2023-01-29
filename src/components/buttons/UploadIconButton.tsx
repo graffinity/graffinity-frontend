@@ -35,7 +35,7 @@ const UploadIconButton = (props: UploadIconButtonProps) => {
 				<IconButton
 					className="hover-icon-effect"
 					disableTouchRipple
-					onClick={isLoggedIn ? () => handleClick() : () => {}}
+					onClick={isLoggedIn ? () => handleClick() : () => { }}
 					sx={{
 						opacity: isLoggedIn ? 1 : 0.5,
 					}}
