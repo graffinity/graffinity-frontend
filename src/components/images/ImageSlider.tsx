@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import "./ImageComponents.css";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 import { useAppSelector } from "redux/store/hooks";
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import PopUPComponent from "pages/GraffitiFullView/GraffittiUploadPopUp";
 
 interface ImageSliderProps {
 	graffiti: GraffitiResponse;
@@ -22,7 +24,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
-
+	const [popUp, setPopUp] = useState<boolean>(false);
 	useEffect(() => {
 		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,6 +68,12 @@ const ImageSlider = (props: ImageSliderProps) => {
 		}
 	};
 
+	function handleDialogOpen() {
+		setPopUp(true);
+	}
+	function handleDialogClose() {
+		setPopUp(false);
+	}
 	const handleClick = () => {
 		handlePhotoLike();
 	};
@@ -98,7 +106,11 @@ const ImageSlider = (props: ImageSliderProps) => {
 				}}
 			>
 				<Tooltip
-					title={isLoggedIn ? "" : "Please log in to like this photo"}
+					title={
+						isLoggedIn
+							? ""
+							: "Please log in to like this graffiti and / or upload more pictures of it "
+					}
 					style={{
 						width: "100%",
 					}}
@@ -114,6 +126,8 @@ const ImageSlider = (props: ImageSliderProps) => {
 							marginBottom: "-58px",
 							boxSizing: "border-box",
 							width: "100%",
+							alignContent: "center",
+							alignItems: "center",
 						}}
 					>
 						<FavouriteButton
@@ -122,6 +136,14 @@ const ImageSlider = (props: ImageSliderProps) => {
 							isLiked={isLiked}
 							disabled={!isLoggedIn}
 						/>
+						<MoreHorizOutlinedIcon
+							onClick={isLoggedIn ? handleDialogOpen : undefined}
+							style={{
+								zIndex: 99,
+								margin: "0",
+							}}
+						/>
+						<PopUPComponent onClose={handleDialogClose} open={popUp} />
 					</div>
 				</Tooltip>
 
