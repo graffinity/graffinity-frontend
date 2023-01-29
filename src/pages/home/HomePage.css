@@ -9,14 +9,14 @@
 	margin-bottom: 72px;
 }
 
-.homepage-container .left {
+.homepage-container .google-maps-container {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
 	width: 100%;
 }
 
-.homepage-container .right {
+.homepage-container .nearby-graffiti-container {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -25,9 +25,10 @@
 }
 @media screen and (max-width: 900px) {
 	.homepage-container {
-		flex-direction: column-reverse;
 		padding: 0;
-		height: auto;
-		width: auto;
+		width: calc(100% - 32px);
+		box-sizing: border-box;
+		padding: 0px 32px;
+		margin-right: -32px;
 	}
 }

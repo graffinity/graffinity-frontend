@@ -17,15 +17,16 @@ const GraffitiAPI = {
 	delete: (id: number): Promise<GraffitiResponse> =>
 		axios.delete(`${baseUrl}/${id}`),
 	findNearbyGraffiti: (
-		userLocation?: SavedUserLocation
+		userLocation: SavedUserLocation
 	): Promise<GraffitiResponse[]> => {
-		return axios.get(`${baseUrl}/nearby`, {
-			params: {
-				latitude: userLocation?.latitude,
-				longitude: userLocation?.longitude,
-				savedAt: userLocation?.savedAt,
-			},
-		});
+		return axios.get(
+			`${baseUrl}/nearby/${userLocation.latitude}/${userLocation.longitude}`,
+			{
+				params: {
+					savedAt: userLocation?.savedAt,
+				},
+			}
+		);
 	},
 };
 

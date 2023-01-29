@@ -91,9 +91,9 @@ const NearbyGraffitiListItem = (props: NearbyGraffitiListItemProps) => {
 					}}
 				>
 					{distance
-						? `${distance}m away`
-						: graffiti.distanceFromUser
-						? `${graffiti.distanceFromUser}m away`
+						? `${Math.round(distance)}m away`
+						: graffiti.distance
+						? `${Math.round(graffiti.distance)}m away`
 						: "150m tarkim"}
 				</Typography>
 			</Box>
