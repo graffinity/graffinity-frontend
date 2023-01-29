@@ -1,4 +1,4 @@
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import LibraryComponent from "components/gallery/GalleryComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import FullViewDescription from "components/graffiti/FullViewDescription";
 import ImageCropDialog from "components/images/ImageCropDialog";
 import ImageSlider from "components/images/ImageSlider";

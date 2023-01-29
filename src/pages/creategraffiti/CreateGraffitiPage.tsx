@@ -1,6 +1,6 @@
 import { useJsApiLoader } from "@react-google-maps/api";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import CreateGrafiitiForm from "components/graffiti/CreateGraffitiForm";
 import NotLoggedInComponent from "components/login/NotLoggedInComponent";
 import { googleDefaultConfig } from "constants/googleDefaultConfig";

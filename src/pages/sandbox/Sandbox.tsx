@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import { Formik, FormikProps, FormikValues } from "formik";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import GraffitiPhotoRequest from "models/graffitiphoto/GraffitiPhotoRequest";

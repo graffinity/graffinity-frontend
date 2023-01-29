@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import MultiActionAreaCard from "components/common/TitleCard";
 import MapComponent from "components/map/MapComponent";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";

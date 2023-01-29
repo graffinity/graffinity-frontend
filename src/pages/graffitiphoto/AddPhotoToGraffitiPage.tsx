@@ -1,7 +1,7 @@
 import { CloseOutlined } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-import GraffitiAPI from "api/GraffitiPostAPI";
+import GraffitiAPI from "api/GraffitiAPI";
 import GalleryComponent from "components/gallery/GalleryComponent";
 import UploadIconButton from "components/images/UploadIconButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
