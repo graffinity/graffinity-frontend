@@ -5,6 +5,7 @@ interface CommonState {
 	isLoggedIn?: boolean;
 	userInfo?: UserInfoResponse;
 	userLocation?: SavedUserLocation;
+	gaveUserLocationPermission?: boolean;
 }
 
 export default CommonState;

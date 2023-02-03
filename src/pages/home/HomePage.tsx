@@ -34,19 +34,23 @@ const HomePage = () => {
 		setHeight(window.innerHeight);
 	});
 	useEffect(() => {
+		common.getUserLocation();
 		getGraffitis();
 		getMarkers(graffitis);
-		getNearbyGraffitis();
+		if (userCoords) {
+			getNearbyGraffitis();
+		}
 
 		if (containerRef.current) {
 			setHeight(containerRef.current.clientHeight);
-			return;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		getNearbyGraffitis();
+		if (userCoords) {
+			getNearbyGraffitis();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userCoords]);
 

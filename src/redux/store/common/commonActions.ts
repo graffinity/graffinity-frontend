@@ -28,23 +28,65 @@ const setUserInfo =
 
 const getUserLocation =
 	(): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-		if (navigator.geolocation) {
+		let lastUserLocation = localStorage.getItem("userLocation");
+		if (lastUserLocation) {
+			let userLocation: SavedUserLocation = JSON.parse(lastUserLocation);
+			if (
+				userLocation.savedAt &&
+				new Date(userLocation.savedAt).getTime() >
+					new Date().getTime() - 1000 * 60 * 10
+			) {
+				dispatch(commonActions.setUserLocation({ userLocation }));
+				return;
+			}
+		}
+		if (navigator?.geolocation) {
 			navigator.geolocation.getCurrentPosition(
-				(position) => {
+				(location) => {
+					if (!location.coords) return;
 					let userLocation: SavedUserLocation = {
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
+						latitude: location.coords.latitude,
+						longitude: location.coords.longitude,
 						savedAt: new Date(),
 					};
-					dispatch(commonActions.setUserLocation({ userLocation }));
+					localStorage.setItem("userLocation", JSON.stringify(userLocation));
+					dispatch(
+						commonActions.setUserLocation({ userLocation: userLocation })
+					);
 				},
 				(error) => {
 					console.log(error);
+					navigator.geolocation.getCurrentPosition(
+						(location) => {
+							if (!location.coords) return;
+							let userLocation: SavedUserLocation = {
+								latitude: location.coords.latitude,
+								longitude: location.coords.longitude,
+								savedAt: new Date(),
+							};
+
+							localStorage.setItem(
+								"userLocation",
+								JSON.stringify(userLocation)
+							);
+							dispatch(
+								commonActions.setUserLocation({ userLocation: userLocation })
+							);
+						},
+						(error) => {
+							console.log(error);
+						},
+						{
+							enableHighAccuracy: false, // true = use GPS, false = use IP address
+							timeout: 6000, //
+							maximumAge: 0,
+						}
+					);
 				},
 				{
 					enableHighAccuracy: true, // true = use GPS, false = use IP address
-					timeout: 120, // 2 * 60 = 120 seconds = 2 minutes
-					maximumAge: 60 * 60 * 2, // 2 * 60 * 60 = 7200 seconds = 2 hours
+					timeout: 6000, //
+					maximumAge: 0,
 				}
 			);
 		} else {
