@@ -1,5 +1,5 @@
 ###################
-# BUILD FOR PRODUCTION
+# BUILD FOR DEVELOPMENT
 ###################
 
 FROM node:18 As build
