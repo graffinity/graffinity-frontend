@@ -10,7 +10,6 @@ import RouteItem from "./models/routes/RouteItem";
 
 const AppRouter = () => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
-	const userInfo = useAppSelector((state) => state.common.userInfo);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activePage, setActivePage] = useState<RouteItem>(routes[0].items[0]);
