@@ -5,7 +5,14 @@ interface CommonState {
 	isLoggedIn?: boolean;
 	userInfo?: UserInfoResponse;
 	userLocation?: SavedUserLocation;
-	gaveUserLocationPermission?: boolean;
+	locationAccessStatus: LocationAccessStatus;
+}
+
+export enum LocationAccessStatus {
+	NOT_REQUESTED = "NOT_REQUESTED",
+	REQUESTED = "REQUESTED",
+	GRANTED = "GRANTED",
+	DENIED = "DENIED",
 }
 
 export default CommonState;

@@ -12,6 +12,7 @@ import { Divider, Typography } from "@mui/material";
 
 const HomePage = () => {
 	const userCoords = useAppSelector((state) => state.common.userLocation);
+	const status = useAppSelector((state) => state.common);
 
 	const [width, setWidth] = useState<number>(window.innerWidth);
 	const [height, setHeight] = useState<number>(window.innerHeight);
@@ -54,6 +55,10 @@ const HomePage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userCoords]);
 
+	useEffect(() => {
+		console.log("Status: ", status);
+	}, [status]);
+
 	const getGraffitis = async () => {
 		let response = await GraffitiAPI.findAll();
 		getMarkers(response);
@@ -64,51 +69,43 @@ const HomePage = () => {
 	const getNearbyGraffitis = async () => {
 		if (!userCoords) {
 			common.getUserLocation();
-			let userLocation: GeolocationPosition = {
-				coords: {
-					latitude: 0,
-					longitude: 0,
-					accuracy: 0,
-					altitude: null,
-					altitudeAccuracy: null,
-					heading: null,
-					speed: null,
-				},
-				timestamp: 0,
-			};
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					userLocation = position;
-				},
-				(error) => {
-					console.error("Error getting location information: ", error);
-				}
-			);
-			if (userCoords) {
-				let request: SavedUserLocation = userCoords;
-				let response = await GraffitiAPI.findNearbyGraffiti(request);
-				setNearbyGraffitis(response);
-				return response;
-			}
+			// let userLocation: GeolocationPosition = {
+			// 	coords: {
+			// 		latitude: 0,
+			// 		longitude: 0,
+			// 		accuracy: 0,
+			// 		altitude: null,
+			// 		altitudeAccuracy: null,
+			// 		heading: null,
+			// 		speed: null,
+			// 	},
+			// 	timestamp: 0,
+			// };
 
-			if (userLocation.coords.latitude && userLocation.coords.longitude) {
-				let request: SavedUserLocation = {
-					latitude: userLocation.coords.latitude,
-					longitude: userLocation.coords.longitude,
-					savedAt: new Date(),
-				};
-				let response = await GraffitiAPI.findNearbyGraffiti(request);
-				setNearbyGraffitis(response);
-				return response;
-			}
+			// if (userLocation.coords.latitude && userLocation.coords.longitude) {
+			// 	let request: SavedUserLocation = {
+			// 		latitude: userLocation.coords.latitude,
+			// 		longitude: userLocation.coords.longitude,
+			// 		savedAt: new Date(),
+			// 	};
+			// 	let response = await GraffitiAPI.findNearbyGraffiti(request);
+			// 	setNearbyGraffitis(response);
+			// 	return response;
+			// }
 		}
 		if (userCoords) {
 			let request: SavedUserLocation = userCoords;
 			let response = await GraffitiAPI.findNearbyGraffiti(request);
 			setNearbyGraffitis(response);
-
 			return response;
 		}
+		// if (userCoords) {
+		// 	let request: SavedUserLocation = userCoords;
+		// 	let response = await GraffitiAPI.findNearbyGraffiti(request);
+		// 	setNearbyGraffitis(response);
+
+		// 	return response;
+		// }
 	};
 
 	const getMarkers = async (graffitis: GraffitiResponse[]) => {
@@ -189,18 +186,10 @@ const HomePage = () => {
 						marginRight: "-48px",
 					}}
 				>
-					<NearbyGraffitiList nearbyGraffitis={nearbyGraffitis} />
+					{userCoords && (
+						<NearbyGraffitiList nearbyGraffitis={nearbyGraffitis} />
+					)}
 				</div>
-
-				{/* <div
-						style={{
-							width: "100%",
-							height: "100%",
-							marginTop: "36px",
-						}}
-					>
-						<MultiActionAreaCard />
-					</div> */}
 			</div>
 		</div>
 	);
