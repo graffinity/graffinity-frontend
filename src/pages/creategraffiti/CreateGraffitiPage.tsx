@@ -52,6 +52,8 @@ const CreateGrafiitiPage = () => {
 			let res = await GraffitiPhotoAPI.create(formData);
 			if (res) {
 				window.location.href = "/graffiti/view/" + graffiti.id;
+			} else {
+				alert("Something went wrong!");
 			}
 		}
 	};
