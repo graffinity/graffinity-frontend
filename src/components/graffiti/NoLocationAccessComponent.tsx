@@ -1,26 +1,10 @@
 import { Button, Typography } from "@mui/material";
-import { useState } from "react";
-import LoginDialog from "../login/LoginDialog";
-import SignUpDialog from "../login/SignupDialog";
+import AppTheme from "AppTheme";
+import common from "redux/common";
 
 const NoLocationAccessComponent = () => {
-	const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-	const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
-
-	const handleLoginDialogOpen = () => {
-		setLoginDialogOpen(true);
-	};
-
-	const handleLoginDialogClose = () => {
-		setLoginDialogOpen(false);
-	};
-
-	const handleRegisterDialogOpen = () => {
-		setRegisterDialogOpen(true);
-	};
-
-	const handleRegisterDialogClose = () => {
-		setRegisterDialogOpen(false);
+	const requestLocationAccess = () => {
+		common.getUserLocation();
 	};
 
 	return (
@@ -31,7 +15,7 @@ const NoLocationAccessComponent = () => {
 				alignItems: "center",
 				width: "60%",
 				marginTop: "64px",
-				marginBottom: "96px",
+				marginBottom: "0px",
 				padding: "36px",
 				gap: "24px",
 				border: "1px solid #FFFFFF",
@@ -39,11 +23,19 @@ const NoLocationAccessComponent = () => {
 				borderRadius: "16px",
 			}}
 		>
-			<Typography variant="h3" color="white" align="center">
-				This action is only available to logged in users
+			<Typography
+				variant="h3"
+				color={AppTheme.palette.grey[300]}
+				align="center"
+			>
+				Please enable location access to in order see nearby graffitis...
 			</Typography>
-			<Typography variant="h5" color="white" align="center">
-				Please log in or sign up to continue...
+			<Typography
+				variant="h5"
+				color={AppTheme.palette.grey[200]}
+				align="center"
+			>
+				You can enable location access in your browser settings.
 			</Typography>
 			<div
 				style={{
@@ -66,31 +58,12 @@ const NoLocationAccessComponent = () => {
 					}}
 				>
 					<Button
-						onClick={handleLoginDialogOpen}
+						onClick={requestLocationAccess}
 						variant="outlined"
 						style={{
+							padding: "16px 24px",
 							borderColor: "white",
-							padding: "8px 32px",
-							width: "50%",
-						}}
-					>
-						<Typography
-							variant="h5"
-							style={{
-								textTransform: "none",
-								color: "white",
-							}}
-						>
-							Login
-						</Typography>
-					</Button>
-					<Button
-						onClick={handleRegisterDialogOpen}
-						variant="outlined"
-						style={{
-							padding: "8px 24px",
-							borderColor: "white",
-							width: "50%",
+							width: "60%",
 						}}
 					>
 						<Typography
@@ -98,22 +71,14 @@ const NoLocationAccessComponent = () => {
 							style={{
 								color: "white",
 								textTransform: "none",
+								fontWeight: 600,
+								fontSize: "1.2rem",
 							}}
 						>
-							Sign Up
+							Request Location Access
 						</Typography>
 					</Button>
 				</div>
-				<LoginDialog
-					open={loginDialogOpen}
-					handleClose={handleLoginDialogClose}
-					handleRegisterOpen={handleRegisterDialogOpen}
-				/>
-				<SignUpDialog
-					open={registerDialogOpen}
-					handleClose={handleRegisterDialogClose}
-					handleLoginOpen={handleLoginDialogOpen}
-				/>
 			</div>
 		</div>
 	);
