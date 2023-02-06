@@ -7,10 +7,12 @@ import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import AppTheme from "AppTheme";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import DeleteIconButton from "components/buttons/DeleteIconButton";
 import FavouriteButton from "components/buttons/FavouriteButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
 import { UploadDialog } from "pages/GraffitiFullView/GraffittiUploadPopUp";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import common from "redux/common";
 import { useAppSelector } from "redux/store/hooks";
 import "./ImageComponents.css";
 
@@ -20,6 +22,7 @@ interface ImageSliderProps {
 
 const ImageSlider = (props: ImageSliderProps) => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+	const user = useAppSelector((state) => state.common.userInfo);
 	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [likeCount, setLikeCount] = useState<number>(0);
@@ -44,6 +47,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 	}, [activeStep]);
 	useEffect(() => {
 		getLikeCount();
+		common.getStatus();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 
@@ -158,6 +162,23 @@ const ImageSlider = (props: ImageSliderProps) => {
 							alignItems: "center",
 						}}
 					>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "flex-start",
+								zIndex: 99,
+								width: "100%",
+								marginBottom: "-18px",
+								marginLeft: "8px",
+							}}
+						>
+							{isLoggedIn &&
+								user?.userId === graffiti.photos[activeStep].userId && (
+									<DeleteIconButton
+										graffitiPhoto={graffiti.photos[activeStep]}
+									/>
+								)}
+						</div>
 						<div>
 							<FavouriteButton
 								likeCount={likeCount}
