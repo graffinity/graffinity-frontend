@@ -137,48 +137,39 @@ const ImageSlider = (props: ImageSliderProps) => {
 					width: "100%",
 				}}
 			>
-				<Tooltip
-					title={
-						isLoggedIn
-							? ""
-							: "Please log in to like this graffiti and / or upload more pictures of it "
-					}
+				<div
 					style={{
+						display: "flex",
+						justifyContent: "flex-end",
+						zIndex: 99,
+						padding: "8px",
+						paddingTop: "16px",
+						marginBottom: "-58px",
+						boxSizing: "border-box",
 						width: "100%",
+						alignContent: "center",
+						alignItems: "center",
 					}}
-					placement="bottom-end"
 				>
 					<div
 						style={{
 							display: "flex",
-							justifyContent: "flex-end",
+							justifyContent: "flex-start",
 							zIndex: 99,
-							padding: "8px",
-							paddingTop: "16px",
-							marginBottom: "-58px",
-							boxSizing: "border-box",
 							width: "100%",
-							alignContent: "center",
-							alignItems: "center",
+							marginBottom: "-18px",
+							marginLeft: "8px",
 						}}
 					>
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "flex-start",
-								zIndex: 99,
-								width: "100%",
-								marginBottom: "-18px",
-								marginLeft: "8px",
-							}}
-						>
-							{isLoggedIn &&
-								user?.userId === graffiti.photos[activeStep].userId && (
-									<DeleteIconButton
-										graffitiPhoto={graffiti.photos[activeStep]}
-									/>
-								)}
-						</div>
+						{isLoggedIn &&
+							user?.userId === graffiti.photos[activeStep].userId && (
+								<DeleteIconButton graffitiPhoto={graffiti.photos[activeStep]} />
+							)}
+					</div>
+					<Tooltip
+						title={isLoggedIn ? "" : "Please log in to like this graffiti"}
+						placement="top"
+					>
 						<div>
 							<FavouriteButton
 								likeCount={likeCount}
@@ -187,71 +178,71 @@ const ImageSlider = (props: ImageSliderProps) => {
 								disabled={!isLoggedIn}
 							/>
 						</div>
-						<div
-							style={{
-								marginTop: "-16px",
-								marginBottom: "-32px",
-							}}
+					</Tooltip>
+					<div
+						style={{
+							marginTop: "-16px",
+							marginBottom: "-32px",
+						}}
+					>
+						<Tooltip
+							title={
+								isLoggedIn
+									? "Add photos to this graffiti"
+									: "Please log in upload a photo"
+							}
+							placement="bottom"
 						>
-							<Tooltip
-								title={
-									isLoggedIn
-										? "Add photos to this graffiti"
-										: "Please log in upload a photo"
-								}
-								placement="bottom"
+							<IconButton
+								className="hover-icon-effect"
+								disableTouchRipple
+								onClick={isLoggedIn ? () => handleInputClick() : () => {}}
+								sx={{
+									opacity: isLoggedIn ? 1 : 0.5,
+									"&:hover": {
+										cursor: isLoggedIn ? "normal" : "not-allowed",
+										backgroundColor: "rgba(0, 0, 0, 0.2)",
+									},
+								}}
 							>
-								<IconButton
-									className="hover-icon-effect"
-									disableTouchRipple
-									onClick={isLoggedIn ? () => handleInputClick() : () => {}}
-									sx={{
+								<AddCircleOutlined
+									className="base-icon"
+									style={{
+										color: "#FFFFFF",
 										opacity: isLoggedIn ? 1 : 0.5,
+										height: "32px",
+										width: "32px",
+									}}
+									sx={{
 										"&:hover": {
 											cursor: isLoggedIn ? "normal" : "not-allowed",
-											backgroundColor: "rgba(0, 0, 0, 0.2)",
+											boxShadow: isLoggedIn
+												? "0 0 0 10px rgba(0, 0, 0, 0.4) !important"
+												: "0 0 0 10px rgba(229, 57, 53, 0.4) !important",
+											color: isLoggedIn
+												? "#FFFFFF"
+												: "rgba(229, 57, 53, 0.55) !important",
 										},
 									}}
-								>
-									<AddCircleOutlined
-										className="base-icon"
-										style={{
-											color: "#FFFFFF",
-											opacity: isLoggedIn ? 1 : 0.5,
-											height: "32px",
-											width: "32px",
-										}}
-										sx={{
-											"&:hover": {
-												cursor: isLoggedIn ? "normal" : "not-allowed",
-												boxShadow: isLoggedIn
-													? "0 0 0 10px rgba(0, 0, 0, 0.4) !important"
-													: "0 0 0 10px rgba(229, 57, 53, 0.4) !important",
-												color: isLoggedIn
-													? "#FFFFFF"
-													: "rgba(229, 57, 53, 0.55) !important",
-											},
-										}}
-									/>
-								</IconButton>
-							</Tooltip>
-							<input
-								alt="Upload Image"
-								accept="image/*"
-								type="file"
-								multiple
-								onChange={handleFileChange}
-								ref={hiddenInputRef}
-								style={{ display: "none" }}
-							/>
-						</div>
-						<UploadDialog
-							handleClose={handleDialogClose}
-							graffitiId={graffiti.id}
-							status={popUpOpen}
+								/>
+							</IconButton>
+						</Tooltip>
+						<input
+							alt="Upload Image"
+							accept="image/*"
+							type="file"
+							multiple
+							onChange={handleFileChange}
+							ref={hiddenInputRef}
+							style={{ display: "none" }}
 						/>
 					</div>
-				</Tooltip>
+					<UploadDialog
+						handleClose={handleDialogClose}
+						graffitiId={graffiti.id}
+						status={popUpOpen}
+					/>
+				</div>
 
 				<Box
 					component={"img"}
