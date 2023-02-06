@@ -135,6 +135,8 @@ const ImageSlider = (props: ImageSliderProps) => {
 					marginTop: "48px",
 					boxSizing: "border-box",
 					width: "100%",
+					maxHeight: "800px",
+					maxWidth: "800px",
 				}}
 			>
 				<div
@@ -256,8 +258,8 @@ const ImageSlider = (props: ImageSliderProps) => {
 						alignContent: "center",
 						objectFit: "cover",
 						overflowBlock: "hidden",
-						maxHeight: "1280px",
-						maxWidth: "1280px",
+						maxHeight: "800px",
+						maxWidth: "800px",
 						aspectRatio: 1 / 1,
 					}}
 				/>

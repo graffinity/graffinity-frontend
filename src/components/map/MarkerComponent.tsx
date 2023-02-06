@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { InfoWindow, Marker } from "@react-google-maps/api";
@@ -7,6 +8,7 @@ import MarkerData from "models/map/MarkerData";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Map.css";
+import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
 
 interface MarkerComponentProps {
 	marker: MarkerData;
@@ -25,29 +27,85 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 		handleActiveMarkerNull,
 	} = props;
 
-	const images = marker.photos.map((photo) => photo.url);
-	const maxSteps = images.length;
-	const [currentImage, setCurrentImage] = useState<string>(images[0]);
+	const photos = marker.photos.map((photo) => photo.url);
+	const maxSteps = photos.length;
+	const [currentImage, setCurrentImage] = useState<string>(photos[0]);
+	const [activeStep, setActiveStep] = useState<number>(0);
 	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(
 		null
 	);
-	const [activeStep, setActiveStep] = useState<number>(0);
+	const [images, setImages] = useState<File[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [uploadDialogOpen, setUploadDialogOpen] = useState<{
+		open: boolean;
+		images: File[];
+	}>({
+		open: false,
+		images: [],
+	});
 
 	const imageRef = useRef<HTMLImageElement | null>(null);
 
 	const handleNext = () => {
-		setCurrentImage(images[activeStep + 1]);
+		setCurrentImage(photos[activeStep + 1]);
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
 
 	const handleBack = () => {
-		setCurrentImage(images[activeStep - 1]);
+		setCurrentImage(photos[activeStep - 1]);
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
 	const handleReset = () => {
-		setCurrentImage(images[0]);
+		setCurrentImage(photos[0]);
 		setActiveStep(0);
+	};
+
+	const handleOpen = (files: FileList) => {
+		setUploadDialogOpen({
+			open: true,
+			images: Array.from(files),
+		});
+	};
+
+	const handleClose = () => {
+		setUploadDialogOpen({
+			open: false,
+			images: [],
+		});
+	};
+
+	const addPhotosToGraffiti = async (images: File[]) => {
+		if (images.length <= 3) {
+			let formData = new FormData();
+
+			formData.append("image1", images[0]);
+			if (images.length > 1 && images[1]) {
+				formData.append("image2", images[1]);
+			}
+			if (images.length > 2 && images[2]) {
+				formData.append("image3", images[2]);
+			}
+			try {
+				let response = await GraffitiPhotoAPI.uploadMultiplePhotos(
+					marker.id,
+					formData
+				);
+				return response;
+			} catch (error) {
+				console.error(error);
+				setIsLoading(false);
+				handleClose();
+				alert("Something went wrong");
+				return error;
+			}
+		} else if (images.length === 0) {
+			console.error("No files uploaded");
+			alert("No files uploaded");
+		} else {
+			console.error("You can upload no more than 3 images at a time");
+			alert("You can upload no more than 3 images at a time");
+		}
 	};
 
 	const navigate = useNavigate();
