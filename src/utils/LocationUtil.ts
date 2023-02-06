@@ -12,13 +12,12 @@ export const getAddress = async (
 		lat: Number(+latitude),
 		lng: Number(+longitude),
 	};
-	console.log("latlng", latlng);
+
 	let result = await geocoder.geocode(
 		{ location: latlng },
 		(results, status) => {
 			if (status === "OK" && results) {
 				if (results[0]) {
-					console.log(results[0].formatted_address);
 					return results[0].formatted_address;
 				}
 			}
@@ -37,7 +36,6 @@ export const getCoordinates = async (
 		(results, status) => {
 			if (status === "OK" && results) {
 				if (results[0]) {
-					console.log(results[0].geometry.location);
 					return results[0].geometry.location;
 				}
 			}

@@ -42,7 +42,6 @@ const CreateGrafiitiPage = () => {
 				categoryIds: [],
 			};
 
-			console.log(graffitiReq);
 			let graffiti = await GraffitiAPI.create(graffitiReq);
 
 			let request: GraffitiPhotoRequest = {

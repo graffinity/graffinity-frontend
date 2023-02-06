@@ -37,7 +37,6 @@ const DeleteIconButton = (props: DeleteIconButtonProps) => {
 	const handleDelete = async () => {
 		let response = await GraffitiPhotoAPI.delete(props.graffitiPhoto.id);
 		if (response) {
-			console.log("deleted");
 			window.location.reload();
 		} else {
 			alert("Something went wrong");

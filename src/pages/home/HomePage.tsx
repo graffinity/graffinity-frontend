@@ -88,7 +88,6 @@ const HomePage = () => {
 				let request: SavedUserLocation = userCoords;
 				let response = await GraffitiAPI.findNearbyGraffiti(request);
 				setNearbyGraffitis(response);
-				console.log(response);
 				return response;
 			}
 
@@ -99,17 +98,15 @@ const HomePage = () => {
 					savedAt: new Date(),
 				};
 				let response = await GraffitiAPI.findNearbyGraffiti(request);
-				console.log(response);
 				setNearbyGraffitis(response);
 				return response;
 			}
-			console.log("nebesigaudau");
 		}
 		if (userCoords) {
 			let request: SavedUserLocation = userCoords;
 			let response = await GraffitiAPI.findNearbyGraffiti(request);
 			setNearbyGraffitis(response);
-			console.log(response);
+
 			return response;
 		}
 	};
