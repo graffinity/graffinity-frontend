@@ -49,7 +49,10 @@ const CreateGrafiitiPage = () => {
 				addedAt: new Date(),
 			};
 			formData.append("body", JSON.stringify(request));
-			await GraffitiPhotoAPI.create(formData);
+			let res = await GraffitiPhotoAPI.create(formData);
+			if (res) {
+				window.location.href = "/graffiti/view/" + graffiti.id;
+			}
 		}
 	};
 
