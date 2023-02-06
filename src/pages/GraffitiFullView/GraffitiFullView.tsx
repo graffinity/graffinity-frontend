@@ -43,18 +43,10 @@ export default function GraffitiFullView() {
 				className="PhotoContainer"
 				style={{
 					width: "calc(100%-128px)",
+
 					flex: 2,
 				}}
 			>
-				{/* <IconButton
-					onClick={handleOpen}
-					style={{
-						padding: "8px",
-						color: "white",
-					}}
-				>
-					<LocalHospitalOutlined />
-				</IconButton> */}
 				{graffiti && <ImageSlider graffiti={graffiti} />}
 			</div>
 			<div
@@ -67,12 +59,18 @@ export default function GraffitiFullView() {
 				<FullViewDescription graffiti={graffiti} />
 			</div>
 			{graffiti && (
-				<ImageCropDialog
-					open={open}
-					handleClose={handleClose}
-					handleOpen={handleOpen}
-					imgSrc={graffiti.photos[0].url}
-				/>
+				<div
+					style={{
+						height: "80%",
+					}}
+				>
+					<ImageCropDialog
+						open={open}
+						handleClose={handleClose}
+						handleOpen={handleOpen}
+						imgSrc={graffiti.photos[0].url}
+					/>
+				</div>
 			)}
 		</div>
 	);

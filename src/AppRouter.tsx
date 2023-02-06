@@ -20,6 +20,7 @@ const AppRouter = () => {
 
 	useEffect(() => {
 		common.getStatus();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

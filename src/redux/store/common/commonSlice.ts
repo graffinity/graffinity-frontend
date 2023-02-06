@@ -1,11 +1,11 @@
-import CommonState from "./CommonState";
+import CommonState, { LocationAccessStatus } from "./CommonState";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState: CommonState = {
 	isLoggedIn: undefined,
 	userInfo: undefined,
 	userLocation: undefined,
-	gaveUserLocationPermission: undefined,
+	locationAccessStatus: LocationAccessStatus.NOT_REQUESTED,
 };
 
 export const commonSlice = createSlice({
@@ -21,9 +21,8 @@ export const commonSlice = createSlice({
 		setUserLocation(state, action) {
 			state.userLocation = action.payload.userLocation;
 		},
-		setGaveUserLocationPermission(state, action) {
-			state.gaveUserLocationPermission =
-				action.payload.gaveUserLocationPermission;
+		setLocationAccessStatus(state, action) {
+			state.locationAccessStatus = action.payload.locationAccessStatus;
 		},
 		handleLogin(state, action) {
 			state.isLoggedIn = action.payload.isLoggedIn;

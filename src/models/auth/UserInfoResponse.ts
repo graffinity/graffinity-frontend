@@ -4,6 +4,7 @@ interface UserInfoResponse {
 	lastname?: string;
 	email: string;
 	username: string;
+	isAdmin: boolean;
 	isLoggedIn?: boolean;
 }
 

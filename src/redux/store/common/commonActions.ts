@@ -4,6 +4,7 @@ import UserAPI from "api/UserAPI";
 import SavedUserLocation from "models/map/SavedUserLocation";
 import { RootState } from "../rootReducer";
 import { commonSlice } from "./commonSlice";
+import { LocationAccessStatus } from "./CommonState";
 
 const commonActions = commonSlice.actions;
 
@@ -53,6 +54,11 @@ const getUserLocation =
 					dispatch(
 						commonActions.setUserLocation({ userLocation: userLocation })
 					);
+					dispatch(
+						commonActions.setLocationAccessStatus({
+							locationAccessStatus: LocationAccessStatus.GRANTED,
+						})
+					);
 				},
 				(error) => {
 					console.log(error);
@@ -72,9 +78,21 @@ const getUserLocation =
 							dispatch(
 								commonActions.setUserLocation({ userLocation: userLocation })
 							);
+							dispatch(
+								commonActions.setLocationAccessStatus({
+									locationAccessStatus: LocationAccessStatus.GRANTED,
+								})
+							);
 						},
 						(error) => {
 							console.log(error);
+							if (error.code === 1) {
+								dispatch(
+									commonActions.setLocationAccessStatus({
+										locationAccessStatus: LocationAccessStatus.DENIED,
+									})
+								);
+							}
 						},
 						{
 							enableHighAccuracy: false, // true = use GPS, false = use IP address
@@ -89,9 +107,36 @@ const getUserLocation =
 					maximumAge: 0,
 				}
 			);
+
+			navigator.permissions.query({ name: "geolocation" }).then((result) => {
+				if (result.state === "granted") {
+					dispatch(
+						commonActions.setLocationAccessStatus({
+							locationAccessStatus: LocationAccessStatus.GRANTED,
+						})
+					);
+				} else if (result.state === "prompt") {
+					dispatch(
+						commonActions.setLocationAccessStatus({
+							locationAccessStatus: LocationAccessStatus.REQUESTED,
+						})
+					);
+				} else if (result.state === "denied") {
+					dispatch(
+						commonActions.setLocationAccessStatus({
+							locationAccessStatus: LocationAccessStatus.DENIED,
+						})
+					);
+				}
+			});
 		} else {
 			console.log("Geolocation is not supported by this browser.");
 			alert("Geolocation is not supported by this browser.");
+			dispatch(
+				commonActions.setLocationAccessStatus({
+					locationAccessStatus: LocationAccessStatus.DENIED,
+				})
+			);
 		}
 	};
 const handleLogin =
