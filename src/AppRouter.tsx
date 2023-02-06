@@ -21,13 +21,12 @@ const AppRouter = () => {
 
 	useEffect(() => {
 		common.getStatus();
-		console.log(userInfo);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		common.getStatus();
-		console.log(userInfo);
 	}, [isLoggedIn]);
 
 	return (
