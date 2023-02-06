@@ -48,17 +48,7 @@ const CreateGrafiitiForm = (props: CreateGraffitiFormProps) => {
 	artistIds.push("Unknown");
 
 	const handleImageUpload = (file: File) => {
-		console.log("uploaded: ", file);
-
-		file.arrayBuffer().then((buffer) => {
-			let blob = new Blob([new Uint8Array(buffer)], { type: file.type });
-			let urlCreator = window.URL || window.webkitURL;
-			let imageUrl = urlCreator.createObjectURL(blob);
-			console.log("imageUrl", imageUrl);
-
-			console.log("blob", blob);
-			setImages([...images, file]);
-		});
+		setImages((prevImages) => [...prevImages, file]);
 	};
 
 	return (

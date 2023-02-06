@@ -46,9 +46,8 @@ const Header = (props: HeaderProps) => {
 	};
 
 	const handleLogout = async () => {
-		let res = await AuthAPI.logout();
+		await AuthAPI.logout();
 		window.location.reload();
-		console.log("logout res", res);
 	};
 
 	return (

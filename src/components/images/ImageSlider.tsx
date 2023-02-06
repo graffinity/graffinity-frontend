@@ -1,18 +1,20 @@
+import { AddCircleOutlined } from "@mui/icons-material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { Tooltip, Typography } from "@mui/material";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
 import AppTheme from "AppTheme";
+import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import DeleteIconButton from "components/buttons/DeleteIconButton";
 import FavouriteButton from "components/buttons/FavouriteButton";
 import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import { useEffect, useState } from "react";
-import "./ImageComponents.css";
-import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
+import { UploadDialog } from "pages/GraffitiFullView/GraffittiUploadPopUp";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import common from "redux/common";
 import { useAppSelector } from "redux/store/hooks";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import PopUPComponent from "pages/GraffitiFullView/GraffittiUploadPopUp";
+import "./ImageComponents.css";
 
 interface ImageSliderProps {
 	graffiti: GraffitiResponse;
@@ -20,11 +22,20 @@ interface ImageSliderProps {
 
 const ImageSlider = (props: ImageSliderProps) => {
 	const isLoggedIn = useAppSelector((state) => state.common.isLoggedIn);
+	const user = useAppSelector((state) => state.common.userInfo);
 	const { graffiti } = props;
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
-	const [popUp, setPopUp] = useState<boolean>(false);
+	const [popUpOpen, setPopUpOpen] = useState<{ open: boolean; images: File[] }>(
+		{
+			open: false,
+			images: [],
+		}
+	);
+
+	const hiddenInputRef = useRef<HTMLInputElement | null>(null);
+
 	useEffect(() => {
 		getLikeCount();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,6 +47,7 @@ const ImageSlider = (props: ImageSliderProps) => {
 	}, [activeStep]);
 	useEffect(() => {
 		getLikeCount();
+		common.getStatus();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoggedIn]);
 
@@ -68,11 +80,18 @@ const ImageSlider = (props: ImageSliderProps) => {
 		}
 	};
 
-	function handleDialogOpen() {
-		setPopUp(true);
+	function handleDialogOpen(images: FileList) {
+		let status = {
+			open: true,
+			images: Array.from(images),
+		};
+		setPopUpOpen(status);
 	}
 	function handleDialogClose() {
-		setPopUp(false);
+		setPopUpOpen({
+			open: false,
+			images: [],
+		});
 	}
 	const handleClick = () => {
 		handlePhotoLike();
@@ -82,6 +101,19 @@ const ImageSlider = (props: ImageSliderProps) => {
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	};
+
+	const handleInputClick = () => {
+		hiddenInputRef.current?.click();
+	};
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			if (e.target.files.length > 1) {
+			}
+			let images = e.target.files;
+			handleDialogOpen(images);
+		}
 	};
 
 	const handleBack = () => {
@@ -130,20 +162,94 @@ const ImageSlider = (props: ImageSliderProps) => {
 							alignItems: "center",
 						}}
 					>
-						<FavouriteButton
-							likeCount={likeCount}
-							handleClick={handleClick}
-							isLiked={isLiked}
-							disabled={!isLoggedIn}
-						/>
-						<MoreHorizOutlinedIcon
-							onClick={isLoggedIn ? handleDialogOpen : undefined}
+						<div
 							style={{
+								display: "flex",
+								justifyContent: "flex-start",
 								zIndex: 99,
-								margin: "0",
+								width: "100%",
+								marginBottom: "-18px",
+								marginLeft: "8px",
 							}}
+						>
+							{isLoggedIn &&
+								user?.userId === graffiti.photos[activeStep].userId && (
+									<DeleteIconButton
+										graffitiPhoto={graffiti.photos[activeStep]}
+									/>
+								)}
+						</div>
+						<div>
+							<FavouriteButton
+								likeCount={likeCount}
+								handleClick={handleClick}
+								isLiked={isLiked}
+								disabled={!isLoggedIn}
+							/>
+						</div>
+						<div
+							style={{
+								marginTop: "-16px",
+								marginBottom: "-32px",
+							}}
+						>
+							<Tooltip
+								title={
+									isLoggedIn
+										? "Add photos to this graffiti"
+										: "Please log in upload a photo"
+								}
+								placement="bottom"
+							>
+								<IconButton
+									className="hover-icon-effect"
+									disableTouchRipple
+									onClick={isLoggedIn ? () => handleInputClick() : () => {}}
+									sx={{
+										opacity: isLoggedIn ? 1 : 0.5,
+										"&:hover": {
+											cursor: isLoggedIn ? "normal" : "not-allowed",
+											backgroundColor: "rgba(0, 0, 0, 0.2)",
+										},
+									}}
+								>
+									<AddCircleOutlined
+										className="base-icon"
+										style={{
+											color: "#FFFFFF",
+											opacity: isLoggedIn ? 1 : 0.5,
+											height: "32px",
+											width: "32px",
+										}}
+										sx={{
+											"&:hover": {
+												cursor: isLoggedIn ? "normal" : "not-allowed",
+												boxShadow: isLoggedIn
+													? "0 0 0 10px rgba(0, 0, 0, 0.4) !important"
+													: "0 0 0 10px rgba(229, 57, 53, 0.4) !important",
+												color: isLoggedIn
+													? "#FFFFFF"
+													: "rgba(229, 57, 53, 0.55) !important",
+											},
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
+							<input
+								alt="Upload Image"
+								accept="image/*"
+								type="file"
+								multiple
+								onChange={handleFileChange}
+								ref={hiddenInputRef}
+								style={{ display: "none" }}
+							/>
+						</div>
+						<UploadDialog
+							handleClose={handleDialogClose}
+							graffitiId={graffiti.id}
+							status={popUpOpen}
 						/>
-						<PopUPComponent onClose={handleDialogClose} open={popUp} />
 					</div>
 				</Tooltip>
 

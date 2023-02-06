@@ -15,7 +15,6 @@ const ImageCropDialog = (props: ImageCropDialogProps) => {
 	const [zoom, setZoom] = useState<number>(1);
 	const onCropComplete = useCallback(
 		(croppedArea: Area, croppedAreaPixels: Area) => {
-			console.log(croppedArea, croppedAreaPixels);
 			return croppedAreaPixels;
 		},
 		[]

@@ -18,7 +18,6 @@ interface SignupProps {
 
 const SignupDialog = (props: SignupProps) => {
 	const handleSubmit = async (values: RegistrationValues) => {
-		console.log("values", values);
 		let request: UserCreateRequest = {
 			username: values.username,
 			email: values.email,
@@ -26,12 +25,9 @@ const SignupDialog = (props: SignupProps) => {
 			name: values.name,
 			lastname: values.lastname,
 		};
-		let response = await AuthAPI.signup(request);
-		console.log("response", response);
+		await AuthAPI.signup(request);
 		props.handleClose();
 		window.location.reload();
-
-		console.log("AuthAPI response", response);
 	};
 	return (
 		<Dialog
@@ -241,7 +237,6 @@ const validationSchema = yup.object({
 			async (value) => {
 				if (!_.isEmpty(value) && !_.isNil(value)) {
 					let isDuplicate = await UserAPI.existsByUsername(value);
-					console.log("isDuplicate: ", isDuplicate);
 					return !isDuplicate;
 				}
 				return true;
@@ -258,7 +253,6 @@ const validationSchema = yup.object({
 			async (value) => {
 				if (!_.isEmpty(value) && !_.isNil(value)) {
 					let isDuplicate = await UserAPI.existsByEmail(value);
-					console.log("isDuplicate: ", isDuplicate);
 					return !isDuplicate;
 				}
 				return true;
@@ -282,49 +276,3 @@ const validationSchema = yup.object({
 });
 
 export default SignupDialog;
-
-// const checkIfUserExistsByEmail = async (email: string) => {
-// 	if (email === "") {
-// 		return false;
-// 	}
-// 	let response = await UserAPI.existsByEmail(email);
-// 	console.log("exists: ", response);
-// 	return response;
-// };
-// const checkIfUserExistsByUsername = async (username: string) => {
-// 	if (username === "") {
-// 		return false;
-// 	}
-// 	let response = await UserAPI.existsByUsername(username);
-// 	console.log("exists: ", response);
-// 	return response;
-// };
-
-// country: yup.string().nullable().required()
-//     .test('validator', 'country is incorrect', value => {
-//       if (!_.isEmpty(value)) {
-//         const isDuplicateExists = await checkDuplicate(value);
-//         console.log("isDuplicateExists = ", isDuplicateExists);
-//         return !isDuplicateExists;
-//       }
-//       // WHEN THE VALUE IS EMPTY RETURN `true` by default
-//       return true;
-//     })
-// });
-
-// function checkDuplicate(valueToCheck) {
-//   return new Promise(async (resolve, reject) => {
-//     let isDuplicateExists;
-
-//     // EXECUTE THE API CALL TO CHECK FOR DUPLICATE VALUE
-//     api.post('url', valueToCheck)
-//     .then((valueFromAPIResponse) => {
-//       isDuplicateExists = valueFromAPIResponse; // boolean: true or false
-//       resolve(isDuplicateExists);
-//     })
-//     .catch(() => {
-//       isDuplicateExists = false;
-//       resolve(isDuplicateExists);
-//     })
-//   });
-// }

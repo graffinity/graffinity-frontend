@@ -13,7 +13,6 @@ const AuthAPI = {
 			refresh_token: string;
 		} = await axios.post(`${baseUrl}/login`, request);
 
-		console.log("res", res);
 		let access_token = res.access_token;
 		if (access_token) {
 			localStorage.setItem("token", access_token);
@@ -30,7 +29,6 @@ const AuthAPI = {
 			refresh_token: string;
 		} = await axios.post(`${baseUrl}/signup`, request);
 
-		console.log("res", res);
 		let access_token = res.access_token;
 		if (access_token) {
 			localStorage.setItem("token", access_token);

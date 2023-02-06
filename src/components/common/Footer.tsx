@@ -1,8 +1,5 @@
-import FacebookIcon from "@mui/icons-material/Facebook";
-import { AppBar, Link, Typography } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import { AppBar } from "@mui/material";
+import { ReactComponent as GraffinityLogo } from "../../assets/svg/graffinity-logo.svg";
 import "./Common.css";
 
 export function FooterContainer() {
@@ -11,7 +8,6 @@ export function FooterContainer() {
 			position="static"
 			color="primary"
 			style={{
-				// display: "absolute",
 				width: "100%",
 				bottom: "0",
 				background: "#202024",
@@ -19,128 +15,21 @@ export function FooterContainer() {
 		>
 			<div
 				style={{
-					width: "100%",
 					display: "flex",
 					justifyContent: "center",
+					alignItems: "center",
+					width: "100%",
+					padding: "8px 0px",
+					boxSizing: "border-box",
 				}}
 			>
-				<div className="footer-container">
-					<div className="footer-section">
-						<div className="footer-title">
-							<Typography color="#FFFFFF" variant="h3">
-								About Us
-							</Typography>
-						</div>
-						<div className="footer-links">
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Story
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Clients
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Testimonials
-								</Typography>
-							</Link>
-						</div>
-					</div>
-					<div className="footer-section">
-						<div className="footer-title">
-							<Typography variant="h3" color="#FFFFFF">
-								Services
-							</Typography>
-						</div>
-						<div className="footer-links">
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Marketing
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Consulting
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Development
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Design
-								</Typography>
-							</Link>
-						</div>
-					</div>
-					<div className="footer-section">
-						<div className="footer-title">
-							<Typography variant="h3" color="#FFFFFF">
-								Contact Us
-							</Typography>
-						</div>
-						<div className="footer-links">
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									United States
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									United Kingdom
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Australia
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<Typography variant="body" className="text">
-									Support
-								</Typography>
-							</Link>
-						</div>
-					</div>
-					<div className="footer-section">
-						<div className="footer-title">
-							<Typography variant="h3" color="#FFFFFF">
-								Social
-							</Typography>
-						</div>
-						<div className="footer-links">
-							<Link href="#" className="text-and-icon">
-								<FacebookIcon className="icon" />
-								<Typography variant="body" className="text">
-									Facebook
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<InstagramIcon className="icon" />
-								<Typography variant="body" className="text">
-									Instagram
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<YouTubeIcon className="icon" />
-								<Typography variant="body" className="text">
-									Youtube
-								</Typography>
-							</Link>
-							<Link href="#" className="link">
-								<TwitterIcon className="icon" />
-								<Typography variant="body" className="text">
-									Twitter
-								</Typography>
-							</Link>
-						</div>
-					</div>
-				</div>
+				<GraffinityLogo
+					style={{
+						maxWidth: "45%",
+						width: "45%",
+						height: "auto",
+					}}
+				/>
 			</div>
 		</AppBar>
 	);

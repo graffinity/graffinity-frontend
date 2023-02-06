@@ -19,7 +19,6 @@ export default function GraffitiFullView() {
 	};
 
 	useEffect(() => {
-		console.log("graffitiId", id);
 		getGraffiti();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

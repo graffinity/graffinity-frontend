@@ -42,7 +42,6 @@ const CreateGrafiitiPage = () => {
 				categoryIds: [],
 			};
 
-			console.log(graffitiReq);
 			let graffiti = await GraffitiAPI.create(graffitiReq);
 
 			let request: GraffitiPhotoRequest = {
@@ -50,7 +49,12 @@ const CreateGrafiitiPage = () => {
 				addedAt: new Date(),
 			};
 			formData.append("body", JSON.stringify(request));
-			await GraffitiPhotoAPI.create(formData);
+			let res = await GraffitiPhotoAPI.create(formData);
+			if (res) {
+				window.location.href = "/graffiti/view/" + graffiti.id;
+			} else {
+				alert("Something went wrong!");
+			}
 		}
 	};
 
