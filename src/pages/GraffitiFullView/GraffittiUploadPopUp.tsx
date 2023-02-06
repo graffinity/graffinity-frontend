@@ -1,97 +1,93 @@
-import {
-	Button,
-	Dialog,
-	DialogProps,
-	IconButton,
-	TextField,
-	Typography,
-} from "@mui/material";
-import GraffitiResponse from "models/graffiti/GraffitiResponse";
-import { useEffect, useState } from "react";
+import { Button, CircularProgress, Dialog, Typography } from "@mui/material";
 import GraffitiPhotoAPI from "api/GraffitiPhotoAPI";
-// import * as yup from "yup";
-import { useParams } from "react-router-dom";
-import GraffitiAPI from "api/GraffitiAPI";
-import GalleryComponent from "components/gallery/GalleryComponent";
-import { CloseOutlined } from "@mui/icons-material";
 import UploadIconButton from "components/buttons/UploadIconButton";
+import UploadedImageComponent from "components/common/UploadedImageComponent";
+import { useEffect, useState } from "react";
 
-interface popUpComponentProps extends DialogProps {}
-
-// const maxNumber = 6900000;
-
-export default function PopUPComponent(props: popUpComponentProps) {
-	const { id } = useParams();
-	const [graffiti, setGraffiti] = useState<GraffitiResponse | undefined>();
-	const [images, setImages] = useState<File[]>([]);
-
-	// const validationSchema = yup.object({
-	//     file: yup
-	//         .mixed()
-	//         .nullable()
-	//         .required("A file is required")
-	//         .test(
-	//             "fileSize",
-	//             "File too large",
-	//             (value) => value && value.size <= maxNumber
-	//         ),
-	// });
-
-	const getGraffiti = async () => {
-		if (id) {
-			let response = await GraffitiAPI.findById(+id);
-			setGraffiti(response);
-		}
-		setGraffiti(undefined);
+interface UploadDialogProps {
+	status: {
+		open: boolean;
+		images: File[];
 	};
 
-	const addPhotosToGraffiti = async (images: File[]) => {
-		if (images.length <= 3 && images.length > 0) {
-			let promises = images.map(async (file) => {
-				let formData = new FormData();
-				formData.append("file", file);
-				if (id) {
-					let response = await GraffitiPhotoAPI.addPhotoToGraffiti(
-						+id,
-						formData
-					);
+	graffitiId: number;
+	handleClose: () => void;
+}
 
-					console.log("response", response);
-					return response;
-				}
-				return undefined;
-			});
-
-			let result = await Promise.all(promises);
-			return result;
-		} else {
-			console.error("You can only add 1-3 images at a time");
-		}
-	};
+// Previously, this was PopUpComponent declaration
+export const UploadDialog = (props: UploadDialogProps) => {
+	const { status, graffitiId, handleClose } = props;
+	const [images, setImages] = useState<File[]>(status.images);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		getGraffiti();
+		setImages(status.images);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [status]);
 
-	const handleSubmit = async () => {
-		let result = await addPhotosToGraffiti(images);
-		console.log("result", result);
-		setImages([]);
+	const addPhotosToGraffiti = async (images: File[]) => {
+		if (images.length <= 3) {
+			let formData = new FormData();
+
+			formData.append("image1", images[0]);
+			if (images.length > 1 && images[1]) {
+				formData.append("image2", images[1]);
+			}
+			if (images.length > 2 && images[2]) {
+				formData.append("image3", images[2]);
+			}
+			try {
+				let response = await GraffitiPhotoAPI.uploadMultiplePhotos(
+					graffitiId,
+					formData
+				);
+				return response;
+			} catch (error) {
+				console.error(error);
+				setIsLoading(false);
+				handleClose();
+				alert("Something went wrong");
+				return error;
+			}
+		} else if (images.length === 0) {
+			console.error("No files uploaded");
+			alert("No files uploaded");
+		} else {
+			console.error("You can upload no more than 3 images at a time");
+			alert("You can upload no more than 3 images at a time");
+		}
 	};
 
-	const handleImageUpload = (file: File) => {
-		console.log("uploaded: ", file);
+	const handleSubmit = async () => {
+		setIsLoading(true);
+		await addPhotosToGraffiti(images);
+		setIsLoading(false);
 
-		file.arrayBuffer().then((buffer) => {
-			let blob = new Blob([new Uint8Array(buffer)], { type: file.type });
-			let urlCreator = window.URL || window.webkitURL;
-			let imageUrl = urlCreator.createObjectURL(blob);
-			console.log("imageUrl", imageUrl);
+		setImages([]);
+		handleClose();
+		setTimeout(() => {
+			window.location.reload();
+		}, 200);
+	};
 
-			console.log("blob", blob);
-			setImages([...images, file]);
-		});
+	const handleMultipleImagesUpload = (files1: FileList) => {
+		if (images.length > 0) {
+			let filesArray = Array.from(files1);
+			if (filesArray.length > 3 || filesArray.length + images.length > 3) {
+				alert("Can not upload more than 3 images at a time");
+				return;
+			}
+			filesArray.forEach((file) => {
+				let imageNames = images.map((image) => image.name);
+				if (!imageNames.includes(file.name)) {
+					setImages((prev) => [...prev, file]);
+				}
+			});
+		}
+	};
+
+	const removeImage = (image: File) => {
+		setImages((prev) => prev.filter((file) => file.name !== image.name));
 	};
 
 	return (
@@ -99,159 +95,85 @@ export default function PopUPComponent(props: popUpComponentProps) {
 			PaperProps={{
 				style: {
 					background: "#404044",
-					width: "100vw",
+					borderRadius: "12px",
+					width: "100%",
+					padding: "24px",
+					boxSizing: "border-box",
+					display: "flex",
 				},
 			}}
-			open={props.open}
-			onClose={props.onClose}
+			open={status.open}
+			onClose={handleClose}
 		>
 			<div
 				style={{
 					display: "flex",
-					flexDirection: "column",
 					alignItems: "center",
-					padding: "24px",
-					height: "100%",
-					gap: "8px",
+					width: "100%",
+					justifyContent: "center",
 				}}
 			>
-				<div>
-					<Typography
-						color="common.white"
-						sx={{
-							mb: "12px",
-							fontFamily: "Times, Times New Roman, serif",
-						}}
-					>
-						Enter the name of the graffiti
-					</Typography>
-					<TextField
-						id="outlined-multiline-flexible demo-helper-text-misaligned-
-					no-helper"
-						fullWidth
-						multiline
-						label="Name"
-						variant="outlined"
-						inputProps={{ style: { color: "white" } }}
-						sx={{
-							"& .MuiInputLabel-root": { color: "white" },
-							"& .MuiFilledInput-input": {
-								border: "1px solid white",
-								borderRadius: 1,
-							},
-						}}
+				{images.length <= 3 && (
+					<UploadIconButton
+						handleUpload={handleMultipleImagesUpload}
+						disabled={images.length >= 3}
 					/>
-					<Typography
-						color="common.white"
-						sx={{
-							mt: "12px",
-							mb: "12px",
-							fontFamily: "Times, Times New Roman, serif",
-						}}
-					>
-						Enter a short description
-					</Typography>
-					<TextField
-						id="outlined-multiline-flexible demo-helper-text-misaligned-
-					no-helper"
-						fullWidth
-						multiline
-						label="Description"
-						variant="outlined"
-						inputProps={{ style: { color: "white" } }}
-						sx={{
-							"& .MuiInputLabel-root": { color: "white" },
-							"& .MuiFilledInput-input": {
-								border: "1px solid white",
-								borderRadius: 1,
-							},
-						}}
-					/>
-					<>
-						<div
-							style={{
-								display: "flex",
-								alignItems: "center",
-								width: "100%",
-								margin: "20px",
-							}}
-						>
-							<UploadIconButton handleUpload={handleImageUpload} />
-						</div>
-						{images.length > 0 && (
-							<div
-								style={{
-									display: "flex",
-									flexWrap: "wrap",
-									alignItems: "center",
-								}}
-							>
-								{images.map((image) => (
-									<div
-										key={image.lastModified * Math.random()}
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											alignItems: "center",
-											gap: "12px",
-										}}
-									>
-										<Typography variant="h6" color="#FFFFFF">
-											{image.name}
-										</Typography>
-										<div
-											style={{
-												display: "flex",
-												alignItems: "flex-start",
-												marginLeft: "12px",
-											}}
-										>
-											<img
-												src={URL.createObjectURL(image)}
-												alt="uploaded"
-												style={{
-													width: "100px",
-													height: "100px",
-												}}
-											/>
-											<IconButton
-												style={{
-													marginLeft: "-36px",
-													padding: "8px",
-												}}
-												onClick={() => {
-													setImages(images.filter((i) => i !== image));
-												}}
-											>
-												<CloseOutlined
-													style={{
-														color: "#FFFFFF",
-													}}
-												/>
-											</IconButton>
-										</div>
-									</div>
-								))}
-							</div>
-						)}
-						<Button
-							variant="contained"
-							onClick={handleSubmit}
-							style={{
-								background: "#202024",
-								marginTop: "24px",
-								width: "100%",
-								textTransform: "none",
-							}}
-						>
-							<Typography variant="h4" color="#FFFFFF">
-								Submit Photos
-							</Typography>
-						</Button>
-						{graffiti && <GalleryComponent graffiti={graffiti} />}
-					</>
-				</div>
+				)}
 			</div>
+
+			{images.length > 0 && (
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "wrap",
+						width: "100%",
+						padding: "16px",
+						boxSizing: "border-box",
+						height: "100%",
+						gap: "16px",
+					}}
+				>
+					{images.map((image, index) => (
+						<UploadedImageComponent
+							key={index}
+							image={image}
+							onRemove={removeImage}
+						/>
+					))}
+				</div>
+			)}
+
+			{/* {isLoading && <CircularProgress />} */}
+
+			<Button
+				variant="contained"
+				onClick={handleSubmit}
+				style={{
+					// background: "#202024",
+					marginTop: "24px",
+					width: "100%",
+					textTransform: "none",
+					padding: "8px",
+				}}
+			>
+				{!isLoading ? (
+					<Typography
+						variant="h5"
+						color="#FFFFFF"
+						style={{
+							fontSize: "18px",
+							lineHeight: "24px",
+							fontWeight: "600",
+						}}
+					>
+						Submit Photos
+					</Typography>
+				) : (
+					<CircularProgress style={{ color: "#FFFFFF" }} />
+				)}
+			</Button>
 		</Dialog>
 	);
-}
+};
+
+export default UploadDialog;

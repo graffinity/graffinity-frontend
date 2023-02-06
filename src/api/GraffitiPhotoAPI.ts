@@ -40,6 +40,15 @@ const GraffitiPhotoAPI = {
 				"Content-Type": "multipart/form-data",
 			},
 		}),
+	uploadMultiplePhotos: (
+		graffitiId: number,
+		formData: FormData
+	): Promise<number> =>
+		axios.post(`${baseUrl}/graffiti/${graffitiId}/upload-multiple`, formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		}),
 };
 
 export default GraffitiPhotoAPI;

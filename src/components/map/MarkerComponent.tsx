@@ -133,7 +133,7 @@ const MarkerComponent = (props: MarkerComponentProps) => {
 											}}
 										>
 											<UploadIconButton
-												handleUpload={(file: File) => console.log(file)}
+												handleUpload={(file: FileList) => console.log(file)}
 											/>
 										</div>
 
