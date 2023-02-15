@@ -10,7 +10,7 @@
 		"@emotion/styled": "^11.10.5",
 		"@fontsource/inter": "^4.5.15",
 		"@mui/icons-material": "^5.11.0",
-		"@mui/material": "^5.11.7",
+		"@mui/material": "^5.11.9",
 		"@react-google-maps/api": "^2.18.1",
 		"@reduxjs/toolkit": "^1.9.2",
 		"@testing-library/jest-dom": "^5.16.5",
