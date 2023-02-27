@@ -86,7 +86,7 @@
 		"eslint-config-prettier": "^8.6.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"file-loader": "^6.2.0",
-		"moment-timezone": "^0.5.40",
+		"moment-timezone": "^0.5.41",
 		"prettier": "^2.8.3",
 		"tsconfig-paths": "^4.1.2",
 		"url-loader": "^4.1.1"
